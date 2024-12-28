@@ -9,7 +9,7 @@ Class Mission {
   private $briefing = "";
   private $debriefing = "";
   private $platoonId = NULL;
-  private $tags = "";
+  private $tag = "";
 
   public function getName() {
     return $this->longName;
@@ -82,11 +82,11 @@ Class Mission {
     $this->platoonId = $id;
   }
   
-  public function getTags() {
-    return $this->tags;
+  public function getTag() {
+    return $this->tag;
   }
 
-  public function setTags($tags) {
-    $this->tags = $tags;
+  public function setTag($tag) {
+    $this->tag = $tag;
   }
 }

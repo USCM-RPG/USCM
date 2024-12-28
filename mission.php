@@ -47,6 +47,15 @@ if ($user->isAdmin() || $user->isGm()) {
       $characters[] = $characterController->getCharacter($characterId);
     }
     $missionController->setCharacters($characters, $mission);
+  
+  #kod för taggar
+  } elseif ($_GET['what']=="tag") {
+    $tag = array();
+    $mission = $missionController->getMission($missionId);
+    foreach ($_POST['tag'] as $tagId) {
+      $tag[] = $missionController->getTag($tagId);
+    }
+    $missionController->setTag($tag, $mission);
   }
   elseif ($_GET['what']=="commendations") {
     foreach ($_POST['characters'] as $character_id => $dummy) {

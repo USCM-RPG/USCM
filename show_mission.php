@@ -1,4 +1,4 @@
-<?php
+c<?php
 $admin=($_SESSION['level']>=3)?(TRUE):(FALSE);
 $gm=($_SESSION['level']>=2)?(TRUE):(FALSE);
 $missionId = $_GET['id'];
@@ -24,7 +24,8 @@ $gmUser = $playerController->getPlayer($mission->getGmId());
 <dl class="list-description">
   <dt>Tags</dt>
   <dd>
-    <?php echo $mission->getTags();?>
+    <?php echo $mission->getTag();?><br>
+    <?php if ($admin or $gm) {?><a href="index.php?url=modify_mission.php&mission=<?php echo $mission->getId();?>&what=tag" class="colorfont">Change</a><?php } ?>
   </dd>
   <dt>Date</dt>
   <dd>
