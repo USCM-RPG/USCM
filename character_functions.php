@@ -204,6 +204,19 @@ function getCommendationsForCharacter($characterId) {
   return $commendations;
 }
 
+function getMissionTagsForCharacter($characterId) {
+  $db = getDatabaseConnection();
+  $tagarray = array ();
+  $tagsql = "SELECT t.tag, COUNT(t.id) as tagcount FROM uscm_missions m JOIN uscm_mission_tags mt ON m.mission_id=mt.missionid JOIN uscm_tags t ON mt.tagid=t.id WHERE m.character_id=:cid GROUP BY t.id ORDER BY tagcount DESC";
+  $stmt = $db->prepare($tagsql);
+  $stmt->bindValue(':cid', $characterId, PDO::PARAM_INT);
+  $stmt->execute();
+  while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+    $tagarray [$row ['tag']] = $row ['tagcount'];
+  }
+  return $tagarray;
+}
+
 function getNumberOfMissionsForCharacter($characterId) {
   $db = getDatabaseConnection();
   $chosencertarray = array ();
