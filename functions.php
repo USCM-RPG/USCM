@@ -19,6 +19,7 @@ require_once ("classes/rank.php");
 require_once ("classes/skill.php");
 require_once ("classes/specialty.php");
 require_once ("classes/trait.php");
+require_once ("classes/tags.php");
 require_once ("controllers/db_controller.php");
 require_once ("controllers/character_controller.php");
 require_once ("controllers/news_controller.php");
@@ -28,6 +29,7 @@ require_once ("controllers/platoon_controller.php");
 require_once ("controllers/player_controller.php");
 require_once ("controllers/rank_controller.php");
 require_once ("controllers/user_controller.php");
+require_once ("controllers/tag_controller.php");
 
 $db_connection = NULL;
 // set_exception_handler(die("Caught exception, going to die"));
