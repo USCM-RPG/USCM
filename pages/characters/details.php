@@ -97,6 +97,37 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 	?>
     </tbody>
 	</table>
+	
+	<?php
+    $missiontags = getMissionTagsForCharacter($characterId);
+    if ($missiontags) {
+    ?>
+    <h3 class="heading heading-h3">
+      Tags
+    </h3>
+	<table class="table">
+    <thead>
+    <tr>
+      <th>Tag</th>
+      <th>Number</th>
+    </tr>
+    </thead>
+    <tbody>
+	<?php
+    foreach ($missiontags as $key => $value) {
+        ?>
+		<tr>
+			<td><?php echo $key;?></a></td>
+			<td><?php echo $value; ?></td>
+		</tr>
+		<?php
+    }
+	?>
+    </tbody>
+	</table>
+	<?php
+	}
+	?>
 
     <h3 class="heading heading-h3">
       Special Encounters <?php echo ($character->getStatus() == 'Active' ? "Survived" : "")?>

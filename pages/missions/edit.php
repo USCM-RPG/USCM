@@ -9,6 +9,7 @@ if ($admin || $gm) {
     $characterController = new CharacterController();
     $rankController = new RankController();
     $medalController = new MedalController();
+    $tagController = new TagController();
     $mission = $missionController->getMission($missionId);
     $platoons = $platoonController->getPlatoons();
     if (array_key_exists('characters', $_POST)) {
@@ -50,6 +51,37 @@ if ($admin || $gm) {
                                 <option value="<?php echo $platoon->getId(); ?>" <?php echo ($platoon->getId() == $mission->getPlatoonId()) ? ("selected") : (""); ?> ><?php echo $platoon->getName(); ?></option>
         <?php } ?></select>
         </label>
+
+        <input class="button" type="submit" value="Modify Mission">
+      </form>
+      
+    <?php } elseif ($_GET['what'] == "tag") {
+                ?>
+
+    <form class="form" method="post" action="tags.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
+
+  <fieldset class="form--inline grid grid--1x3--leftalign">
+    <legend>Tags</legend>
+          <?php
+          $allTags = $tagController->getAllTags();
+          $missionTags = $tagController->getTagsForMission($missionId);
+          $missionTagsAsArray = array ();
+          foreach ( $missionTags as $tag ) {    
+            $missionTagsAsArray[$tag->getId()] = $tag->getId();
+          }
+          foreach ($allTags as $tag) {
+            $tagId = $tag->getId();
+              ?>
+            <label for="tag<?php echo $tagId; ?>">
+              <input
+              type="checkbox"
+              id="tag_<?php echo $tagId; ?>"
+              name="tag[<?php echo $tagId; ?>]"
+              <?php echo (array_key_exists($tagId, $missionTagsAsArray)) ? ("checked") : (""); ?>>
+            <?php echo $tag->getName(); ?>
+          </label>
+        <?php } ?>
+        </fieldset>
 
         <input class="button" type="submit" value="Modify Mission">
       </form>
