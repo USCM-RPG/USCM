@@ -162,7 +162,7 @@ if ($admin || $gm) {
 
         För tillfället går det ej att tilldela en medalj från USCM och en nationsmedalj, utan de skriver bara över varandra om man försöker.
 
-        <fieldset>
+        <fieldset class="form--inline grid grid--1x3--leftalign">
           <legend>Characters</legend>
 
         <?php
@@ -170,13 +170,13 @@ if ($admin || $gm) {
         foreach ($characters as $character) {
           ?>
           <label for="character_<?php echo $character->getId(); ?>">
-            <?php echo $character->getName(); ?>
             <input
               type="checkbox"
               id="character_<?php echo $character->getId(); ?>"
               name="characters[<?php echo $character->getId(); ?>]"
               <?php echo (array_key_exists($character->getId(), $postCharacters)) ? ("checked ") : (""); ?>
             >
+            <?php echo $character->getName(); ?>
           </label>
         <?php } ?>
         </fieldset>
