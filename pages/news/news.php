@@ -1,16 +1,25 @@
 <?php
-require_once('./functions.php');
-$newsController = new NewsController();
 if (session_status() !== PHP_SESSION_ACTIVE) {
   session_start();
 }
+$newsController = new NewsController();
 $userController = new UserController();
 $user = $userController->getCurrentUser();
-
-if (isset($_GET['action'])!=true) { ?>
+?>
   <h1 class="heading heading-h1">News</h1>
-
   <?php
+if ($user->isAdmin() || $user->isGm()) {
+  if (isset($_GET['action']) && $_GET['action'] == "post") {
+    if ($user->isAdmin() || $user->isGm()) {
+      $newsentry = new News();
+      $newsentry->setDate($_POST['date']);
+      $newsentry->setWrittenBy($_POST['written_by']);
+      $newsentry->setText($_POST['text']);
+      $newsController->save($newsentry);
+    }
+  }
+}
+  
     $listOfNews = $newsController->getLastYearsNews();
     foreach ($listOfNews as $news) { ?>
       <article class="news">
@@ -22,13 +31,13 @@ if (isset($_GET['action'])!=true) { ?>
           <?php echo $news->getText(); ?>
         </div>
       </article>
-    <?php } ?>
+<?php } ?>
 
   <div class="p-10 center"><a href="index.php?url=news/archive.php">News archive</a></div>
 
-  <?php if ($user->isAdmin() || $user->isGm()): ?>
+  <?php if ($user->isAdmin() || $user->isGm()) {?>
     <h2 class="heading heading-h2">Create news</h2>
-    <form class="form" action="news.php?action=post" method="post">
+    <form class="form" action="index.php?url=news/news.php&action=post" method="post">
       <label for="date">
         Datum
         <input type="text" id="date" name="date">
@@ -50,18 +59,4 @@ if (isset($_GET['action'])!=true) { ?>
 
       <input class="button" type="submit" value="Create News">
     </form>
-
-  <?php endif ?>
-
-            <?php
-} elseif ($_GET['action'] == "post") {
-    if ($user->isAdmin() || $user->isGm()) {
-      $news = new News();
-      $news->setDate($_POST['date']);
-      $news->setWrittenBy($_POST['written_by']);
-      $news->setText($_POST['text']);
-      $newsController->save($news);
-    }
-    header("location:{$url_root}/index.php?url=news.php");
-}
-?>
+<?php } ?>
