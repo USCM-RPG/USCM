@@ -12,21 +12,21 @@ $missionController = new MissionController();
 foreach ($tags as $tag) { 
 ?>
   <li>
-    <a href="index.php?url=tags/list.php&selectedtag=true&selectedtagid=<?php echo $tag->getId();?>&id=<?php echo $tag->getName();?>"><?php echo $tag->getName();?></a>
+    <a href="index.php?url=tags/list.php&selectedtagid=<?php echo $tag->getId();?>&id=<?php echo $tag->getName();?>"><?php echo $tag->getName();?></a>
   </li>
 <?php } ?>
 </ul>
 </section>
 
 
-<!--empty section for space between the two sections--> 
+<!--empty section for space between sections 'Mission tags' and 'Missions with the selected tag'--> 
 <section>
 <section> <br> </section>
 
 <!--this stuff shows all missions with the selected tag--> 
 <legend>
 <?php
-if ($_GET['selectedtag']) {
+if (isset ($_GET['selectedtagid'])) {
 $missionIds=$tagController->getMissionsForTag($_GET['selectedtagid']); ?>
 <h3 class="heading heading-h3">Missions with the selected tag</h3>
 <fieldset class="form--inline grid grid--1x3--missiontags">
