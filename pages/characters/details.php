@@ -127,6 +127,35 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 	</table>
 	<?php
 	}
+	
+   $missionterrain = getMissionTerrainForCharacter($characterId);
+    if ($missionterrain) {
+    ?>
+    <h3 class="heading heading-h3">
+      Terrain
+    </h3>
+	<table class="table">
+    <thead>
+    <tr>
+      <th>Terrain</th>
+      <th>Missions</th>
+    </tr>
+    </thead>
+    <tbody>
+	<?php
+    foreach ($missionterrain as $key => $value) {
+        ?>
+		<tr>
+			<td><?php echo $key;?></a></td>
+			<td><?php echo $value; ?></td>
+		</tr>
+		<?php
+    }
+	?>
+    </tbody>
+	</table>
+	<?php
+	}
 	?>
 
     <h3 class="heading heading-h3">

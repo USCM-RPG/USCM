@@ -217,6 +217,19 @@ function getMissionTagsForCharacter($characterId) {
   return $tagarray;
 }
 
+function getMissionTerrainForCharacter($characterId) {
+  $db = getDatabaseConnection();
+  $terrainarray = array ();
+  $terrainsql = "SELECT expertise_name AS terrain, count(en.id) AS missions FROM uscm_missions m JOIN terrain_mission tm ON tm.mission_id=m.mission_id JOIN expertise_names en ON en.id=tm.expertise_id WHERE m.character_id=:cid GROUP BY en.id ORDER BY missions DESC";
+  $stmt = $db->prepare($terrainsql);
+  $stmt->bindValue(':cid', $characterId, PDO::PARAM_INT);
+  $stmt->execute();
+  while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+    $terrainarray [$row ['terrain']] = $row ['missions'];
+  }
+  return $terrainarray;
+}
+
 function getNumberOfMissionsForCharacter($characterId) {
   $db = getDatabaseConnection();
   $chosencertarray = array ();
