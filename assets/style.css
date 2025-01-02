@@ -214,6 +214,10 @@ label {
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: left;
 }
+.grid--1x3--missiontags {
+  grid-template-columns: 30px 30px 1fr;
+  justify-items: left;
+}
 
 @media (min-width: 599px) {
   .grid--small {

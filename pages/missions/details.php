@@ -22,7 +22,7 @@ $gmUser = $playerController->getPlayer($mission->getGmId());
 </h2>
 
 <dl class="list-description">
-  <dt>Tags</dt>
+  <dt><a href="index.php?url=tags/list.php&mission=<?php echo $mission->getId();?>&what=tag" class="colorfont">Tags</a><?php</dt>
   <dd>
     <?php echo $mission->getTags();?><br>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=tag" class="colorfont">Change</a><?php } ?>
