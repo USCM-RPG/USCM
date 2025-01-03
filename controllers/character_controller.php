@@ -280,12 +280,14 @@ Class CharacterController {
    *
    * @return Skill[]
    */
-  function getSkillsGrouped() {
+  function getSkillsGrouped($minversion=2) {
     $sql = "SELECT sn.id, skill_name, optional, skill_group_id, default_value, description
                 FROM uscm_skill_names sn
                 LEFT JOIN uscm_skill_groups sg on sn.skill_group_id=sg.id
+                WHERE sn.version >= :version
                 ORDER BY sg.id,sn.skill_name";
     $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':version', $minversion, PDO::PARAM_INT);
     $stmt->execute();
     $skills = array();
     while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
