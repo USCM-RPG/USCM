@@ -64,7 +64,7 @@ if ($admin || $gm) {
     <legend>Tags</legend>
           <?php
           $allTags = $tagController->getAllTags();
-          $missionTags = $tagController->getTagsForMission($missionId);
+          $missionTags = $missionController->getTagsForMission($missionId);
           $missionTagsAsArray = array ();
           foreach ( $missionTags as $tag ) {    
             $missionTagsAsArray[$tag->getId()] = $tag->getId();
