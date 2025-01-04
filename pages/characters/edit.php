@@ -183,7 +183,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   <fieldset class="form--inline grid grid--small">
     <legend>Skills</legend>
             <?php
-            $allSkills = $characterController->getSkillsGrouped();
+            $allSkills = $characterController->getSkillsGrouped($character->getVersion());
             $characterSkills = $character->getSkillsGrouped();
             foreach($allSkills as $skill) {
               $skillId = $skill->getId();
@@ -195,6 +195,17 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
                   <input type="hidden" name="optional[<?php echo $skillId; ?>]" value="<?php echo $skill->getOptional(); ?>">
             <?php } ?>
   </fieldset>
+
+<?php
+if ($character->getVersion() > 2) {
+?>
+  <fieldset class="form--inline grid grid--small">
+    <legend>Expertise</legend>
+    Todo: add expertise here
+  </fieldset>
+<?php
+}
+?>
 
   <fieldset class="form--inline grid grid--small">
     <legend>Traits</legend>
@@ -239,10 +250,11 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
             <?php } ?>
   </fieldset>
 
-  <fieldset class="form--inline grid grid--small">
+
 <?php
 if ($character->getVersion() < 3) {
 ?>
+  <fieldset class="form--inline grid grid--small">
     <legend>Certificates</legend>
             <?php
             $allPlatoonCertificates = array();
@@ -259,16 +271,10 @@ if ($character->getVersion() < 3) {
                 <?php echo $certificate->getName(); ?>
                 <input type="checkbox" id="certs_<?php echo $certificateId; ?>" name="certs[<?php echo $certificateId; ?>]" <?php echo (array_key_exists($certificateId, $characterCertificates)) ? ("checked ") : (""); echo (in_array($certificateId, $allPlatoonCertificates)) ? ("disabled ") : (""); ?>>
               </label>
-        <?php } ?>
-<?php
-} else {
-?>
-    <legend>Expertise</legend>
-    Todo: add expertise here
-<?php
+  </fieldset>
+        <?php }
 }
 ?>
-  </fieldset>
 
     <fieldset class="form--inline grid grid--small">
       <legend>Encounters</legend>
