@@ -94,7 +94,7 @@ class MissionController {
    * @return Mission
    */
   function getMission($missionId) {
-    $sql = "SELECT mission_name_short, mission_name, mn.id as missionid, pn.name_short as platoonnameshort, gm, date, briefing, debriefing, platoon_id, GROUP_CONCAT(t.tag ORDER BY t.tag ASC SEPARATOR ', ') as tags FROM uscm_mission_names mn LEFT JOIN uscm_platoon_names pn ON pn.id=mn.platoon_id LEFT JOIN uscm_mission_tags mt ON mn.id=mt.missionid LEFT JOIN uscm_tags t ON mt.tagid=t.id WHERE mn.id = :missionId GROUP BY mn.id LIMIT 1";
+     $sql = "SELECT mission_name_short, mission_name, mn.id as missionid, pn.name_short as platoonnameshort, gm, date, briefing, debriefing, platoon_id, GROUP_CONCAT(DISTINCT en.expertise_name ORDER BY en.expertise_name ASC SEPARATOR ', ') as terrain, GROUP_CONCAT(t.tag ORDER BY t.tag ASC SEPARATOR ', ') as tags FROM uscm_mission_names mn LEFT JOIN uscm_platoon_names pn ON pn.id=mn.platoon_id LEFT JOIN uscm_mission_tags mt ON mn.id=mt.missionid LEFT JOIN uscm_tags t ON mt.tagid=t.id INNER JOIN terrain_mission tm ON mt.missionid=tm.mission_id INNER JOIN expertise_names en ON tm.expertise_id=en.id WHERE mn.id = :missionId GROUP BY mn.id LIMIT 1";
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':missionId', $missionId, PDO::PARAM_INT);
     $mission = new Mission();
@@ -112,6 +112,7 @@ class MissionController {
         $mission->setDebriefing($row['debriefing']);
         $mission->setPlatoonId($row['platoon_id']);
         $mission->setTags($row['tags']);
+        $mission->setTerrain($row['terrain']);
       }
     } catch (PDOException $e) {
     }

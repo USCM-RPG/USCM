@@ -10,6 +10,7 @@ Class Mission {
   private $debriefing = "";
   private $platoonId = NULL;
   private $tags = "";
+  private $terrain = "";
 
   public function getName() {
     return $this->longName;
@@ -88,5 +89,12 @@ Class Mission {
 
   public function setTags($tags) {
     $this->tags = $tags;
+  }
+  public function getTerrain() {
+    return $this->terrain;
+  }
+
+  public function setTerrain($terrain) {
+    $this->terrain = $terrain;
   }
 }

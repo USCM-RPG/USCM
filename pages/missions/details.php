@@ -27,6 +27,17 @@ $gmUser = $playerController->getPlayer($mission->getGmId());
     <?php echo $mission->getTags();?><br>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=tag" class="colorfont">Change</a><?php } ?>
   </dd>
+  
+  <!--terrain stuff starts here-->
+
+  <dt>Terrain</dt>
+<dd>
+ <?php echo $mission->getTerrain();?><br>
+  </dd>
+  
+  <!--terrain stuff ends here-->
+  
+  
   <dt>Date</dt>
   <dd>
     <?php echo $mission->getDate();?>
