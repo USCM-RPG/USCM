@@ -6,7 +6,7 @@
  */
 session_start();
 require_once "functions.php";
-$tagController = new TagController();
+//$tagController = new TagController();
 $missionController = new MissionController();
 $db = getDatabaseConnection();
 $userController = new UserController();
@@ -26,8 +26,8 @@ if ($user->isAdmin() || $user->isGm()) {
   // Tags
   //
   // Finds all tags currently in database for mission
-  $tags = $tagController->getTagsForMission($missionId);
-  $mission = $missionController->getMission($missionId);
+  $tags = $missionController->getTagsForMission($missionId);
+  //$mission = $missionController->getMission($missionId);
   foreach ( $tags as $tag ) {    
     $oldTags[$tag->getId()] = $tag->getId();
   }

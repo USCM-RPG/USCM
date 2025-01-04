@@ -44,3 +44,4 @@ Class ExpertiseController {
     
     return $expertisearray;
   }
+}

@@ -293,6 +293,25 @@ class MissionController {
     }
   }
   
+   public function getTagsForMission($missionId) {
+    $sql = "SELECT tg.id, tag " .
+        "FROM uscm_tags AS tg " .
+        "INNER JOIN uscm_mission_tags AS m ON m.tagid = tg.id " .
+        "WHERE m.missionid = :cid";
+    $sql = $sql . " ORDER BY tag ASC ";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':cid', $missionId, PDO::PARAM_INT);
+    $stmt->execute();
+    $tags = array();
+    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+      $tag = new Tag();
+      $tag->setId($row['id']);
+      $tag->setName($row['tag']);
+      $tags[] = $tag;
+    }
+    return $tags;
+  }
+  
   public function getTerrain($mission) {
 	$expertisearray = array();
 	$expertisesql = "SELECT en.id,expertise_name, expertise_group_id, value FROM expertise_names en
