@@ -22,6 +22,7 @@ require_once ("classes/trait.php");
 require_once ("classes/tags.php");
 require_once ("controllers/db_controller.php");
 require_once ("controllers/character_controller.php");
+require_once ("controllers/expertise_controller.php");
 require_once ("controllers/news_controller.php");
 require_once ("controllers/medal_controller.php");
 require_once ("controllers/mission_controller.php");
