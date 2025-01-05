@@ -38,6 +38,10 @@ if ($_GET['action'] == "update_character") {
   $add_certificate = array ();
   $updated_certificate = array ();
   $old_certificate = array ();
+  $remove_expertise = array ();
+  $add_expertise = array ();
+  $updated_expertise = array ();
+  $old_expertise = array ();
   $character_id = $_POST['character'];
   $character = $characterController->getCharacter($character_id);
   $version=$character->getVersion();
@@ -146,7 +150,7 @@ if ($_GET['action'] == "update_character") {
   // walks through $_POST[] and decides what to delete, update and insert in database
   foreach ( $_POST['attribute'] as $attribute_id => $value ) {
     if (array_key_exists($attribute_id, $old_attributes)) {
-      // an optonal attribute has been revoked
+      // an optional attribute has been revoked
       if ($_POST['optional'][$attribute_id] == "1" && $value <= "0") {
         $remove_attributes[$attribute_id] = $old_attributes[$attribute_id]['id'];
       } else { // update the attribute (regardless if the value has changed)
@@ -219,7 +223,7 @@ if ($_GET['action'] == "update_character") {
 
   // remove the skills that weren't in the $_POST
   foreach ( $old_skills as $skill_name_id => $id ) {
-    $remove[$skill_name_id] = $skill_name_id['id'];
+    $remove_skills[$skill_name_id] = $skill_name_id['id'];
     unset($old_skills[$skill_name_id]);
   }
 
@@ -244,6 +248,46 @@ if ($_GET['action'] == "update_character") {
     $stmt->bindValue(':cid', $character_id, PDO::PARAM_INT);
     $stmt->bindValue(':skill_name_id', $skill_name_id, PDO::PARAM_INT);
     $stmt->bindValue(':value', $value['value'], PDO::PARAM_INT);
+    $stmt->execute();
+  }
+  
+  // Expertise
+    $expertisecharacter = $character->getExpertise();
+  foreach ( $expertisecharacter as $expertise_name_id => $expertise ) {
+    $old_expertise[$expertise_name_id]['id'] = $expertise['uid'];
+  }
+  // walks through $_POST[] and decides what to delete, update and insert in database
+  if ($_POST['expertise'] == NULL)
+    $_POST['expertise'] = array ();
+  foreach ( $_POST['expertise'] as $expertise_id => $value ) {
+    if (array_key_exists($expertise_id, $old_expertise)) {
+      // update the expertise (regardless if the value has changed)
+      $updated_expertise[$expertise_id]['id'] = $old_expertise[$expertise_id]['id'];
+      // remove the handled data from old_expertise
+      unset($old_expertise[$expertise_id]);
+    } elseif ($value != NULL) { // ($value != "0" || $_POST['optional'][$attribute_id] == "0") &&
+                                // add the data
+      $add_expertise[$expertise_id] = 1;
+    }
+  }
+  // remove the expertise that weren't in the $_POST
+  foreach ( $old_expertise as $expertise_id => $id ) {
+    $remove_expertise[$expertise_id] = $id;
+    unset($old_expertise[$expertise_id]);
+  }
+
+  foreach ( $remove_expertise as $expertise_id => $id ) {
+    $sql = "DELETE FROM expertises WHERE character_id=:cid AND id=:id LIMIT 1";
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(':cid', $character_id, PDO::PARAM_INT);
+    $stmt->bindValue(':id', $id['id'], PDO::PARAM_INT);
+    $stmt->execute();
+  }
+  foreach ( $add_expertise as $expertise_id => $value ) {
+    $sql = "INSERT INTO expertises SET character_id=:cid,expertise_id=:expertise_id";
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(':cid', $character_id, PDO::PARAM_INT);
+    $stmt->bindValue(':expertise_id', $expertise_id, PDO::PARAM_INT);
     $stmt->execute();
   }
 
