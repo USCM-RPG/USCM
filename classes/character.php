@@ -897,8 +897,8 @@ where c.id=:cid group by cn.id)";
     $stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
     $stmt->execute();
     while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      $traits[$row['id']]['expertise_name'] = $row['expertise_name'];
-      $traits[$row['id']]['uid'] = $row['uid'];
+      $expertise[$row['id']]['expertise_name'] = $row['expertise_name'];
+      $expertise[$row['id']]['uid'] = $row['uid'];
     }
     return $expertise;
   }

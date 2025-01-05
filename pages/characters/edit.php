@@ -5,6 +5,7 @@ $userController = new UserController();
 $platoonController = new PlatoonController();
 $rankController = new RankController();
 $characterController = new CharacterController();
+$expertiseController = new ExpertiseController();
 $character = new Character($characterId);
 $character = $characterController->getCharacter($characterId);
 $user = $userController->getCurrentUser();
@@ -198,10 +199,21 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 
 <?php
 if ($character->getVersion() > 2) {
+	$allExpertise = $expertiseController->getAllExpertise();
+	$characterExpertise  = $character->getExpertise();
 ?>
   <fieldset class="form--inline grid grid--small">
     <legend>Expertise</legend>
-    Todo: add expertise here
+		<?php
+		foreach($allExpertise as $expertise) {
+			$expertiseId = $expertise->getId();
+			?>
+			<label for="expertise_<?php echo $expertiseId; ?>">
+				<?php echo $expertise->getName(); ?>
+				<input type="checkbox" id="expertise_<?php echo $expertiseId; ?>" name="expertise[<?php echo $expertiseId; ?>]" <?php echo (array_key_exists($expertiseId, $characterExpertise)) ? ("checked") : (""); ?>>
+			</label>
+			<?php
+		} ?>
   </fieldset>
 <?php
 }
@@ -271,10 +283,9 @@ if ($character->getVersion() < 3) {
                 <?php echo $certificate->getName(); ?>
                 <input type="checkbox" id="certs_<?php echo $certificateId; ?>" name="certs[<?php echo $certificateId; ?>]" <?php echo (array_key_exists($certificateId, $characterCertificates)) ? ("checked ") : (""); echo (in_array($certificateId, $allPlatoonCertificates)) ? ("disabled ") : (""); ?>>
               </label>
+            <?php } ?>
   </fieldset>
-        <?php }
-}
-?>
+<?php } ?>
 
     <fieldset class="form--inline grid grid--small">
       <legend>Encounters</legend>
