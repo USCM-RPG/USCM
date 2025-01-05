@@ -2,7 +2,7 @@
 /*
  * Note: libPDF uses coordinates from the lower left corner
  */
-session_start();
+require_once("../../components/session.php");
 require_once("../../functions.php");
 require_once("../../classes/iconpdf.php");
 

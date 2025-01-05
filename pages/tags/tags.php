@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once("../../components/session.php");
 require_once "../../functions.php";
 
 $missionController = new MissionController();
@@ -23,8 +23,8 @@ if ($user->isAdmin() || $user->isGm()) {
   //
   // Finds all tags currently in database for mission
   $tags = $missionController->getTagsForMission($missionId);
-  
-  foreach ( $tags as $tag ) {    
+
+  foreach ( $tags as $tag ) {
     $oldTags[$tag->getId()] = $tag->getId();
   }
   // walks through $_POST[] and decides what to delete, update and insert in database

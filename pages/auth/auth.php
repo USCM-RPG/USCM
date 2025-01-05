@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    include("../../components/session.php");
     include("../../functions.php");
     if (login(1)) {
       header("Location: {$url_root}/index.php");
