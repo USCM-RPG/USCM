@@ -1,7 +1,5 @@
 <?php
-if (session_status() !== PHP_SESSION_ACTIVE) {
-  session_start();
-}
+require_once("components/session.php");
 $newsController = new NewsController();
 $userController = new UserController();
 $user = $userController->getCurrentUser();
@@ -19,7 +17,7 @@ if ($user->isAdmin() || $user->isGm()) {
     }
   }
 }
-  
+
     $listOfNews = $newsController->getLastYearsNews();
     foreach ($listOfNews as $news) { ?>
       <article class="news">

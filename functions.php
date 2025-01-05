@@ -89,13 +89,14 @@ function login($level) {
       unset($_SESSION['table_prefix']);
       unset($_SESSION['user_id']);
       unset($_SESSION['platoon_id']);
+      session_destroy();
       return 0;
     } elseif ($alt == "login") {
       if (empty($_POST['anvandarnamn']) || empty($_POST['losenord'])) {
         $_SESSION['inloggad'] = 0;
         $_SESSION['level'] = "0";
+        session_destroy();
         return 0;
-        exit();
       }
 
         $query = "SELECT Users.id, emailadress, platoon_id, Admins.userid AS Admin, GMs.userid AS GM,
@@ -129,19 +130,15 @@ function login($level) {
           $db->exec("UPDATE Users SET lastlogintime = '{$userinfo['logintime']}' WHERE id = {$userinfo['id']}");
           $db->exec("UPDATE Users SET logintime = NOW() WHERE id = {$userinfo['id']}");
           return 1;
-          exit();
         } elseif (!is_null($row['howmany'] ) && $row['howmany'] > 1) {
           $_SESSION['inloggad'] = 0;
           $_SESSION['level'] = "0";
           return 0;
-          exit();
         } else {
           $_SESSION['inloggad'] = 0;
           $_SESSION['level'] = "0";
           return 0;
-          exit();
         }
-
     }
   }
 }

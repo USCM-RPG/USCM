@@ -4,7 +4,7 @@
  * Functions handling characters should go in here
  *
  */
-session_start();
+require_once("components/session.php");
 require_once "functions.php";
 $characterController = new CharacterController();
 $db = getDatabaseConnection();
@@ -96,7 +96,7 @@ if ($_GET['action'] == "update_character") {
 						 encai=:cbai,
 						 encarach=:cbarachnid
 						 WHERE id=:character_id";
-  
+
   $stmt = $db->prepare($charactersql);
   $stmt->bindValue(':playerid', $player, PDO::PARAM_INT);
   $stmt->bindValue(':platoonid', $platoon, PDO::PARAM_INT);
