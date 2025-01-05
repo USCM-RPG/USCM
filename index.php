@@ -18,7 +18,7 @@
         include("components/header.php");
       ?>
 
-      <main class="main">
+      <main class="main" id="main">
         <?php
         if(isset($_GET['url'])){
           // To make sure the file loaded is in the local file system and not a remote url

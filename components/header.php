@@ -1,3 +1,5 @@
+<a href="#main" class="screen-reader-only">Skip to content</a>
+
 <header class="header">
   <div class="logo">
     <div class="image">
