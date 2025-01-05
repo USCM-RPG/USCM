@@ -4,6 +4,7 @@ $gm=($_SESSION['level']>=2)?(TRUE):(FALSE);
 $missionId = $_GET['id'];
 $missionController = new MissionController();
 $mission = $missionController->getMission($missionId);
+$tags = $missionController->getTagsForMission($missionId);
 $playerController = new PlayerController();
 $gmUser = $playerController->getPlayer($mission->getGmId());
 ?>
@@ -22,9 +23,11 @@ $gmUser = $playerController->getPlayer($mission->getGmId());
 </h2>
 
 <dl class="list-description">
-  <dt><a href="index.php?url=tags/list.php&mission=<?php echo $mission->getId();?>&what=tag" class="colorfont">Tags</a><?php</dt>
+  <dt>Tags</dt>
   <dd>
-    <?php echo $mission->getTags();?><br>
+    <?php foreach ($tags as $tag) {
+      echo '<a href="index.php?url=tags/list.php&selectedtagid='. $tag->getId() .'">'. $tag->getName() .'</a><br>';
+    }?>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=tag" class="colorfont">Change</a><?php } ?>
   </dd>
   <dt>Date</dt>
