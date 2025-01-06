@@ -44,4 +44,26 @@ Class ExpertiseController {
     
     return $expertisearray;
   }
+
+public function getMissionTerrain($missionId) {
+  $terrain = '';
+	$expertisesql = "SELECT GROUP_CONCAT(expertise_name ORDER BY expertise_name ASC SEPARATOR ', ') as terrain
+	            FROM expertise_names en 
+	            JOIN terrain_mission tm ON tm.expertise_id=en.id
+	            WHERE tm.mission_id=:missionId
+	            ORDER BY expertise_name ASC LIMIT 1";
+	$db = getDatabaseConnection();
+	$stmt = $db->prepare($expertisesql);
+	$stmt->bindValue(':missionId', $missionId, PDO::PARAM_INT);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    try {  
+      if (!empty($row)) {
+         $terrain = $row['terrain'];
+        }
+    } catch (PDOException $e) {
+    }
+    
+    return $terrain;
+  }
 }

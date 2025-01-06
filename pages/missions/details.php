@@ -7,6 +7,8 @@ $mission = $missionController->getMission($missionId);
 $tags = $missionController->getTagsForMission($missionId);
 $playerController = new PlayerController();
 $gmUser = $playerController->getPlayer($mission->getGmId());
+$expertiseController = new ExpertiseController();
+$terrain = $expertiseController->getMissionTerrain($missionId);
 ?>
 
 <div class="mission">
@@ -75,6 +77,14 @@ $gmUser = $playerController->getPlayer($mission->getGmId());
     } ?>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=promotions" class="colorfont">Change</a><?php } ?>
   </dd>
+  
+  <!--stuff to show terrain in missions starts here-->
+  <dt>Terrain</dt>
+<dd>
+ <?php echo $terrain;?><br>
+  </dd>
+  <!--stuff to show terrain in missions ends here-->
+  
 </dl>
 
 <h3 class="heading heading-h3">
