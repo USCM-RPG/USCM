@@ -26,12 +26,12 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
 
 <dl class="list-description">
   <dt>
-    <a href="index.php?url=tags/list.php">Tags</a>
+    Tags
   </dt>
   <dd>
     <div>
     <?php foreach ($tags as $tag) {
-      echo '<a href="index.php?url=tags/list.php&id='. $tag->getId() .'">'. $tag->getName() .'</a> ';
+      echo '<a href="index.php?url=missions/list.php&tag='. $tag->getId() .'">'. $tag->getName() .'</a> ';
     } ?>
     </div>
     <?php if (!empty($tags)) { echo '<br>'; } ?>
