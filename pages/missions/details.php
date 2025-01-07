@@ -25,11 +25,15 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
 </h2>
 
 <dl class="list-description">
-  <dt>Tags</dt>
+  <dt>
+    <a href="index.php?url=tags/list.php">Tags</a>
+  </dt>
   <dd>
     <?php foreach ($tags as $tag) {
-      echo '<a href="index.php?url=tags/list.php&selectedtagid='. $tag->getId() .'">'. $tag->getName() .'</a><br>';
-    }?>
+      echo '<a href="index.php?url=tags/list.php&selectedtagid='. $tag->getId() .'">'. $tag->getName() .'</a> ';
+    }
+    if (!empty($tags)) { echo '<br>'; }
+    ?>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=tag" class="colorfont">Change</a><?php } ?>
   </dd>
   <dt>Date</dt>
@@ -77,14 +81,14 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
     } ?>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=promotions" class="colorfont">Change</a><?php } ?>
   </dd>
-  
+
   <!--stuff to show terrain in missions starts here-->
   <dt>Terrain</dt>
 <dd>
  <?php echo $terrain;?><br>
   </dd>
   <!--stuff to show terrain in missions ends here-->
-  
+
 </dl>
 
 <h3 class="heading heading-h3">
