@@ -28,7 +28,7 @@
           }
         }
         else {
-          include('components/404.php');
+          include('pages/news/news.php');
         }
         ?>
       </main>
