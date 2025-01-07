@@ -29,11 +29,12 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
     <a href="index.php?url=tags/list.php">Tags</a>
   </dt>
   <dd>
+    <div>
     <?php foreach ($tags as $tag) {
       echo '<a href="index.php?url=tags/list.php&id='. $tag->getId() .'">'. $tag->getName() .'</a> ';
-    }
-    if (!empty($tags)) { echo '<br>'; }
-    ?>
+    } ?>
+    </div>
+    <?php if (!empty($tags)) { echo '<br>'; } ?>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=tag" class="colorfont">Change</a><?php } ?>
   </dd>
   <dt>Date</dt>
