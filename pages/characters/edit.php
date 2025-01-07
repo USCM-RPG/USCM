@@ -219,7 +219,7 @@ if ($character->getVersion() > 2) {
 }
 ?>
 
-  <fieldset class="form--inline grid grid--small">
+  <fieldset class="form--inline grid grid--1x3--leftalign">
     <legend>Traits</legend>
             <?php
             $allTraits = $characterController->getTraits();
@@ -228,13 +228,13 @@ if ($character->getVersion() > 2) {
               $traitId = $trait->getId();
                 ?>
               <label for="traits_<?php echo $traitId; ?>">
-                <?php echo $trait->getName(); ?>
                 <input type="checkbox" id="traits_<?php echo $traitId; ?>" name="traits[<?php echo $traitId; ?>]" <?php echo (array_key_exists($traitId, $characterTraits)) ? ("checked") : (""); ?>>
+                <?php echo $trait->getName(); ?>
               </label>
             <?php } ?>
   </fieldset>
 
-  <fieldset class="form--inline grid grid--small">
+  <fieldset class="form--inline grid grid--1x3--leftalign">
     <legend>Advantages</legend>
             <?php
             $allAdvantages = $characterController->getAdvantages();
@@ -242,13 +242,13 @@ if ($character->getVersion() > 2) {
               $advantageId = $advantage->getId();
             ?>
               <label for="advs_<?php echo $advantageId; ?>">
-                <?php echo $advantage->getName() . " (" . $advantage->getValue() . ")"; ?>
                 <input type="checkbox" id="advs_<?php echo $advantageId; ?>" name="advs[<?php echo $advantageId; ?>]" <?php echo ($character->hasCharacterAdvantage($advantageId)) ? ("checked") : (""); ?> >
+                <?php echo $advantage->getName() . " (" . $advantage->getValue() . ")"; ?>
               </label>
             <?php } ?>
   </fieldset>
 
-  <fieldset class="form--inline grid grid--small">
+  <fieldset class="form--inline grid grid--1x3--leftalign">
     <legend>Disadvantages</legend>
             <?php
             $allDisadvantages = $characterController->getDisadvantages();
@@ -256,8 +256,8 @@ if ($character->getVersion() > 2) {
               $disadvantageId = $disadvantage->getId();
                 ?>
               <label for="disadvs_<?php echo $disadvantageId; ?>">
-                <?php echo $disadvantage->getName() . " (" . $disadvantage->getValue() . ")"; ?>
                 <input type="checkbox" id="disadvs_<?php echo $disadvantageId; ?>" name="disadvs[<?php echo $disadvantageId; ?>]" <?php echo ($character->hasCharacterDisadvantage($disadvantageId)) ? ("checked") : (""); ?>>
+                <?php echo $disadvantage->getName() . " (" . $disadvantage->getValue() . ")"; ?>
               </label>
             <?php } ?>
   </fieldset>
@@ -266,7 +266,7 @@ if ($character->getVersion() > 2) {
 <?php
 if ($character->getVersion() < 3) {
 ?>
-  <fieldset class="form--inline grid grid--small">
+  <fieldset class="form--inline grid grid--1x3--leftalign">
     <legend>Certificates</legend>
             <?php
             $allPlatoonCertificates = array();
@@ -280,39 +280,40 @@ if ($character->getVersion() < 3) {
               $certificateId = $certificate->getId();
                 ?>
               <label for="certs_<?php echo $certificateId; ?>">
-                <?php echo $certificate->getName(); ?>
+                
                 <input type="checkbox" id="certs_<?php echo $certificateId; ?>" name="certs[<?php echo $certificateId; ?>]" <?php echo (array_key_exists($certificateId, $characterCertificates)) ? ("checked ") : (""); echo (in_array($certificateId, $allPlatoonCertificates)) ? ("disabled ") : (""); ?>>
+                <?php echo $certificate->getName(); ?>
               </label>
             <?php } ?>
   </fieldset>
 <?php } ?>
 
-    <fieldset class="form--inline grid grid--small">
+    <fieldset class="form--inline grid grid--1x3--leftalign">
       <legend>Encounters</legend>
 
       <label for="cbalien">
-        Alien
         <input type="checkbox" id="cbalien" name="cbalien" <?php echo ($character->getEncounterAlien()==1) ? ('checked="1"') : (""); ?>>
+        Alien
       </label>
 
       <label for="cbgrey">
-        Grey
         <input type="checkbox" id="cbgrey" name="cbgrey" <?php echo ($character->getEncounterGrey()==1) ? ('checked="1"') : (""); ?>>
+        Grey
       </label>
 
       <label for="cbpredator">
-        Predator
         <input type="checkbox" id="cbpredator" name="cbpredator" <?php echo ($character->getEncounterPredator()==1) ? ('checked="1"') : (""); ?>>
+        Predator
       </label>
 
       <label for="cbai">
-        AI/Android
         <input type="checkbox" id="cbai" name="cbai" <?php echo ($character->getEncounterAI()==1) ? ('checked="1"') : (""); ?>>
+        AI/Android
       </label>
 
       <label for="cbarachnid">
-        Arachnid
         <input type="checkbox" id="cbarachnid" name="cbarachnid" <?php echo ($character->getEncounterArachnid()==1) ? ('checked="1"') : (""); ?>>
+        Arachnid
       </label>
     </fieldset>
 
