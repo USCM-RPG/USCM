@@ -35,7 +35,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 		$canmodify = TRUE;
 	}
 
-	if ($canmodify) { ?><form class="form" method="post" action="character.php?action=update_character"><?php } ?>
+	if ($canmodify) { ?><form class="form" method="post" action="actions/character.php?action=update_character"><?php } ?>
     <input type="hidden" name="player" value="<?php echo $player->getId(); ?>">
     <input type="hidden" name="character" value="<?php echo $characterId; ?>">
 

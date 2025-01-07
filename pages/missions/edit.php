@@ -27,7 +27,7 @@ if ($admin || $gm) {
   <h2 class="heading heading-h2"><?php echo $mission->getShortName(); ?></h2>
 
     <?php if ($_GET['what'] == "names") { ?>
-      <form class="form" method="post" action="mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
+      <form class="form" method="post" action="actions/mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
         <label for="mission_name_short">
           Mission
           <input type="text" id="mission_name_short" name="mission_name_short" value="<?php echo $mission->getShortName(); ?>">
@@ -54,11 +54,11 @@ if ($admin || $gm) {
 
         <input class="button" type="submit" value="Modify Mission">
       </form>
-      
+
     <?php } elseif ($_GET['what'] == "tag") {
                 ?>
 
-    <form class="form" method="post" action="pages/tags/tags.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
+    <form class="form" method="post" action="actions/tags.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
 
   <fieldset class="form--inline grid grid--1x3--leftalign">
     <legend>Tags</legend>
@@ -66,7 +66,7 @@ if ($admin || $gm) {
           $allTags = $tagController->getAllTags();
           $missionTags = $missionController->getTagsForMission($missionId);
           $missionTagsAsArray = array ();
-          foreach ( $missionTags as $tag ) {    
+          foreach ( $missionTags as $tag ) {
             $missionTagsAsArray[$tag->getId()] = $tag->getId();
           }
           foreach ($allTags as $tag) {
@@ -90,7 +90,7 @@ if ($admin || $gm) {
         } elseif ($_GET['what'] == "gm") {
       ?>
 
-      <form class="form" method="post" action="mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
+      <form class="form" method="post" action="actions/mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
         <label for="gm">
           Game master
           <select id="gm" name="gm">
@@ -109,7 +109,7 @@ if ($admin || $gm) {
 
     <?php } elseif ($_GET['what'] == "briefing") { ?>
 
-      <form class="form" method="post" action="mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
+      <form class="form" method="post" action="actions/mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
         <label for="briefing">
           Briefing<br>
           Alla radbrytningar kommer bytas ut till en radbrytning och html-tecknet för radbrytning
@@ -122,7 +122,7 @@ if ($admin || $gm) {
     <?php } elseif ($_GET['what'] == "debriefing") {
         ?>
 
-      <form class="form" method="post" action="mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
+      <form class="form" method="post" action="actions/mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
         <label for="briefing">
           Debriefing<br>
           Alla radbrytningar kommer bytas ut till en radbrytning och html-tecknet för radbrytning
@@ -135,7 +135,7 @@ if ($admin || $gm) {
     <?php } elseif ($_GET['what'] == "characters") {
         ?>
 
-      <form class="form" method="post" action="mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
+      <form class="form" method="post" action="actions/mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
         <label for="characters">
           Characters
 
@@ -184,7 +184,7 @@ if ($admin || $gm) {
         <input class="button" type="submit" value="Modify Mission">
       </form>
 
-      <form class="form" method="post" action="mission.php?what=commendations&mission=<?php echo $missionId; ?>">
+      <form class="form" method="post" action="actions/mission.php?what=commendations&mission=<?php echo $missionId; ?>">
             <?php if ($postCharacters) { ?>
             <?php foreach ($postCharacters as $character_id => $dummy) { ?>
                     <input type="hidden" name="characters[<?php echo $character_id; ?>]" value="on">
@@ -225,7 +225,7 @@ if ($admin || $gm) {
         <input class="button" type="submit" value="Modify Mission">
       </form>
 
-      <form class="form" method="post" action="mission.php?what=promotion&mission=<?php echo $missionId; ?>"><?php
+      <form class="form" method="post" action="actions/mission.php?what=promotion&mission=<?php echo $missionId; ?>"><?php
         if ($postCharacter) { ?>
 
                 <input type="hidden" name="character" value="<?php echo $postCharacter; ?>">

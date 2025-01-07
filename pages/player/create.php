@@ -6,7 +6,7 @@ if ($user->isAdmin()) {
 ?>
   <h1 class="heading heading-h1">Create player</h1>
 
-<form class="form" method="post" action="player.php?what=create">
+<form class="form" method="post" action="actions/player.php?what=create">
   <label for="forname">
     Firstname
     <input type="text" id="forname" name="forname">

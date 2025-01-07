@@ -5,8 +5,8 @@
  *	commendations could be screwed up
  *
  */
-require_once("components/session.php");
-include("functions.php");
+require_once("../components/session.php");
+include("../functions.php");
 $missionController = new MissionController();
 $characterController = new CharacterController();
 $rankController = new RankController();

@@ -4,8 +4,8 @@
  * Functions handling characters should go in here
  *
  */
-require_once("components/session.php");
-require_once "functions.php";
+require_once("../components/session.php");
+require_once "../functions.php";
 $characterController = new CharacterController();
 $db = getDatabaseConnection();
 
@@ -250,7 +250,7 @@ if ($_GET['action'] == "update_character") {
     $stmt->bindValue(':value', $value['value'], PDO::PARAM_INT);
     $stmt->execute();
   }
-  
+
   // Expertise
     $expertisecharacter = $character->getExpertise();
   foreach ( $expertisecharacter as $expertise_name_id => $expertise ) {

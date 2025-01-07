@@ -17,7 +17,7 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
 
       <h2 class="heading heading-h2"><?php echo stripslashes($player->getNameWithNickname()); ?></h2>
 
-        <form class="form" method="post" action="player.php?what=modify">
+        <form class="form" method="post" action="actions/player.php?what=modify">
                 <input type="hidden" name="id" value="<?php echo $player->getId(); ?>">
                 <input type="hidden" name="res" value="<?php //echo $player['password']; ?>">
 
