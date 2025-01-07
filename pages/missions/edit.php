@@ -60,7 +60,7 @@ if ($admin || $gm) {
 
     <form class="form" method="post" action="actions/tags.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
 
-  <fieldset class="form--inline grid grid--1x3--leftalign">
+  <fieldset class="form--inline grid grid--small grid--leftalign">
     <legend>Tags</legend>
           <?php
           $allTags = $tagController->getAllTags();
@@ -72,7 +72,7 @@ if ($admin || $gm) {
           foreach ($allTags as $tag) {
             $tagId = $tag->getId();
               ?>
-            <label for="tag<?php echo $tagId; ?>">
+            <label for="tag_<?php echo $tagId; ?>">
               <input
               type="checkbox"
               id="tag_<?php echo $tagId; ?>"
@@ -162,7 +162,7 @@ if ($admin || $gm) {
 
         För tillfället går det ej att tilldela en medalj från USCM och en nationsmedalj, utan de skriver bara över varandra om man försöker.
 
-        <fieldset class="form--inline grid grid--1x3--leftalign">
+        <fieldset class="form--inline grid grid--small grid--leftalign">
           <legend>Characters</legend>
 
         <?php
