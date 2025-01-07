@@ -4,7 +4,7 @@
  * Functions handling characters should go in here
  *
  */
-require_once("../components/session.php");
+require_once("../session.php");
 require_once "../functions.php";
 $characterController = new CharacterController();
 $db = getDatabaseConnection();

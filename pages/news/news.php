@@ -1,5 +1,5 @@
 <?php
-require_once("components/session.php");
+require_once("session.php");
 $newsController = new NewsController();
 $userController = new UserController();
 $user = $userController->getCurrentUser();

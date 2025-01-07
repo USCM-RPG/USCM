@@ -5,7 +5,7 @@
  *	commendations could be screwed up
  *
  */
-require_once("../components/session.php");
+require_once("../session.php");
 include("../functions.php");
 $missionController = new MissionController();
 $characterController = new CharacterController();

@@ -1,5 +1,5 @@
 <?php
-include("{$_SERVER['DOCUMENT_ROOT']}{$url_root}/components/session.php");
+include("{$_SERVER['DOCUMENT_ROOT']}{$url_root}/session.php");
 include("{$_SERVER['DOCUMENT_ROOT']}{$url_root}/components/security-headers.php");
 ?>
 <!DOCTYPE html>

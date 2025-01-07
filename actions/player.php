@@ -3,7 +3,7 @@
  *	Functions handling players should go in here
  *
  */
-require_once("../components/session.php");
+require_once("../session.php");
 include("../functions.php");
 $userController = new UserController();
 $playerController = new PlayerController();

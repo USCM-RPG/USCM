@@ -1,5 +1,5 @@
 <?php
-  include("components/session.php");
+  include("session.php");
   include("functions.php");
   include("components/security-headers.php");
 ?>
@@ -28,7 +28,7 @@
           }
         }
         else {
-          include('pages/news/news.php');
+          include('components/404.php');
         }
         ?>
       </main>
