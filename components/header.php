@@ -82,7 +82,7 @@
       <?php endif ?>
       <li>
         <?php if ($_SESSION['inloggad']==1): ?>
-          <a href="pages/auth/auth.php?alt=logout">
+          <a href="actions/auth.php?alt=logout">
             Log Out
             <svg aria-hidden="true">
               <use href="assets/icons/sign-out.svg#sign-out"></use>
