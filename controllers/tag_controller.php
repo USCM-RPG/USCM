@@ -27,20 +27,29 @@ Class TagController {
     return $tags;
   }
 
-#funktion för att hämta alla missions med en specifik tag
 public function getMissionsForTag($tagId) {
-    $sql = "SELECT m.missionid " .
-        "FROM uscm_mission_tags AS m " .
-        "INNER JOIN uscm_tags AS tg ON m.tagid = tg.id " .
-        "INNER JOIN uscm_mission_names AS mn ON m.missionid = mn.id " .
-        "WHERE m.tagid = :tagid";
-    $sql = $sql . " ORDER BY mn.date DESC,mission_name_short DESC ";
+    $sql = "select missionid, uscm_mission_names.mission_name, uscm_mission_names.mission_name_short, uscm_platoon_names.name_short as platoonnameshort ".
+      "from uscm_mission_tags ".
+      "left join uscm_tags on uscm_mission_tags.tagid = uscm_tags.id ".
+      "left join uscm_mission_names on uscm_mission_tags.missionid = uscm_mission_names.id ".
+      "left join uscm_platoon_names on uscm_platoon_names.id = uscm_mission_names.platoon_id ".
+      "where tagid = :tagid ".
+      "order by uscm_mission_names.date desc, mission_name_short desc";
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':tagid', $tagId, PDO::PARAM_INT);
-    $stmt->execute();
     $missions = array();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      $missions[] = $row['missionid'];
+    try {
+      $stmt->execute();
+      while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+        $mission = new Mission();
+        $mission->setId($row['missionid']);
+        $mission->setName($row['mission_name']);
+        $mission->setShortName($row['mission_name_short']);
+        $mission->setPlatoonShortName($row['platoonnameshort']);
+        $missions[] = $mission;
+      }
+    } catch (PDOException $e) {
+      print "Error fetching missions by tag " . $e->getMessage() . "<br>";
     }
     return $missions;
   }
