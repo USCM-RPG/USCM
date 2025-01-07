@@ -41,7 +41,12 @@
         </a>
       </li>
       <li>
-        <a href="https://discord.gg/nEp7kwd4h7" target="_blank">Discord</a>
+        <a href="https://discord.gg/nEp7kwd4h7" target="_blank">
+          Discord
+          <svg aria-hidden="true">
+            <use href="assets/icons/discord-logo.svg#discord-logo"></use>
+          </svg>
+        </a>
       </li>
       <?php if ($_SESSION['level']>=2): ?>
         <li>
@@ -77,9 +82,19 @@
       <?php endif ?>
       <li>
         <?php if ($_SESSION['inloggad']==1): ?>
-          <a href="pages/auth/auth.php?alt=logout">Log Out</a>
+          <a href="pages/auth/auth.php?alt=logout">
+            Log Out
+            <svg aria-hidden="true">
+              <use href="assets/icons/sign-out.svg#sign-out"></use>
+            </svg>
+          </a>
         <?php else: ?>
-          <a href="index.php?url=auth/login.php&alt=login">Log In</a>
+          <a href="index.php?url=auth/login.php&alt=login">
+            Log In
+            <svg aria-hidden="true">
+              <use href="assets/icons/sign-in.svg#sign-in"></use>
+            </svg>
+          </a>
         <?php endif ?>
       </li>
     </ul>

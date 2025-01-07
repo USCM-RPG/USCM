@@ -33,6 +33,7 @@
 a {
   color: var(--uscm-color-green);
   text-decoration: underline;
+  text-underline-position: under;
 }
 a:focus,
 a:hover {
@@ -90,6 +91,10 @@ input {
 }
 .nav [aria-current="page"] {
   text-decoration: overline;
+}
+.nav svg {
+  height: 22px;
+  width: 22px;
 }
 
 .main {
