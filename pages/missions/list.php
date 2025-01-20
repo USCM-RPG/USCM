@@ -1,4 +1,11 @@
-<h1 class="heading heading-h1">Missions</h1>
+<h1 class="heading heading-h1">
+  Missions
+  <?php if ($_SESSION['level']>=2) { ?>
+    <span class="span">
+      <a href="index.php?url=missions/create.php">Create mission</a>
+    </span>
+  <?php } ?>
+</h1>
 
 <?php
 $tagController = new TagController();

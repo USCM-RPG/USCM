@@ -54,7 +54,14 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
 
 ?>
 
-<h1 class="heading heading-h1">Characters</h1>
+<h1 class="heading heading-h1">
+  Characters
+  <?php if ($_SESSION['level']>=2) { ?>
+    <span class="span">
+      <a href="index.php?url=characters/create.php">Create character</a>
+    </span>
+  <?php } ?>
+</h1>
 
 <label for="select-platoon" style="display: block; margin-bottom: 20px;">
   Select platoon
