@@ -292,7 +292,7 @@ class MissionController {
     } catch (PDOException $e) {
     }
   }
-  
+
    public function getTagsForMission($missionId) {
     $sql = "SELECT tg.id, tag " .
         "FROM uscm_tags AS tg " .
@@ -311,11 +311,11 @@ class MissionController {
     }
     return $tags;
   }
-  
+
   public function getTerrain($mission) {
 	$expertisearray = array();
 	$expertisesql = "SELECT en.id,expertise_name, expertise_group_id, value FROM expertise_names en
-              JOIN terrain_mission tm ON tm.expertise_id=en.id 
+              JOIN terrain_mission tm ON tm.expertise_id=en.id
               JOIN expertise_groups eg ON en.expertise_group_id=eg.id
               WHERE tm.mission_id=:missionId AND eg.expertise_group_name='Terrain';";
 	$db = getDatabaseConnection();
@@ -330,7 +330,7 @@ class MissionController {
 	  $expertise->setValue($row['value']);
 	  $expertisearray[] = $expertise;
     }
-    
+
     return $expertisearray;
   }
 
@@ -484,5 +484,58 @@ class MissionController {
     } catch (PDOException $e) {
       $this->db->rollBack();
     }
+  }
+
+  public function getMissionsByUser($userId) {
+    $sql = "select uscm_missions.mission_id, uscm_mission_names.mission_name, uscm_mission_names.mission_name_short, uscm_platoon_names.name_short as platoon_name_short
+from uscm_characters
+left join uscm_missions on uscm_missions.character_id = uscm_characters.id
+left join uscm_mission_names on uscm_mission_names.id = uscm_missions.mission_id
+left join uscm_platoon_names on uscm_platoon_names.id = uscm_mission_names.platoon_id
+where uscm_characters.userid = :userid
+order by uscm_mission_names.date desc, mission_name_short desc";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':userid', $userId, PDO::PARAM_INT);
+    $missions = array();
+    try {
+      $stmt->execute();
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $mission = new Mission();
+        $mission->setId($row['mission_id']);
+        $mission->setName($row['mission_name']);
+        $mission->setShortName($row['mission_name_short']);
+        $mission->setPlatoonShortName($row['platoon_name_short']);
+        $missions[] = $mission;
+      }
+    } catch (PDOException $e) {
+      print "Error fetching missions by player " . $e->getMessage() . "<br>";
+    }
+    return $missions;
+  }
+
+  public function getMissionsAsGmByUser($userId) {
+    $sql = "select uscm_mission_names.id as mission_id, uscm_mission_names.mission_name, uscm_mission_names.mission_name_short, uscm_platoon_names.name_short as platoon_name_short
+from GMs
+left join Users on Users.id = GMs.userid
+left join uscm_mission_names on uscm_mission_names.gm = GMs.id
+left join uscm_platoon_names on uscm_platoon_names.id = uscm_mission_names.platoon_id
+where GMs.userid = :userid";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':userid', $userId, PDO::PARAM_INT);
+    $missions = array();
+    try {
+      $stmt->execute();
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $mission = new Mission();
+        $mission->setId($row['missionid']);
+        $mission->setName($row['mission_name']);
+        $mission->setShortName($row['mission_name_short']);
+        $mission->setPlatoonShortName($row['platoon_name_short']);
+        $missions[] = $mission;
+      }
+    } catch (PDOException $e) {
+      print "Error fetching missions as gm by player " . $e->getMessage() . "<br>";
+    }
+    return $missions;
   }
 }

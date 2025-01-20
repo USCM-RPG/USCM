@@ -137,7 +137,7 @@ Class CharacterController {
     }
     return $characters;
   }
-  
+
     /**
    *
    * @param Mission $mission
@@ -329,7 +329,7 @@ Class CharacterController {
     }
     return $skills;
   }
-  
+
     /**
    * Get all expertise for character
    * @param Character $character
@@ -356,10 +356,10 @@ Class CharacterController {
 	  $expertise->setValue($row['value']);
 	  $expertisearray[] = $expertise;
     }
-    
+
     return $expertisearray;
   }
-  
+
     /**
    * Get only expertise not linked to skill for character
    * @param Character $character
@@ -387,7 +387,7 @@ Class CharacterController {
 	  $expertise->setValue($row['value']);
 	  $expertisearray[] = $expertise;
     }
-    
+
     return $expertisearray;
   }
 
@@ -642,5 +642,33 @@ Class CharacterController {
     return $characterCertificates;
   }
 
-
+  public function getCharactersByUser($userId) {
+    $sql = "select uscm_characters.id as character_id, forname, lastname, DATE_FORMAT(enlisted,'%Y-%m-%d') as enlisted, status, uscm_rank_names.rank_short, uscm_specialty_names.specialty_name
+from uscm_characters
+left join uscm_ranks on uscm_ranks.character_id = uscm_characters.id
+left join uscm_rank_names on uscm_rank_names.id = uscm_ranks.rank_id
+left join uscm_specialty on uscm_specialty.character_id = uscm_characters.id
+left join uscm_specialty_names on uscm_specialty_names.id = uscm_specialty.specialty_name_id
+where userid = :userid
+order by enlisted desc";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':userid', $userId, PDO::PARAM_INT);
+    $characters = array();
+    try {
+      $stmt->execute();
+      while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+        $character = new Character($row['character_id']);
+        $character->setGivenName($row['forname']);
+        $character->setSurname($row['lastname']);
+        $character->setStatus($row['status']);
+        $character->setEnlistedDate($row['enlisted']);
+        $character->setRankShort($row['rank_short']);
+        $character->setSpecialtyName($row['specialty_name']);
+        $characters[] =  $character;
+      }
+    } catch (PDOException $e) {
+      print "Error fetching characters by player " . $e->getMessage() . "<br>";
+    }
+    return $characters;
+  }
 }
