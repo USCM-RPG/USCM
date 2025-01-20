@@ -42,7 +42,11 @@ class Player extends DbEntity {
   }
 
   public function getName() {
-    return $this->givenName . ' ' . $this->surname;
+    $name = $this->givenName;
+    if ($this->surname) {
+      $name .= " " . $this->surname;
+    }
+    return $name;
   }
 
   public function getNameWithNickname() {
@@ -50,7 +54,9 @@ class Player extends DbEntity {
     if ($this->use_nickname) {
       $name .= " '" . $this->nickname . "'";
     }
-    $name .= " " . $this->surname;
+    if ($this->surname) {
+      $name .= " " . $this->surname;
+    }
     return $name;
   }
 
@@ -141,7 +147,7 @@ class Player extends DbEntity {
   public function setGmActive($active) {
     $this->gmActive = $active;
   }
-  
+
   public function getPlayerActive() {
     return $this->playerActive;
   }

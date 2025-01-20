@@ -73,30 +73,34 @@
             Modify player
           </a>
         </li>
-      <?php elseif ($_SESSION['level']>=1): ?>
+      <?php endif ?>
+      <?php if ($_SESSION['inloggad']==1): ?>
         <li>
-          <a href="index.php?url=player/edit.php&player=<?php echo $_SESSION['user_id']; ?>" <?php echo $urlParam == "player/edit.php&player=" . $_SESSION['user_id'] ? "aria-current='page'" : ""?>>
-            Modify player
+          <a href="index.php?url=player/details.php&player=<?php echo $_SESSION['user_id']; ?>" <?php echo $urlParam  == "player/details.php" && $_GET["player"] == $_SESSION['user_id'] ? "aria-current='page'" : ""?>>
+            My page
+            <svg aria-hidden="true">
+              <use href="assets/icons/user-circle.svg#user-circle"></use>
+            </svg>
           </a>
         </li>
-      <?php endif ?>
-      <li>
-        <?php if ($_SESSION['inloggad']==1): ?>
+        <li>
           <a href="actions/auth.php?alt=logout">
             Log Out
             <svg aria-hidden="true">
               <use href="assets/icons/sign-out.svg#sign-out"></use>
             </svg>
           </a>
-        <?php else: ?>
+        </li>
+      <?php else: ?>
+        <li>
           <a href="index.php?url=auth/login.php&alt=login">
             Log In
             <svg aria-hidden="true">
               <use href="assets/icons/sign-in.svg#sign-in"></use>
             </svg>
           </a>
-        <?php endif ?>
-      </li>
+        </li>
+      <?php endif ?>
     </ul>
   </nav>
 </header>
