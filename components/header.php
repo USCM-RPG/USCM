@@ -25,6 +25,13 @@
           About
         </a>
       </li>
+      <?php if ($_SESSION['level']==3): ?>
+        <li>
+          <a href="index.php?url=player/edit.php" <?php echo $urlParam == "player/edit.php" ? "aria-current='page'" : ""?>>
+            Players
+          </a>
+        </li>
+      <?php endif ?>
       <li>
         <a href="index.php?url=characters/list.php" <?php echo $urlParam == "characters/list.php" ? "aria-current='page'" : ""?>>
           Characters
@@ -48,32 +55,6 @@
           </svg>
         </a>
       </li>
-      <?php if ($_SESSION['level']>=2): ?>
-        <li>
-          <a href="index.php?url=characters/create.php" <?php echo $urlParam == "characters/create.php" ? "aria-current='page'" : ""?>>
-            Create character
-          </a>
-        </li>
-        <li>
-          <a href="index.php?url=missions/create.php" <?php echo $urlParam == "missions/create.php" ? "aria-current='page'" : ""?>>
-            Create mission
-          </a>
-        </li>
-      <?php endif ?>
-      <?php if ($_SESSION['level']>=3): ?>
-        <li>
-          <a href="index.php?url=player/create.php" <?php echo $urlParam == "player/create.php" ? "aria-current='page'" : ""?>>
-            Create player
-          </a>
-        </li>
-      <?php endif ?>
-      <?php if ($_SESSION['level']==3): ?>
-        <li>
-          <a href="index.php?url=player/edit.php" <?php echo $urlParam == "player/edit.php" ? "aria-current='page'" : ""?>>
-            Modify player
-          </a>
-        </li>
-      <?php endif ?>
       <?php if ($_SESSION['inloggad']==1): ?>
         <li>
           <a href="index.php?url=player/details.php&player=<?php echo $_SESSION['user_id']; ?>" <?php echo $urlParam  == "player/details.php" && $_GET["player"] == $_SESSION['user_id'] ? "aria-current='page'" : ""?>>

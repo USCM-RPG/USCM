@@ -1,4 +1,11 @@
-<h1 class="heading heading-h1">Modify player</h1>
+<h1 class="heading heading-h1">
+  Players
+  <?php if ($_SESSION['level']>=3) { ?>
+    <span class="span">
+      <a href="index.php?url=player/create.php">Create player</a>
+    </span>
+  <?php } ?>
+</h1>
 
 <?php
 $userController = new UserController();
