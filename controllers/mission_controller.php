@@ -489,8 +489,8 @@ class MissionController {
   public function getMissionsByUser($userId) {
     $sql = "select uscm_missions.mission_id, uscm_mission_names.mission_name, uscm_mission_names.mission_name_short, uscm_platoon_names.name_short as platoon_name_short
 from uscm_characters
-left join uscm_missions on uscm_missions.character_id = uscm_characters.id
-left join uscm_mission_names on uscm_mission_names.id = uscm_missions.mission_id
+join uscm_missions on uscm_missions.character_id = uscm_characters.id
+join uscm_mission_names on uscm_mission_names.id = uscm_missions.mission_id
 left join uscm_platoon_names on uscm_platoon_names.id = uscm_mission_names.platoon_id
 where uscm_characters.userid = :userid
 order by uscm_mission_names.date desc, mission_name_short desc";
@@ -515,11 +515,9 @@ order by uscm_mission_names.date desc, mission_name_short desc";
 
   public function getMissionsAsGmByUser($userId) {
     $sql = "select uscm_mission_names.id as mission_id, uscm_mission_names.mission_name, uscm_mission_names.mission_name_short, uscm_platoon_names.name_short as platoon_name_short
-from GMs
-left join Users on Users.id = GMs.userid
-left join uscm_mission_names on uscm_mission_names.gm = GMs.id
+from uscm_mission_names 
 left join uscm_platoon_names on uscm_platoon_names.id = uscm_mission_names.platoon_id
-where GMs.userid = :userid";
+where uscm_mission_names.gm = :userid";
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':userid', $userId, PDO::PARAM_INT);
     $missions = array();
