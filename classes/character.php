@@ -168,6 +168,14 @@ class Character extends DbEntity {
   public function getExhaustionLimit() {
     return $this->getAttribute('Endurance') * 2;
   }
+  
+  public function getHealthPoints() {
+    $health = $this->getAttribute('Endurance') + 3;
+    if ($this->hasCharacterAdvantage(/*Tough*/51)) {
+      $health = $health + 1;
+    }
+    return $health;
+  }
 
   private function getAttribute($type) {
     $sql = "SELECT value FROM uscm_attributes a
