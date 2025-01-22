@@ -563,27 +563,52 @@ class Character extends DbEntity {
   }
 
   public function getPhysicalSkills() {
-    return $this->skills("Physical", $this->getCertificates());
+	  if ($this->version < 3) {
+		  return $this->skills("Physical", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("Physical");
+	  }
   }
 
   public function getVehiclesSkills() {
-    return $this->skills("Vehicle", $this->getCertificates());
+   
+	  if ($this->version < 3) {
+		  return $this->skills("Vehicle", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("Vehicle");
+	  }
   }
   
   public function getTechnicalSkills() {
-    return $this->skills("Technical", $this->getCertificates());
+	  if ($this->version < 3) {
+		  return $this->skills("Technical", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("Technical");
+	  }
   }
   
   public function getMilitarySkills() {
-    return $this->skills("Military", $this->getCertificates());
+	  if ($this->version < 3) {
+		  return $this->skills("Military", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("Military");
+	  }
   }
 
   public function getOtherSkills() {
-    return $this->skills("General", $this->getCertificates());
+	  if ($this->version < 3) {
+		  return $this->skills("General", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("General");
+	  }
   }
 
   public function getLanguagesSkills() {
-    return $this->skills("Languages", $this->getCertificates());
+	  if ($this->version < 3) {
+		  return $this->skills("Languages", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("Languages");
+	  }
   }
 
   private function skills($skilltype, $certarray) {
