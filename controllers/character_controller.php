@@ -374,7 +374,7 @@ Class CharacterController {
               LEFT JOIN expertise_skill es on en.id=es.expertiseid
               JOIN expertises e ON e.expertise_id=en.id
               JOIN expertise_groups eg ON en.expertise_group_id=eg.id
-              WHERE e.character_id=:cid ORDER BY en.expertise_name AND es.expertiseid IS NULL";
+              WHERE e.character_id=:cid AND es.expertiseid IS NULL ORDER BY expertise_group_id, en.expertise_name";
 	$db = getDatabaseConnection();
 	$stmt = $db->prepare($expertisesql);
     $stmt->bindValue(':cid', $character->getId(), PDO::PARAM_INT);
