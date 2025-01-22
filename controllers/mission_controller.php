@@ -513,9 +513,9 @@ order by uscm_mission_names.date desc, mission_name_short desc";
     return $missions;
   }
 
-  public function getMissionsAsGmByUser($userId) {
+  public function getMissionsGmByUser($userId) {
     $sql = "select uscm_mission_names.id as mission_id, uscm_mission_names.mission_name, uscm_mission_names.mission_name_short, uscm_platoon_names.name_short as platoon_name_short
-from uscm_mission_names 
+from uscm_mission_names
 left join uscm_platoon_names on uscm_platoon_names.id = uscm_mission_names.platoon_id
 where uscm_mission_names.gm = :userid
 order by uscm_mission_names.date desc, mission_name_short desc";

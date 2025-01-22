@@ -19,7 +19,7 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
       <span class="span">
         <a href="index.php?url=player/edit.php&player=<?php echo $_SESSION['user_id']; ?>">Change</a>
       </span>
-  </h2>
+    </h2>
 
     <h3 class="heading heading-h3">My characters</h3>
 
@@ -74,7 +74,17 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
           <?php
           $glory = $character->getGlory();
           if ($glory != "0") {
-            echo $glory;
+            $medals = "";
+            $commendationsArray = getCommendationsForCharacter($character->getId());
+            foreach ($commendationsArray as $key => $value) {
+              if ($commendationsArray[$key]['medal_short'] != "") $medals = $medals . " " . $commendationsArray[$key]['medal_short'];
+            }
+          ?>
+          <details class="details">
+            <summary><?php echo $glory;?></summary>
+            <?php echo $medals;?>
+          </details>
+            <?php
           }
           ?>
         </td>
@@ -83,7 +93,7 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
             * <?php echo $character->getEnlistedDate();?>
           </span>
           <?php
-          if ($character->getStatus() != "Active") {
+          if ($character->getStatus() == "Dead" || $character->getStatus() == "Retired") {
             ?>
             <span class="no-wrap">
               † <?php echo $lastMission['date'] ?? '';?>
@@ -124,12 +134,12 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
 
     <?php
     $missionController = new MissionController();
-    $missions = $missionController->getMissionsAsGmByUser($playerId);
+    $missions = $missionController->getMissionsGmByUser($playerId);
     ?>
     <?php
     if ($missions) {
       ?>
-      <h3 class="heading heading-h3">My missions (as GM)</h3>
+      <h3 class="heading heading-h3">My GMed missions</h3>
       <ul class="list">
         <?php
         foreach ($missions as $mission) {
