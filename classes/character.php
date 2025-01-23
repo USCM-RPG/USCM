@@ -186,7 +186,7 @@ class Character extends DbEntity {
     $stmt->bindValue(':type', $type, PDO::PARAM_STR);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $row['value'];
+    return $row['value'] ?? null;
   }
 
   public function getLeadershipPoints() {
