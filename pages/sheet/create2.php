@@ -551,6 +551,6 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 
   header("Content-type: application/pdf");
   header("Content-Length: $len");
-  header("Content-Disposition: inline; filename=character.pdf");
+  header("Content-Disposition: inline; filename=" . $character->getSurname() . ".pdf");
   print $buf;
 }
