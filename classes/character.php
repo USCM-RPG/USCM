@@ -177,7 +177,7 @@ class Character extends DbEntity {
     return $health;
   }
 
-  private function getAttribute($type) {
+  public function getAttribute($type) {
     $sql = "SELECT value FROM uscm_attributes a
           LEFT JOIN uscm_attribute_names an ON an.id=a.attribute_id
           WHERE an.attribute_name=:type AND character_id=:cid";

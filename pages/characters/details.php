@@ -67,6 +67,36 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
         echo 0;
       }?>
     </dd>
+    <dt>
+      Psionic aptitude
+    </dt>
+    <dd>
+      <?php
+		$psi = $character->getAttribute('Psionics');
+		if ($psi === null) {
+			echo "Unknown - not tested";
+		} else {
+		  switch ($psi) {
+			  case 0:
+				echo "0 - No talent (average for a human)";
+				break;
+			case 1:
+				echo "1 - Barely detectable talent (average for a human)";
+				break;
+			case 2:
+			case 3:
+				echo "$psi - Clearly detectable talent above human average";
+				break;
+			case 4:
+			case 5:
+				echo "$psi - Strong talent, among the top levels ever measured for a human";
+				break;
+			default:
+				echo "Unknown - not tested";
+		  }
+		}
+      ?>
+    </dd>
   </dl>
 
   <h3 class="heading heading-h3">
