@@ -68,12 +68,12 @@ if ($user->isAdmin() || $user->isGm()) { ?>
 
     <label for="enlisted">
       Enlisted (format: YYYYMMDD)
-      <input type="text" id="enlisted" name="enlisted">
+      <input type="text" id="enlisted" name="enlisted" value="<?php echo date('Y-m-d'); ?>">
     </label>
 
     <label for="age">
       Age
-      <input type="number" id="age" name="age">
+      <input type="number" id="age" name="age" value="21">
     </label>
 
     <label for="gender">
@@ -100,23 +100,13 @@ if ($user->isAdmin() || $user->isGm()) { ?>
   <fieldset class="form--inline grid grid--small">
     <legend>Points</legend>
 
-    <label for="ap">
-      Awareness Points
-      <input type="number" id="ap" name="ap" value="0" min="0">
-    </label>
-
     <label for="cp">
-      Cool Points
+      Stunts
       <input type="number" id="cp" name="cp" value="0" min="0">
     </label>
 
-    <label for="ep">
-      Exhaustion Points
-      <input type="number" id="ep" name="ep" value="0" min="0">
-    </label>
-
     <label for="fp">
-      Fear Points
+      Stress
       <input type="number" id="fp" name="fp" value="0" min="0">
     </label>
 
@@ -130,16 +120,6 @@ if ($user->isAdmin() || $user->isGm()) { ?>
       <input type="number" id="pp" name="pp" value="0" min="0">
     </label>
 
-    <label for="tp">
-      Trauma Points
-      <input type="number" id="tp" name="tp" value="0" min="0">
-    </label>
-
-    <label for="mp">
-      Mental Points
-      <input type="number" id="mp" name="mp" value="0" min="0">
-    </label>
-
     <label for="xp">
       Unused XP
       <input type="number" id="xp" name="xp" min="0">
@@ -150,7 +130,7 @@ if ($user->isAdmin() || $user->isGm()) { ?>
     <legend>Skills</legend>
 
     <?php //Ta ut alla skills
-    $skills = $characterController->getSkills();
+    $skills = $characterController->getSkillsGrouped(3);
     foreach ($skills as $skill) { ?>
       <label for="skill_<?php echo $skill->getId();?>">
         <?php echo $skill->getName();?>
@@ -161,7 +141,7 @@ if ($user->isAdmin() || $user->isGm()) { ?>
     <?php } ?>
   </fieldset>
 
-  <input type="hidden" name="version" value="2">
+  <input type="hidden" name="version" value="3">
   <input class="button" type="submit" value="Create Character">
 </form>
 <?php }

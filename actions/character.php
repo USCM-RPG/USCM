@@ -472,6 +472,7 @@ if ($_GET['action'] == "update_character") {
    * Creates a new character
    *
    */
+   $version =  $_POST['version'];
   if ($_POST['enlisted'] != "") {
     $enlisted = $_POST['enlisted'];
   } else {
@@ -485,20 +486,16 @@ if ($_GET['action'] == "update_character") {
   $age = $_POST['age'];
   $gender = $_POST['gender'];
   $xp = $_POST['xp'];
-  $ap = $_POST['ap'];
   $cp = $_POST['cp'];
-  $ep = $_POST['ep'];
   $fp = $_POST['fp'];
   $lp = $_POST['lp'];
   $pp = $_POST['pp'];
-  $tp = $_POST['tp'];
-  $mp = $_POST['mp'];
 
   $charactersql = "INSERT INTO {$_SESSION['table_prefix']}characters (`userid`, `platoon_id`, `forname`, `lastname`,
-            `Enlisted`, `Age`, `Gender`, `UnusedXP`, `AwarenessPoints`,	`CoolPoints`, `ExhaustionPoints`, `FearPoints`,
-            `LeadershipPoints`, `PsychoPoints`, `TraumaPoints`, `MentalPoints`)
-          VALUES(:playerid, :platoonid, :givenname, :lastname, :enlisted, :age, :gender, :xp, :ap,
-            :cp, :ep, :fp, :lp, :pp, :tp, :mp)";
+            `Enlisted`, `Age`, `Gender`, `UnusedXP`,	`CoolPoints`, `FearPoints`,
+            `LeadershipPoints`, `PsychoPoints`, `version`)
+          VALUES(:playerid, :platoonid, :givenname, :lastname, :enlisted, :age, :gender, :xp,
+            :cp, :fp, :lp, :pp, :version)";
 
   $stmt = $db->prepare($charactersql);
   $stmt->bindValue(':playerid', $player, PDO::PARAM_INT);
@@ -509,14 +506,11 @@ if ($_GET['action'] == "update_character") {
   $stmt->bindValue(':age', $age, PDO::PARAM_INT);
   $stmt->bindValue(':gender', $gender, PDO::PARAM_STR);
   $stmt->bindValue(':xp', $xp, PDO::PARAM_INT);
-  $stmt->bindValue(':ap', $ap, PDO::PARAM_INT);
   $stmt->bindValue(':cp', $cp, PDO::PARAM_INT);
-  $stmt->bindValue(':ep', $ep, PDO::PARAM_INT);
   $stmt->bindValue(':fp', $fp, PDO::PARAM_INT);
   $stmt->bindValue(':lp', $lp, PDO::PARAM_INT);
   $stmt->bindValue(':pp', $pp, PDO::PARAM_INT);
-  $stmt->bindValue(':tp', $tp, PDO::PARAM_INT);
-  $stmt->bindValue(':mp', $mp, PDO::PARAM_INT);
+  $stmt->bindValue(':version', $version, PDO::PARAM_INT);
   $stmt->execute();
   $characterid = $db->lastInsertId();
 
