@@ -11,13 +11,40 @@ $characterController = new CharacterController();
 $playerController = new PlayerController();
 $character = $characterController->getCharacter($characterId);
 $user = new Player();
-
 $userid = $character->getPlayerId();
 
 if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->isGm()) {
   $platoon_id = $character->getPlatoonId();
   $player = $character->getPlayer();
-  $bonuses = new Bonus($characterId); //remove?
+  $bonuses = new Bonus($characterId); //remove v2 bonuses?
+  
+  function drawbox($pdf, $txtarray, $xpos, $ypos, $stringlength, $minlines=0) {
+    $multilinetext = explode("\n", wordwrap(implode(', ', array_map(function($e){return $e->getName();}, $txtarray)), $stringlength, "\n"));
+	$linecount = 0;
+	foreach ($multilinetext as $line) {
+		pdf_set_text_pos($pdf, $xpos, $ypos);
+		pdf_show($pdf, $line);
+		$ypos -= 12;
+		$linecount++;
+	}
+	if ($minlines > $linecount) {
+		$ypos -= ($minlines - $linecount)*12;
+		$linecount = $minlines;
+	}
+	
+	if ($linecount > 0) {
+		PDF_rect($pdf, $xpos, $ypos+10, ($stringlength*5)+4, $linecount*12);
+	}
+	return $ypos;
+  }
+  
+  function drawwhiteboxes($pdf, $xpos, $ypos, $count, $width=8, $height=8) {
+	for($i = 1; $i <= $count; $i ++) {
+		pdf_rect($pdf, $xpos, $ypos, $width, $height);
+		pdf_stroke($pdf);
+		$xpos += $width;
+	}
+  }
 
   function fontregular($font, $pdf) {
     $font = PDF_load_font($pdf, "Helvetica", "host", 0);
@@ -130,15 +157,10 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   pdf_show($pdf, "Health:");
   
   $health = $character->getHealthPoints();
-  $width = 8;
-  $height = 8;
   $xpos = $aapcolumntwo;
+  drawwhiteboxes($pdf, $xpos, 388, $health, 12,12);
 
-  for($i = 1; $i <= $health; $i ++) {
-    pdf_rect($pdf, $xpos, 388, $width, $height);
-    pdf_stroke($pdf);
-    $xpos += $width;
-  }
+
 
 pdf_set_text_pos($pdf, $aapcolumnone, 374);
   pdf_show($pdf, "Leadership:");
@@ -147,60 +169,34 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   if ($leadershipbonus['always'] != 0) {
     $leadership += $leadershipbonus['always'];
   }
-
   $xpos = $aapcolumntwo;
-  for($i = 1; $i <= $leadership; $i ++) {
-    pdf_rect($pdf, $xpos, 374, $width, $height);
-    pdf_stroke($pdf);
-    $xpos += $width;
-  }
+  drawwhiteboxes($pdf, $xpos, 374, $leadership);
 
   pdf_set_text_pos($pdf, $aapcolumnone, 362);
   pdf_show($pdf, "Stunts:");
   pdf_set_text_pos($pdf, $aapcolumntwo, 362);
   pdf_show($pdf, $character->getCoolPoints());
-
-  //pdf_set_text_pos($pdf, $aapcolumnone, 350);
-  //pdf_show($pdf, "Awareness:");
   
   pdf_set_text_pos($pdf, $aapcolumnone, 350);
   pdf_show($pdf, "Stress:");
-  pdf_set_text_pos($pdf, $aapcolumntwo, 350);
-  pdf_show($pdf, $character->getFearPoints());
-  pdf_set_text_pos($pdf, $aapcolumnthree, 350);
-  $fearpointsbonus = $bonuses->fearPoints();
-  print_pdf_bonus($pdf, $fearpointsbonus);
-  
+  drawwhiteboxes($pdf, $xpos, 350, $character->getFearLimit());
+
   pdf_set_text_pos($pdf, $aapcolumnone, 338);
   pdf_show($pdf, "Psycho:");
-  pdf_set_text_pos($pdf, $aapcolumntwo, 338);
-  pdf_show($pdf, $character->getPsychoPoints());
-  pdf_set_text_pos($pdf, $aapcolumnthree, 338);
-  $psychopointsbonus = $bonuses->psychoPoints();
-  print_pdf_bonus($pdf, $psychopointsbonus);
+  drawwhiteboxes($pdf, $xpos, 338, $character->getPsychoLimit());
+  $xpos = $aapcolumntwo-2;
+  for($i = 1; $i <= $character->getPsychoPoints(); $i ++) {
+	  pdf_set_text_pos($pdf, $xpos, 338);
+	  pdf_show($pdf, "X");
+	  $xpos += 8;
+  }
+  $xpos = $aapcolumntwo;
 
   pdf_set_text_pos($pdf, $aapcolumnone, 326);
   pdf_show($pdf, "Experience:");
   pdf_set_text_pos($pdf, $aapcolumntwo, 326);
   pdf_show($pdf, $character->getUnusedXp());
 
-
-
-
-
-
-  //pdf_set_text_pos($pdf, $aapcolumnone, 302);
-  //pdf_show($pdf, "Exhaustion:");
-  //pdf_set_text_pos($pdf, $aapcolumntwo, 302);
-  //pdf_show($pdf, $character->getExhaustionPoints());
-  //pdf_set_text_pos($pdf, $aapcolumnthree, 302);
-  //$exhaustionpointsbonus = $bonuses->exhaustionPoints();
-  //print_pdf_bonus($pdf, $exhaustionpointsbonus);
-
-  //pdf_set_text_pos($pdf, $aapcolumnone, 290);
-  //pdf_show($pdf, "Trauma:");
-  //pdf_set_text_pos($pdf, $aapcolumntwo, 290);
-  //pdf_show($pdf, $character->getTraumaPoints());
 
   pdf_set_text_pos($pdf, $aapcolumnfour, 374);
   pdf_show($pdf, "Carry Capacity:");
@@ -218,21 +214,21 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   $combatbonus = $bonuses->combatLoad();
   print_pdf_bonus($pdf, $combatbonus);
   
-  pdf_set_text_pos($pdf, $aapcolumnfour, 350);
-  pdf_show($pdf, "Stress Limit:");
-  pdf_set_text_pos($pdf, $aapcolumnfive, 350);
-  pdf_show($pdf, $character->getFearLimit());
-  pdf_set_text_pos($pdf, $aapcolumnsix, 350);
-  $fearlimitbonus = $bonuses->fearLimit();
-  print_pdf_bonus($pdf, $fearlimitbonus);
+  //pdf_set_text_pos($pdf, $aapcolumnfour, 350);
+  //pdf_show($pdf, "Stress Limit:");
+  //pdf_set_text_pos($pdf, $aapcolumnfive, 350);
+  //pdf_show($pdf, $character->getFearLimit());
+  //pdf_set_text_pos($pdf, $aapcolumnsix, 350);
+  //$fearlimitbonus = $bonuses->fearLimit();
+  //print_pdf_bonus($pdf, $fearlimitbonus);
 
-  pdf_set_text_pos($pdf, $aapcolumnfour, 338);
-  pdf_show($pdf, "Psycho Limit:");
-  pdf_set_text_pos($pdf, $aapcolumnfive, 338);
-  pdf_show($pdf, $character->getPsychoLimit());
-  pdf_set_text_pos($pdf, $aapcolumnsix, 338);
-  $psycholimitbonus = $bonuses->psychoLimit();
-  print_pdf_bonus($pdf, $psycholimitbonus);
+  //pdf_set_text_pos($pdf, $aapcolumnfour, 338);
+  //pdf_show($pdf, "Psycho Limit:");
+  //pdf_set_text_pos($pdf, $aapcolumnfive, 338);
+  //pdf_show($pdf, $character->getPsychoLimit());
+  //pdf_set_text_pos($pdf, $aapcolumnsix, 338);
+  //$psycholimitbonus = $bonuses->psychoLimit();
+  //print_pdf_bonus($pdf, $psycholimitbonus);
 
 
 
@@ -280,28 +276,24 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   
   // Weapons
   fontbold($font, $pdf);
-  $weaponsheight = 802;
+  $weaponsheight = 772;
   pdf_set_text_pos($pdf, 220, $weaponsheight);
   pdf_show($pdf, "Weapons");
   fontregular($font, $pdf);
   $weaponsheight -= 12;
-  foreach ( $weapons as $exp ) {
-    pdf_set_text_pos($pdf, 220, $weaponsheight);
-    pdf_show($pdf, $exp->getName());
-    $weaponsheight -= 12;
+  if ($weapons) {
+	drawbox($pdf, $weapons, 220, $weaponsheight, 32, 4);
   }
   
     // Expertise
   fontbold($font, $pdf);
   $expertiseheight = 639;
   pdf_set_text_pos($pdf, 220, $expertiseheight);
-  pdf_show($pdf, "Expertise");
+  pdf_show($pdf, "Other Expertise");
   fontregular($font, $pdf);
   $expertiseheight -= 12;
-  foreach ( $expertiseother as $exp ) {
-    pdf_set_text_pos($pdf, 220, $expertiseheight);
-    pdf_show($pdf, $exp->getName());
-    $expertiseheight -= 12;
+  if ($expertiseother) {
+	drawbox($pdf, $expertiseother, 220, $expertiseheight, 32, 4);
   }
 
   // Language
@@ -311,10 +303,8 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   pdf_show($pdf, "Language");
   fontregular($font, $pdf);
   $languageheight -= 12;
-  foreach ( $languages as $exp ) {
-    pdf_set_text_pos($pdf, 220, $languageheight);
-    pdf_show($pdf, $exp->getName());
-    $languageheight -= 12;
+  if ($languages) {
+	drawbox($pdf, $languages, 220, $languageheight, 32);
   }
 
   // Terrain
@@ -324,10 +314,8 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   pdf_show($pdf, "Terrain");
   fontregular($font, $pdf);
   $terrainheight -= 12;
-  foreach ( $terrain as $exp ) {
-    pdf_set_text_pos($pdf, 220, $terrainheight);
-    pdf_show($pdf, $exp->getName());
-    $terrainheight -= 12;
+  if ($terrain) {
+	drawbox($pdf, $terrain, 220, $terrainheight, 32, 2);
   }
 
   // Traits
@@ -377,8 +365,9 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   // Right column
   // Skills
   fontbold($font, $pdf);
-  $skillsheight = 760;
+  $skillsheight = 772;
   $skillsxpos = 390;
+  $expxpos = $skillsxpos + 10;
   $levelxpos = 510;
   pdf_set_text_pos($pdf, $skillsxpos, $skillsheight);
   pdf_show($pdf, "Skills");
@@ -394,12 +383,12 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
     pdf_set_text_pos($pdf, $levelxpos, $skillsheight);
     pdf_show($pdf, $skill['value']);
     $skillsheight -= 12;
-    //$skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
-    //foreach ( $skillexpertise as $exp ) {
-		//pdf_set_text_pos($pdf, $levelxpos, $skillsheight);
-		//pdf_show($pdf, $exp->getName());
-		//$skillsheight -= 12;
-	//}
+    $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
+	if ($skillexpertise) {
+		pdf_set_text_pos($pdf, $skillsxpos, $skillsheight);
+		pdf_show($pdf, ' >');
+		$skillsheight = drawbox($pdf, $skillexpertise, $expxpos, $skillsheight, 25);
+	}
   }
   $skillsheight -= 12;
   $skillarray = $character->getPhysicalSkills();
@@ -408,8 +397,15 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
     pdf_show($pdf, $skill['name']);
 
     pdf_set_text_pos($pdf, $levelxpos, $skillsheight);
+    $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
     pdf_show($pdf, $skill['value']);
     $skillsheight -= 12;
+    $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
+    if ($skillexpertise) {
+		pdf_set_text_pos($pdf, $skillsxpos, $skillsheight);
+		pdf_show($pdf, ' >');
+		$skillsheight = drawbox($pdf, $skillexpertise, $expxpos, $skillsheight, 25);
+	}
   }
 
   $skillsheight -= 12;
@@ -421,6 +417,13 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
     pdf_set_text_pos($pdf, $levelxpos, $skillsheight);
     pdf_show($pdf, $skill['value']);
     $skillsheight -= 12;
+    $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
+    if ($skillexpertise) {
+		pdf_set_text_pos($pdf, $skillsxpos, $skillsheight);
+		pdf_show($pdf, ' >');
+		$skillsheight = drawbox($pdf, $skillexpertise, $expxpos, $skillsheight, 25);
+	}
+
   }
   $skillsheight -= 12;
   $skillarray = array_merge($character->getTechnicalSkills(), $character->getMilitarySkills(), $character->getOtherSkills());
@@ -431,7 +434,17 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
     pdf_set_text_pos($pdf, $levelxpos, $skillsheight);
     pdf_show($pdf, $skill['value']);
     $skillsheight -= 12;
+    
+    $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
+    if ($skillexpertise) {
+		pdf_set_text_pos($pdf, $skillsxpos, $skillsheight);
+		pdf_show($pdf, ' >');
+		$skillsheight = drawbox($pdf, $skillexpertise, $expxpos, $skillsheight, 25);
+	}
   }
+  
+  pdf_set_text_pos($pdf, 500, 810);
+  pdf_show($pdf, "www.uscm.se");
 
   pdf_end_page($pdf);
   pdf_close($pdf);
@@ -441,6 +454,6 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
 
   header("Content-type: application/pdf");
   header("Content-Length: $len");
-  header("Content-Disposition: inline; filename=character.pdf");
+  header("Content-Disposition: inline; filename=" . $character->getSurname() . ".pdf");
   print $buf;
 }
