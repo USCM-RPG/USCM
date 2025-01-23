@@ -359,6 +359,38 @@ Class CharacterController {
 
     return $expertisearray;
   }
+  
+    /**
+   * Get expertise linked to skill for character
+   * @param Character $character
+   * @param int $skillid
+   * @return Expertise[]
+   */
+  function getExpertiseOnSkill($character, $skillid) {
+	  $expertisearray = array();
+	      if ($character->getVersion() < 3) {
+		return $expertisearray;
+	}
+	$expertisesql = "SELECT en.id,expertise_name, expertise_group_id, value FROM expertises e
+JOIN expertise_skill es on e.expertise_id=es.expertiseid
+JOIN expertise_names en ON e.expertise_id=en.id
+WHERE e.character_id=:cid AND es.skillid=:sid";
+	$db = getDatabaseConnection();
+	$stmt = $db->prepare($expertisesql);
+    $stmt->bindValue(':cid', $character->getId(), PDO::PARAM_INT);
+    $stmt->bindValue(':sid', $skillid, PDO::PARAM_INT);
+    $stmt->execute();
+    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+	  $expertise = new Expertise();
+	  $expertise->setId($row['id']);
+	  $expertise->setExpertiseGroupId($row['expertise_group_id']);
+	  $expertise->setName($row['expertise_name']);
+	  $expertise->setValue($row['value']);
+	  $expertisearray[] = $expertise;
+    }
+
+    return $expertisearray;
+  }
 
     /**
    * Get only expertise not linked to skill for character
@@ -374,7 +406,7 @@ Class CharacterController {
               LEFT JOIN expertise_skill es on en.id=es.expertiseid
               JOIN expertises e ON e.expertise_id=en.id
               JOIN expertise_groups eg ON en.expertise_group_id=eg.id
-              WHERE e.character_id=:cid ORDER BY en.expertise_name AND es.expertiseid IS NULL";
+              WHERE e.character_id=:cid AND es.expertiseid IS NULL ORDER BY expertise_group_id, en.expertise_name";
 	$db = getDatabaseConnection();
 	$stmt = $db->prepare($expertisesql);
     $stmt->bindValue(':cid', $character->getId(), PDO::PARAM_INT);

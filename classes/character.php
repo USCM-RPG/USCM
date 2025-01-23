@@ -168,6 +168,14 @@ class Character extends DbEntity {
   public function getExhaustionLimit() {
     return $this->getAttribute('Endurance') * 2;
   }
+  
+  public function getHealthPoints() {
+    $health = $this->getAttribute('Endurance') + 3;
+    if ($this->hasCharacterAdvantage(/*Tough*/51)) {
+      $health = $health + 1;
+    }
+    return $health;
+  }
 
   private function getAttribute($type) {
     $sql = "SELECT value FROM uscm_attributes a
@@ -547,31 +555,60 @@ class Character extends DbEntity {
   }
 
   public function getWeaponSkills() {
-    return $this->skills("Weapon", $this->getCertificates());
+	  if ($this->version < 3) {
+		  return $this->skills("Weapon", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("Weapon");
+	  }
   }
 
   public function getPhysicalSkills() {
-    return $this->skills("Physical", $this->getCertificates());
+	  if ($this->version < 3) {
+		  return $this->skills("Physical", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("Physical");
+	  }
   }
 
   public function getVehiclesSkills() {
-    return $this->skills("Vehicle", $this->getCertificates());
+   
+	  if ($this->version < 3) {
+		  return $this->skills("Vehicle", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("Vehicle");
+	  }
   }
   
   public function getTechnicalSkills() {
-    return $this->skills("Technical", $this->getCertificates());
+	  if ($this->version < 3) {
+		  return $this->skills("Technical", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("Technical");
+	  }
   }
   
   public function getMilitarySkills() {
-    return $this->skills("Military", $this->getCertificates());
+	  if ($this->version < 3) {
+		  return $this->skills("Military", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("Military");
+	  }
   }
 
   public function getOtherSkills() {
-    return $this->skills("General", $this->getCertificates());
+	  if ($this->version < 3) {
+		  return $this->skills("General", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("General");
+	  }
   }
 
   public function getLanguagesSkills() {
-    return $this->skills("Languages", $this->getCertificates());
+	  if ($this->version < 3) {
+		  return $this->skills("Languages", $this->getCertificates());
+	  } else {
+		  return $this->skillsv3("Languages");
+	  }
   }
 
   private function skills($skilltype, $certarray) {
@@ -592,6 +629,26 @@ class Character extends DbEntity {
       $skillbonusarray = $this->skillbonus($row['skill_name_id'], $certarray, $certallarray);
       $skillarray[$row['skill_name_id']]['bonus_always'] = $skillbonusarray['always'];
       $skillarray[$row['skill_name_id']]['bonus_sometimes'] = $skillbonusarray['sometimes'];
+    }
+    return $skillarray;
+  }
+  
+  private function skillsv3($skilltype) {
+    $sql = "SELECT skill_name_id, value, skill_name FROM uscm_skills s
+          LEFT JOIN uscm_skill_names sn ON sn.id=s.skill_name_id
+          LEFT JOIN uscm_skill_groups sg ON sg.id=sn.skill_group_id
+          WHERE character_id=:cid AND skill_group_name=:skilltype
+          ORDER BY skill_name";
+    $certallarray = $this->allCertificateRequirements();
+    $skillarray = array ();
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
+    $stmt->bindValue(':skilltype', $skilltype, PDO::PARAM_STR);
+    $stmt->execute();
+    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+      $skillarray[$row['skill_name_id']]['id'] = $row['skill_name_id'];
+      $skillarray[$row['skill_name_id']]['value'] = $row['value'];
+      $skillarray[$row['skill_name_id']]['name'] = $row['skill_name'];
     }
     return $skillarray;
   }
