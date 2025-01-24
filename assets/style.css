@@ -181,6 +181,9 @@ input {
 label {
   cursor: pointer;
 }
+label:has(:disabled) {
+  text-decoration: line-through;
+}
 
 .form > * {
   margin-bottom: 10px;
