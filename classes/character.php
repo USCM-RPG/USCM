@@ -162,11 +162,19 @@ class Character extends DbEntity {
   }
 
   public function getFearLimit() {
+	  $fearlimit = 0;
 	  if ($this->version < 3) {
-		return $this->getAttribute('Psyche') * 2;
+		$fearlimit = $this->getAttribute('Psyche') * 2;
 	} else {
-		return $this->getAttribute('Psyche') + 1;
+		$fearlimit = $this->getAttribute('Psyche') + 1;
 	}
+	if ($this->hasCharacterTrait(/*Bloodthirst*/2)) {
+		$fearlimit = $fearlimit + 1;
+	}
+	if ($this->hasCharacterAdvantage(/*The Big Five*/72)) {
+		$fearlimit = $fearlimit + 1;
+	}
+	return $fearlimit;
   }
 
   public function getExhaustionLimit() {
@@ -1036,6 +1044,16 @@ where c.id=:cid";
       return TRUE;
     }
     return FALSE;
+  }
+  
+  public function hasCharacterTrait($traitId) {
+    $sql = "SELECT id FROM uscm_traits WHERE character_id=:cid AND trait_name_id=:tid";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
+    $stmt->bindValue(':tid', $traitId, PDO::PARAM_INT);
+    $stmt->execute();
+	$row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row['id'] ?? FALSE;
   }
 
   private function populateAdvantageIds($advantages) {
