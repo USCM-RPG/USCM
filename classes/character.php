@@ -162,12 +162,7 @@ class Character extends DbEntity {
   }
 
   public function getFearLimit() {
-	  $fearlimit = 0;
-	  if ($this->version < 3) {
-		$fearlimit = $this->getAttribute('Psyche') * 2;
-	} else {
-		$fearlimit = $this->getAttribute('Psyche') + 1;
-	}
+	$fearlimit = $this->getAttribute('Psyche') * 2;
 	if ($this->hasCharacterTrait(/*Bloodthirst*/2)) {
 		$fearlimit = $fearlimit + 1;
 	}
