@@ -68,7 +68,11 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
           <?php echo $missionCount ?>
         </td>
         <td>
-          <?php echo $lastMission['mission_name_short'] ?? '';?>
+          <?php if ($lastMission) {?>
+            <a href="index.php?url=missions/details.php?id=<?php echo $lastMission['mission_id']?>">
+              <?php echo $lastMission['mission_name_short']?>
+            </a>
+          <?php } ?>
         </td>
         <td>
           <?php

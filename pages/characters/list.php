@@ -160,7 +160,13 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
     </td>
     <td><?php echo $character['specialty_name'];?></td>
     <td class="center"><?php echo $character['missions'];?></td>
-	<td><?php echo $lastMission['mission_name_short'] ?? '';?></td>
+	  <td>
+      <?php if ($lastMission) {?>
+        <a href="index.php?url=missions/details.php&id=<?php echo $lastMission['mission_id']?>">
+          <?php echo $lastMission['mission_name_short']?>
+        </a>
+      <?php } ?>
+    </td>
 <?php
       $medals = "";
       $glory = 0;
