@@ -184,7 +184,12 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   <fieldset class="form--inline grid grid--small">
     <legend>Skills</legend>
             <?php
-            $allSkills = $characterController->getSkillsGrouped($character->getVersion());
+            $allSkills = array();
+            if ($character->getVersion() > 2) {
+				$allSkills = $characterController->getSkillsGrouped($character->getVersion());
+			} else {
+				$allSkills = $characterController->getSkillsGrouped();
+			}
             $characterSkills = $character->getSkillsGrouped();
             foreach($allSkills as $skill) {
               $skillId = $skill->getId();
