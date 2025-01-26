@@ -224,7 +224,7 @@ if ($character->getVersion() > 2) {
 }
 ?>
 
-  <fieldset class="form--inline grid grid--1x3--leftalign">
+  <fieldset class="form--inline grid grid--small grid--leftalign">
     <legend>Traits</legend>
             <?php
             $allTraits = $characterController->getTraits();
@@ -239,7 +239,7 @@ if ($character->getVersion() > 2) {
             <?php } ?>
   </fieldset>
 
-  <fieldset class="form--inline grid grid--1x3--leftalign">
+  <fieldset class="form--inline grid grid--small grid--leftalign">
     <legend>Advantages</legend>
             <?php
             $allAdvantages = $characterController->getAdvantages();
@@ -253,7 +253,7 @@ if ($character->getVersion() > 2) {
             <?php } ?>
   </fieldset>
 
-  <fieldset class="form--inline grid grid--1x3--leftalign">
+  <fieldset class="form--inline grid grid--small grid--leftalign">
     <legend>Disadvantages</legend>
             <?php
             $allDisadvantages = $characterController->getDisadvantages();
@@ -271,7 +271,7 @@ if ($character->getVersion() > 2) {
 <?php
 if ($character->getVersion() < 3) {
 ?>
-  <fieldset class="form--inline grid grid--1x3--leftalign">
+  <fieldset class="form--inline grid grid--small grid--leftalign">
     <legend>Certificates</legend>
             <?php
             $allPlatoonCertificates = array();
@@ -285,7 +285,7 @@ if ($character->getVersion() < 3) {
               $certificateId = $certificate->getId();
                 ?>
               <label for="certs_<?php echo $certificateId; ?>">
-                
+
                 <input type="checkbox" id="certs_<?php echo $certificateId; ?>" name="certs[<?php echo $certificateId; ?>]" <?php echo (array_key_exists($certificateId, $characterCertificates)) ? ("checked ") : (""); echo (in_array($certificateId, $allPlatoonCertificates)) ? ("disabled ") : (""); ?>>
                 <?php echo $certificate->getName(); ?>
               </label>
@@ -293,7 +293,7 @@ if ($character->getVersion() < 3) {
   </fieldset>
 <?php } ?>
 
-    <fieldset class="form--inline grid grid--1x3--leftalign">
+    <fieldset class="form--inline grid grid--small grid--leftalign">
       <legend>Encounters</legend>
 
       <label for="cbalien">

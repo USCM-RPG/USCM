@@ -214,15 +214,6 @@ label:has(:disabled) {
   grid-template-columns: 1fr 1fr;
 }
 
-.grid--1x3--leftalign {
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items: left;
-}
-.grid--1x3--missiontags {
-  grid-template-columns: 30px 30px 1fr;
-  justify-items: left;
-}
-
 .grid--small {
   grid-template-columns: 1fr 1fr;
 }
@@ -235,10 +226,6 @@ label:has(:disabled) {
 
 .grid--leftalign {
   justify-items: left;
-}
-
-.grid--missiontags {
-  grid-template-columns: 30px 30px 1fr;
 }
 
 .button {
