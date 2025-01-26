@@ -3,6 +3,7 @@ Class Skill extends DbEntity {
   private $name = NULL;
   private $optional = NULL;
   private $skillGroupId = NULL;
+  private $skillGroupName = NULL;
   private $defaultValue = NULL;
   private $description = NULL;
 
@@ -28,6 +29,14 @@ Class Skill extends DbEntity {
 
   public function setSkillGroupId($skillGroupId) {
     $this->skillGroupId = $skillGroupId;
+  }
+
+  public function getSkillGroupName() {
+    return $this->skillGroupName;
+  }
+
+  public function setSkillGroupName($skillGroupName) {
+    $this->skillGroupName = $skillGroupName;
   }
 
   public function getDefaultValue() {

@@ -281,7 +281,7 @@ Class CharacterController {
    * @return Skill[]
    */
   function getSkillsGrouped($minversion=2) {
-    $sql = "SELECT sn.id, skill_name, optional, skill_group_id, default_value, description
+    $sql = "SELECT sn.id, skill_name, optional, skill_group_id, default_value, description, skill_group_name
                 FROM uscm_skill_names sn
                 LEFT JOIN uscm_skill_groups sg on sn.skill_group_id=sg.id
                 WHERE sn.version >= :version
@@ -298,6 +298,7 @@ Class CharacterController {
       $skill->setDefaultValue($row['default_value']);
       $skill->setDescription($row['description']);
       $skill->setSkillGroupId($row['skill_group_id']);
+      $skill->setSkillGroupName($row['skill_group_name']);
       $skills[] = $skill;
     }
     return $skills;
@@ -359,7 +360,7 @@ Class CharacterController {
 
     return $expertisearray;
   }
-  
+
     /**
    * Get expertise linked to skill for character
    * @param Character $character
