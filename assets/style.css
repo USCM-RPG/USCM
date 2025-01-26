@@ -46,6 +46,11 @@ input {
   accent-color: var(--uscm-color-green);
 }
 
+legend {
+  background-color:  var(--uscm-color-green);
+  color: var(--uscm-color-background);
+}
+
 .wrapper {
   background-color: var(--uscm-color-background);
   border: 2px solid var(--uscm-color-green);
