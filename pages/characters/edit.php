@@ -129,6 +129,35 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
     </label>
   </div>
 
+  <fieldset class="form--inline grid grid--small grid--leftalign">
+    <legend>Encounters</legend>
+
+    <label for="cbalien">
+      <input type="checkbox" id="cbalien" name="cbalien" <?php echo ($character->getEncounterAlien()==1) ? ('checked="1"') : (""); ?>>
+      Alien
+    </label>
+
+    <label for="cbgrey">
+      <input type="checkbox" id="cbgrey" name="cbgrey" <?php echo ($character->getEncounterGrey()==1) ? ('checked="1"') : (""); ?>>
+      Grey
+    </label>
+
+    <label for="cbpredator">
+      <input type="checkbox" id="cbpredator" name="cbpredator" <?php echo ($character->getEncounterPredator()==1) ? ('checked="1"') : (""); ?>>
+      Predator
+    </label>
+
+    <label for="cbai">
+      <input type="checkbox" id="cbai" name="cbai" <?php echo ($character->getEncounterAI()==1) ? ('checked="1"') : (""); ?>>
+      AI/Android
+    </label>
+
+    <label for="cbarachnid">
+      <input type="checkbox" id="cbarachnid" name="cbarachnid" <?php echo ($character->getEncounterArachnid()==1) ? ('checked="1"') : (""); ?>>
+      Arachnid
+    </label>
+  </fieldset>
+
   <fieldset class="form--inline grid grid--small">
     <legend>Attributes</legend>
             <?php
@@ -292,35 +321,6 @@ if ($character->getVersion() < 3) {
             <?php } ?>
   </fieldset>
 <?php } ?>
-
-    <fieldset class="form--inline grid grid--small grid--leftalign">
-      <legend>Encounters</legend>
-
-      <label for="cbalien">
-        <input type="checkbox" id="cbalien" name="cbalien" <?php echo ($character->getEncounterAlien()==1) ? ('checked="1"') : (""); ?>>
-        Alien
-      </label>
-
-      <label for="cbgrey">
-        <input type="checkbox" id="cbgrey" name="cbgrey" <?php echo ($character->getEncounterGrey()==1) ? ('checked="1"') : (""); ?>>
-        Grey
-      </label>
-
-      <label for="cbpredator">
-        <input type="checkbox" id="cbpredator" name="cbpredator" <?php echo ($character->getEncounterPredator()==1) ? ('checked="1"') : (""); ?>>
-        Predator
-      </label>
-
-      <label for="cbai">
-        <input type="checkbox" id="cbai" name="cbai" <?php echo ($character->getEncounterAI()==1) ? ('checked="1"') : (""); ?>>
-        AI/Android
-      </label>
-
-      <label for="cbarachnid">
-        <input type="checkbox" id="cbarachnid" name="cbarachnid" <?php echo ($character->getEncounterArachnid()==1) ? ('checked="1"') : (""); ?>>
-        Arachnid
-      </label>
-    </fieldset>
 
     <?php if ($canmodify) { ?>
       <input class="button" type="submit" value="Modify Character">
