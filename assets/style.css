@@ -42,15 +42,6 @@ a:hover {
   transition: color 1s;
 }
 
-input {
-  accent-color: var(--uscm-color-green);
-}
-
-legend {
-  background-color:  var(--uscm-color-green);
-  color: var(--uscm-color-background);
-}
-
 .wrapper {
   background-color: var(--uscm-color-background);
   border: 2px solid var(--uscm-color-green);
@@ -190,6 +181,15 @@ label:has(:disabled) {
   text-decoration: line-through;
 }
 
+input {
+  accent-color: var(--uscm-color-green);
+}
+
+legend {
+  background-color:  var(--uscm-color-green);
+  color: var(--uscm-color-background);
+}
+
 .form > * {
   margin-bottom: 10px;
 }
@@ -208,6 +208,10 @@ label:has(:disabled) {
 
 .form .form--inline input {
   width: 40px;
+}
+
+.skill-category {
+  grid-column: 1 / -1;
 }
 
 .grid {

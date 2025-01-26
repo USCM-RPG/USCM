@@ -220,8 +220,13 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 				$allSkills = $characterController->getSkillsGrouped();
 			}
             $characterSkills = $character->getSkillsGrouped();
+            $previousGroupId = null;
             foreach($allSkills as $skill) {
               $skillId = $skill->getId();
+              if ($previousGroupId != $skill->getSkillGroupId()) {
+                echo "<div class='skill-category colorfont'>". $skill->getSkillGroupName() ."</div>";
+              }
+              $previousGroupId = $skill->getSkillGroupId();
             ?>
     <label for="skills_<?php echo $skillId; ?>">
       <?php echo $skill->getName(); ?>
