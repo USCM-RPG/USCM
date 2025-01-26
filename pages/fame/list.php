@@ -189,7 +189,13 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
       </span>
     </td>
     <td><?php echo $character['status_desc'];?></td>
-    <td><?php echo $lastMission['mission_name_short'] ?? '';?></td>
+    <td>
+      <?php if ($lastMission) {?>
+        <a href="index.php?url=missions/details.php&id=<?php echo $lastMission['mission_id']?>">
+          <?php echo $lastMission['mission_name_short']?>
+        </a>
+      <?php } ?>
+    </td>
     <td><?php echo $character['forname'] . " " . $character['lastname'];?></td>
   </tr>
 <?php unset($medals,$glory);
@@ -248,7 +254,13 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
       </span>
     </td>
     <td><?php echo $character['status_desc'];?></td>
-    <td><?php echo $lastMission['mission_name_short'] ?? '';?></td>
+    <td>
+      <?php if ($lastMission) {?>
+        <a href="index.php?url=missions/details.php&id=<?php echo $lastMission['mission_id']?>">
+          <?php echo $lastMission['mission_name_short']?>
+        </a>
+      <?php } ?>
+    </td>
     <td><?php echo $character['forname'] . " " . $character['lastname'];?></td>
   </tr>
 <?php unset($medals,$glory);
