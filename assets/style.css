@@ -337,7 +337,7 @@ legend {
 }
 
 .popover a:focus + .popover-panel,
-.popover a:hover + .popover-panel {
+.popover:hover > .popover-panel {
   display: grid;
 }
 
