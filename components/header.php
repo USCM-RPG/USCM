@@ -48,6 +48,11 @@
         </a>
       </li>
       <li>
+        <a href="index.php?url=statistics/index.php" <?php echo $urlParam == "statistics/index.php" ? "aria-current='page'" : ""?>>
+          Statistics
+        </a>
+      </li>
+      <li>
         <a href="https://discord.gg/nEp7kwd4h7" target="_blank">
           Discord
           <svg aria-hidden="true">
