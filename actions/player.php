@@ -16,6 +16,7 @@ $emailadress=$_POST['emailadress'];
 $password=$_POST['password'];
 $use_nickname=$_POST['use_nickname'];
 $platoon_id=$_POST['platoon_id'];
+$discordid=$_POST['discordid'];
 $active=1;
 if (!isset($_POST['active'])) {
 	$active=0;
@@ -46,6 +47,7 @@ elseif ($_GET['what']=="modify" && ($user->isAdmin() || $user->isGm() || $user->
   $player->setPassword($password);
   $player->setUseNickname($use_nickname);
   $player->setPlatoonId($platoon_id);
+  $player->setDiscordId($discordid);
   $player->setPlayerActive($active);
   $playerController->update($player);
 }

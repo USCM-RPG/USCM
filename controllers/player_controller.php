@@ -38,7 +38,7 @@ Class PlayerController {
   public function update($player) {
     $sql="UPDATE Users SET forname=:givenName,nickname=:nickname,lastname=:surname,
            emailadress=:emailadress,use_nickname=:useNickname
-           ,platoon_id=:platoonId,active=:playeractive WHERE id = :playerId";
+           ,platoon_id=:platoonId,discordid=:discordId,active=:playeractive WHERE id = :playerId";
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':playerId', $player->getId(), PDO::PARAM_INT);
     $stmt->bindValue(':givenName', $player->getGivenName(), PDO::PARAM_STR);
@@ -48,6 +48,7 @@ Class PlayerController {
     $stmt->bindValue(':useNickname',  $player->getUseNickname(), PDO::PARAM_INT);
     $stmt->bindValue(':platoonId',  $player->getPlatoonId(), PDO::PARAM_INT);
 	$stmt->bindValue(':playeractive',  $player->getPlayerActive(), PDO::PARAM_INT);
+	$stmt->bindValue(':discordId',  $player->getDiscordId(), PDO::PARAM_STR);
     try {
       $this->db->beginTransaction();
       $stmt->execute();
@@ -78,7 +79,7 @@ Class PlayerController {
     }
     $playersql = "SELECT Users.id, forname, nickname, lastname, emailadress, use_nickname, platoon_id,
         logintime, lastlogintime, GMs.userid as gm, GMs.RPG_id as RPG_id, GMs.active as gmactive, Users.active as playeractive, ".
-        "Admins.userid as admin FROM Users " .
+        "Admins.userid as admin, discordid FROM Users " .
         "LEFT JOIN GMs on GMs.userid = Users.id " .
         "LEFT JOIN Admins on Admins.userid = Users.id WHERE Users.id = :userid LIMIT 1";
     $stmt = $this->db->prepare($playersql);
@@ -161,6 +162,7 @@ Class PlayerController {
     $player->setGmRpgId($data['RPG_id']);
     $player->setGmActive($data['gmactive']);
 	$player->setPlayerActive($data['playeractive']);
+	$player->setDiscordId($data['discordid']);
     if ($data['admin']) {
       $player->setAdmin(TRUE);
     } else {

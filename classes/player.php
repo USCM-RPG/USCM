@@ -17,6 +17,7 @@ class Player extends DbEntity {
   private $gmActive = NULL;
   private $admin = NULL;
   private $playerActive = NULL;
+  private $discordId = NULL;
 
   function __construct($playerId = NULL) {
     $this->level = $_SESSION ['level'];
@@ -90,6 +91,14 @@ class Player extends DbEntity {
 
   public function setNickname($name) {
     $this->nickname = $name;
+  }
+  
+  public function getDiscordId() {
+    return $this->discordId;
+  }
+
+  public function setDiscordId($discordid) {
+    $this->discordId = $discordid;
   }
 
   public function getEmailaddress() {

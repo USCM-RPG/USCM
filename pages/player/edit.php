@@ -80,6 +80,11 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
                     } ?>
                     </select>
           </label>
+          
+          <label for="discordid">
+            Discord Id (17 or 18 digits)
+            <input type="number" id="discordid" name="discordid" value="<?php echo stripslashes($player->getDiscordId()); ?>">
+          </label>
 
           <label for="active">
             Is active
