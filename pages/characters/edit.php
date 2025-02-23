@@ -241,7 +241,7 @@ if ($character->getVersion() > 2) {
 	$allExpertise = $expertiseController->getAllExpertise();
 	$characterExpertise  = $character->getExpertise();
 ?>
-  <fieldset class="form--inline grid grid--small">
+  <fieldset class="form--inline grid grid--small grid--leftalign">
     <legend>Expertise</legend>
 		<?php
 		foreach($allExpertise as $expertise) {
