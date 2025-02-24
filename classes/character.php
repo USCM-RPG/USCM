@@ -972,7 +972,7 @@ where c.id=:cid group by cn.id)";
    * @return int
    */
   function getXPstartvalue() {
-	  $startxp=128;
+	  $startxp=154;
 	  if ($this->version < 3) {
 		  $startxp=117;
 	  }
