@@ -4,7 +4,7 @@
   include("components/security-headers.php");
 ?>
   <!DOCTYPE html>
-  <html lang="sv">
+  <html lang="en">
     <head>
       <?php
       include("components/meta.php");

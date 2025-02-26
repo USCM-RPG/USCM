@@ -25,18 +25,6 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
 </h2>
 
 <dl class="list-description">
-  <dt>
-    Tags
-  </dt>
-  <dd>
-    <div>
-    <?php foreach ($tags as $tag) {
-      echo '<a href="index.php?url=missions/list.php&tag='. $tag->getId() .'">'. $tag->getName() .'</a> ';
-    } ?>
-    </div>
-    <?php if (!empty($tags)) { echo '<br>'; } ?>
-    <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=tag" class="colorfont">Change</a><?php } ?>
-  </dd>
   <dt>Date</dt>
   <dd>
     <?php echo $mission->getDate();?>
@@ -55,15 +43,18 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
     } ?>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=characters" class="colorfont">Change</a><?php } ?>
   </dd>
+  <?php
+  $npcs = $missionController->getNonPlayerCharacters($mission);
+  if ($npcs) { ?>
   <dt>Non-Player Characters</dt>
   <dd>
     <?php
-    $charactersAndPlayers = $missionController->getNonPlayerCharacters($mission);
-    foreach ($charactersAndPlayers as $character) {
+    foreach ($npcs as $character) {
       echo $character['forname'] . " " . $character['lastname'] . "<br>";
     } ?>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=characters" class="colorfont">Change</a><?php } ?>
   </dd>
+  <?php } ?>
   <dt>Commendations</dt>
   <dd>
     <?php
@@ -82,6 +73,18 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
     } ?>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=promotions" class="colorfont">Change</a><?php } ?>
   </dd>
+  <dt>
+    Tags
+  </dt>
+  <dd>
+    <div>
+      <?php foreach ($tags as $tag) {
+        echo '<a href="index.php?url=missions/list.php&tag='. $tag->getId() .'">'. $tag->getName() .'</a> ';
+      } ?>
+    </div>
+    <?php if (!empty($tags)) { echo '<br>'; } ?>
+    <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=tag" class="colorfont">Change</a><?php } ?>
+  </dd>
 
   <!--stuff to show terrain in missions starts here-->
   <dt>Terrain</dt>
@@ -99,8 +102,8 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
   </span>
 </h3>
 
-<div>
-  <?php echo $mission->getBriefing();?><br>
+<div lang="sv">
+  <p><?php echo $mission->getBriefing();?></p>
 </div>
 
 <h3 class="heading heading-h3">
@@ -110,7 +113,7 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
   </span>
 </h3>
 
-<div>
-  <?php echo $mission->getDebriefing();?><br>
+<div lang="sv">
+  <p><?php echo $mission->getDebriefing();?></p>
 </div>
 </div>
