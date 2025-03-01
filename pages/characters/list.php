@@ -18,7 +18,7 @@ $where="AND c.platoon_id={$_GET['platoon']}";
 
 $charactersql="SELECT rank_id,c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%d') as enlisted,c.status,
               rank_short,specialty_name, p.forname as playerforname,p.lastname as playerlastname,p.nickname,
-              p.use_nickname,c.userid
+              p.use_nickname,c.userid,c.version
           FROM uscm_characters c
           LEFT JOIN Users as p ON c.userid = p.id
           LEFT JOIN uscm_ranks
@@ -34,7 +34,7 @@ $charactersql="SELECT rank_id,c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enl
               WHERE c.status != 'Dead' AND c.status != 'Retired' AND p.id != '0' AND p.id != '59' {$where}
               ORDER BY rank_id DESC";
 $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%d') as enlisted,c.status,
-              rank_id,rank_short,specialty_name,c.userid
+              rank_id,rank_short,specialty_name,c.userid,c.version
           FROM uscm_characters c
           LEFT JOIN Users as p ON c.userid = p.id
           LEFT JOIN uscm_ranks
@@ -190,7 +190,15 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
       </span>
     </td>
     <td>
-      <?php if ($character['status'] != "Active") { echo $character['status']; } ?>
+      <?php if ($character['status'] != "Active") { 
+        echo $character['status']; 
+        }
+        else {
+          if ($character['version'] < 3) {
+          echo '<img src="assets/icons/cryo-icon.svg" alt="In cryo" title="In cryo" height="12vh">';
+          }
+        } 
+      ?>
     </td>
     <td><?php echo ($character['use_nickname']=="1")?(stripslashes($character['nickname'])):(stripslashes($character['playerforname']) . " " . stripslashes($character['playerlastname']));?></td>
   </tr>
@@ -299,7 +307,15 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
       </span>
     </td>
     <td>
-      <?php if ($npc['status'] != "Active") { echo $npc['status']; } ?>
+      <?php if ($npc['status'] != "Active") { 
+        echo $npc['status']; 
+        }
+        else {
+          if ($npc['version'] < 3) {
+          echo '<img src="assets/icons/cryo-icon.svg" alt="In cryo" title="In cryo" height="12vh">';
+          }
+        } 
+      ?>
     </td>
   </tr>
 <?php
