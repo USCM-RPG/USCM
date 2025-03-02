@@ -169,6 +169,9 @@ class Character extends DbEntity {
 	if ($this->hasCharacterAdvantage(/*The Big Five*/72)) {
 		$fearlimit = $fearlimit + 1;
 	}
+    if ($this->hasCharacterDisadvantage(/*Alcoholic*/37)) {
+      $fearlimit = $fearlimit - 2;
+    }
 	return $fearlimit;
   }
 
@@ -180,6 +183,9 @@ class Character extends DbEntity {
     $health = $this->getAttribute('Endurance') + 3;
     if ($this->hasCharacterAdvantage(/*Tough*/51)) {
       $health = $health + 1;
+    }
+    if ($this->hasCharacterDisadvantage(/*Alcoholic*/37)) {
+      $health = $health - 1;
     }
     return $health;
   }
