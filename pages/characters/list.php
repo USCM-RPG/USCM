@@ -326,7 +326,7 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
 </table>
 
 <?php if ($_GET['platoon'] == "1" || $_GET['platoon'] == "5" || $_GET['platoon'] == "6") { ?>
-<table class="table mt-20">
+<table class="table">
   <caption>
     Special Non-Player Characters
     <hr class="line">
