@@ -190,14 +190,14 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
       </span>
     </td>
     <td>
-      <?php if ($character['status'] != "Active") { 
-        echo $character['status']; 
+      <?php if ($character['status'] != "Active") {
+        echo $character['status'];
         }
         else {
           if ($character['version'] < 3) {
-          echo '<img src="assets/icons/cryo-icon.svg" alt="In cryo" title="In cryo" height="12vh">';
+          echo '<img src="assets/icons/cryo-icon.svg" class="icon--text" alt="In cryo" title="In cryo">';
           }
-        } 
+        }
       ?>
     </td>
     <td><?php echo ($character['use_nickname']=="1")?(stripslashes($character['nickname'])):(stripslashes($character['playerforname']) . " " . stripslashes($character['playerlastname']));?></td>
@@ -307,14 +307,14 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
       </span>
     </td>
     <td>
-      <?php if ($npc['status'] != "Active") { 
-        echo $npc['status']; 
+      <?php if ($npc['status'] != "Active") {
+        echo $npc['status'];
         }
         else {
           if ($npc['version'] < 3) {
-          echo '<img src="assets/icons/cryo-icon.svg" alt="In cryo" title="In cryo" height="12vh">';
+          echo '<img src="assets/icons/cryo-icon.svg" class="icon--text" alt="In cryo" title="In cryo">';
           }
-        } 
+        }
       ?>
     </td>
   </tr>

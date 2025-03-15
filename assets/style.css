@@ -66,6 +66,10 @@ a:hover {
 .header {
 }
 
+.icon--text {
+  height: calc(12rem / 16);
+}
+
 .logo {
   align-items: center;
   color: var(--uscm-color-green);
