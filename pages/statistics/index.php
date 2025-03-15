@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">
+<link rel="stylesheet" href="<?php echo $url_root ?>/assets/charts.css">
 <style>
   .charts-css {
     margin-top: 20px;
