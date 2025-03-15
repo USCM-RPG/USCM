@@ -4,6 +4,14 @@
 .title {color: #33CC00; font-style: normal; font-weight: bold;}
 .thead {font-weight: bold; text-decoration: underline;}
 
+:where(button, input, select, textarea) {
+  border-color: #fff;
+}
+:where(select) {
+  appearance: auto;
+  background-image: unset;
+}
+
 :root {
   --uscm-color-green: #33cc00;
   --uscm-color-green-hover: #00ff00;
