@@ -77,9 +77,11 @@
             </svg>
           </a>
         </li>
-      <?php else: ?>
+      <?php else:
+        $redirect = $urlParam ? "&redirect={$urlParam}" : "";
+        ?>
         <li>
-          <a href="index.php?url=auth/login.php&alt=login">
+          <a href="index.php?url=auth/login.php&alt=login<?php echo $redirect; ?>">
             Log In
             <svg aria-hidden="true">
               <use href="assets/icons/sign-in.svg#sign-in"></use>

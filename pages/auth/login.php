@@ -1,6 +1,15 @@
 <h1 class="heading heading-h1">Log in</h1>
 
-<form class="form" action="actions/auth.php?alt=login" method="post">
+<?php
+$redirect = "";
+if(isset($_GET['redirect'])){
+  if(in_array('/'.$_GET['redirect'], $pages)) {
+    $redirect = "&redirect={$_GET["redirect"]}";
+  }
+}
+?>
+
+<form class="form" action="actions/auth.php?alt=login<?php echo $redirect;?>" method="post">
   <label for="anvandarnamn">
     Username
     <input type="text" id="anvandarnamn" name="anvandarnamn" autocomplete="username">
