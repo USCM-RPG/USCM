@@ -32,3 +32,9 @@ php -S localhost:8000
 ```
 
 6. Open [http://localhost:8000](http://localhost:8000)
+
+## Database
+
+## Icons
+
+We use [Phosphor](https://phosphoricons.com/) open-source icons.
