@@ -6,6 +6,7 @@
 
 :where(button, input, select, textarea) {
   border-color: #fff;
+  background-color: #000;
 }
 :where(select) {
   appearance: auto;
