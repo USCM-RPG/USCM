@@ -98,8 +98,32 @@ a:hover {
   gap: 10px;
   justify-content: center;
 }
+.nav a {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+}
+.nav a::after {
+  background-color: var(--uscm-color-green-hover);
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform .25s ease-out;
+}
+.nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
 .nav [aria-current="page"] {
-  text-decoration: overline;
+  color: var(--uscm-color-green-hover);
+}
+.nav [aria-current="page"]::after {
+  transform: scaleX(1);
 }
 .nav svg {
   height: 22px;
