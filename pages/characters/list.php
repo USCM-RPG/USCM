@@ -200,7 +200,16 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
         }
       ?>
     </td>
-    <td><?php echo ($character['use_nickname']=="1")?(stripslashes($character['nickname'])):(stripslashes($character['playerforname']) . " " . stripslashes($character['playerlastname']));?></td>
+    <td>
+      <?php if ($admin || $_SESSION['user_id']==$character['userid']) { ?>
+        <a href="index.php?url=player/edit.php&player=<?php echo $character['userid'] ?>"><?php
+        }
+        echo ($character['use_nickname']=="1")?(stripslashes($character['nickname'])):(stripslashes($character['playerforname']) . " " . stripslashes($character['playerlastname']));
+        if ($admin || $_SESSION['user_id']==$character['userid']) { ?>
+          </a><?php
+        }
+      ?>
+    </td>
   </tr>
 <?php unset($medals,$glory);
   } ?>
