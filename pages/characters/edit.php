@@ -22,7 +22,9 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
     </span>
   </h1>
   <h2 class="heading heading-h2">
-    <?php echo $character->getGivenName(); ?> <?php echo $character->getSurname(); ?>
+    <span style="view-transition-name: transition-character-<?php echo $characterId; ?>;">
+      <?php echo $character->getGivenName(); ?> <?php echo $character->getSurname(); ?>
+    </span>
     <span class="span">
       <a href="index.php?url=characters/details.php&character_id=<?php echo $characterId; ?>">Do you want to know more?</a>
     </span>
@@ -42,7 +44,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   <div class="grid grid--1x2 mt-20">
     <div>
       Player
-      <div>
+      <div style="view-transition-name: transition-character-player-<?php echo $characterId; ?>;">
         <?php echo $player->getName(); ?>
       </div>
     </div>

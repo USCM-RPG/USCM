@@ -56,7 +56,10 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
           <?php echo $character->getRankShort();?>
         </td>
         <td>
-          <a href="index.php?url=characters/edit.php&character_id=<?php echo $character->getId();?>">
+          <a
+            href="index.php?url=characters/edit.php&character_id=<?php echo $character->getId();?>"
+            style="view-transition-name: transition-character-<?php echo $character->getId();?>;"
+          >
             <?php echo $character->getGivenName();?>
             <?php echo $character->getSurname();?>
           </a>

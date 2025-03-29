@@ -35,6 +35,16 @@
   text-underline-offset: 2px;
 }
 
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
 .heading {
   color: var(--uscm-color-green);
 }

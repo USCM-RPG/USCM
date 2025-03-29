@@ -13,12 +13,14 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
 
 <div class="mission">
 <h1 class="heading heading-h1">
-  Mission <?php echo $mission->getShortName();?>
-  <span class="tag tag-<?php echo strtolower($mission->getPlatoonShortName());?>"><?php echo $mission->getPlatoonShortName();?></span>
+  Mission <span style="view-transition-name: transition-mission-<?php echo $mission->getId();?>;"><?php echo $mission->getShortName();?></span>
+  <span class="tag tag-<?php echo strtolower($mission->getPlatoonShortName());?>" style="view-transition-name: transition-mission-platoon-<?php echo $mission->getId();?>;"><?php echo $mission->getPlatoonShortName();?></span>
 </h1>
 
 <h2 class="heading heading-h2">
-  <?php echo $mission->getName();?>
+  <span style="view-transition-name: transition-mission-name-<?php echo $mission->getId();?>;">
+    <?php echo $mission->getName();?>
+  </span>
   <span class="span">
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=names" class="colorfont">Change</a><?php } ?>
   </span>

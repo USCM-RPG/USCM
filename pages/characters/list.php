@@ -150,7 +150,10 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
     <td <?php if ($overlib) {?>class="popover"<?php } ?>><?php
     $link = false;
     if ($admin || $gm || $_SESSION['user_id']==$character['userid']) { $link = true;?>
-        <a href="index.php?url=characters/edit.php&character_id=<?php echo $character['cid'];?>"><?php }
+        <a
+          href="index.php?url=characters/edit.php&character_id=<?php echo $character['cid'];?>"
+          style="view-transition-name: transition-character-<?php echo $character['cid'];?>;"
+        ><?php }
     ?><?php echo $character['forname'] . " " . $character['lastname'];?><?php echo $link ? "</a>" : ""; ?>
           <?php if ($overlib) {?>
             <div class="popover-panel">
@@ -202,7 +205,7 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
     </td>
     <td>
       <?php if ($admin || $_SESSION['user_id']==$character['userid']) { ?>
-        <a href="index.php?url=player/edit.php&player=<?php echo $character['userid'] ?>"><?php
+        <a href="index.php?url=player/edit.php&player=<?php echo $character['userid'] ?>" style="view-transition-name: transition-character-player-<?php echo $character['cid'];?>;"><?php
         }
         echo ($character['use_nickname']=="1")?(stripslashes($character['nickname'])):(stripslashes($character['playerforname']) . " " . stripslashes($character['playerlastname']));
         if ($admin || $_SESSION['user_id']==$character['userid']) { ?>
