@@ -615,6 +615,14 @@ class Character extends DbEntity {
 		  return $this->skillsv3("General");
 	  }
   }
+  
+  public function getExpertSkills() {
+	  if ($this->version < 3) {
+		  return array();
+	  } else {
+		  return $this->skillsv3("Expert");
+	  }
+  }
 
   public function getLanguagesSkills() {
 	  if ($this->version < 3) {

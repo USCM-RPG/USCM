@@ -443,6 +443,25 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
 	}
   }
   
+  $skillsheight -= 12;
+  $skillarray = $character->getExpertSkills();
+  foreach ( $skillarray as $skill ) {
+    pdf_set_text_pos($pdf, $skillsxpos, $skillsheight);
+    pdf_show($pdf, $skill['name']);
+
+    pdf_set_text_pos($pdf, $levelxpos, $skillsheight);
+    pdf_show($pdf, $skill['value']);
+    $skillsheight -= 12;
+    $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
+    if ($skillexpertise) {
+		pdf_set_text_pos($pdf, $skillsxpos, $skillsheight);
+		pdf_show($pdf, ' >');
+		$skillsheight = drawbox($pdf, $skillexpertise, $expxpos, $skillsheight, 25);
+	}
+
+  }
+  $skillsheight -= 12;
+  
   pdf_set_text_pos($pdf, 500, 810);
   pdf_show($pdf, "www.uscm.se");
 
