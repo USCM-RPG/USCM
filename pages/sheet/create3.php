@@ -239,6 +239,10 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   $combatbonus = $bonuses->combatLoad();
   print_pdf_bonus($pdf, $combatbonus);
   
+  pdf_set_text_pos($pdf, $aapcolumnfour, 350);
+  pdf_show($pdf, "Risk:");
+  drawwhiteboxes($pdf, $aapcolumnfour+35, 350, 5);
+  
   //pdf_set_text_pos($pdf, $aapcolumnfour, 350);
   //pdf_show($pdf, "Stress Limit:");
   //pdf_set_text_pos($pdf, $aapcolumnfive, 350);
