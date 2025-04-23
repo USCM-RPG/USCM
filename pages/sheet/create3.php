@@ -184,7 +184,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   $health = $character->getHealthPoints();
   $xpos = $aapcolumntwo;
   drawwhiteboxes($pdf, $xpos, 388, $health, 12,12);
-
+  PDF_image($pdf, "../../assets/images/healtheffects.png", 142+$health*8, 400, 100, 50);
 
 
 pdf_set_text_pos($pdf, $aapcolumnone, 374);
