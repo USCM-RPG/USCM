@@ -55,6 +55,31 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
     $font = PDF_load_font($pdf, "Helvetica-Bold", "host", 0);
     pdf_setfont($pdf, $font, 10);
   }
+  
+  function printbonus($pdf, $skill, $hasskillbonus, $bonusxpos, $bonus2xpos, $skillsheight) {
+    if ($skill['bonus_always'] != 0) {
+      if ($skill['bonus_always'] > 0) {
+        $bonussign = "+";
+      } else {
+        $bonussign = "-";
+      }
+      $hasskillbonus=true;
+      pdf_set_text_pos($pdf, $bonusxpos, $skillsheight);
+      pdf_show($pdf, $bonussign . $skill['bonus_always'] . " ");
+    }
+    
+    if ($skill['bonus_sometimes'] != 0) {
+      if ($skill['bonus_sometimes'] > 0) {
+        $bonussign = "+";
+      } else {
+        $bonussign = "-";
+      }
+      $hasskillbonus=true;
+      pdf_set_text_pos($pdf, $bonus2xpos, $skillsheight);
+      pdf_show($pdf, " (" . $bonussign . $skill['bonus_sometimes'] . ") ");
+    }
+    return $hasskillbonus;
+  }
 
   $aapcolumnone = 50;
   $aapcolumntwo = 110;
@@ -364,11 +389,14 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
 
   // Right column
   // Skills
-  fontbold($font, $pdf);
+  $hasskillbonus=false;
   $skillsheight = 772;
   $skillsxpos = 390;
   $expxpos = $skillsxpos + 10;
   $levelxpos = 510;
+  $bonusxpos = 530;
+  $bonus2xpos = 540;
+  fontbold($font, $pdf);
   pdf_set_text_pos($pdf, $skillsxpos, $skillsheight);
   pdf_show($pdf, "Skills");
   pdf_set_text_pos($pdf, 500, $skillsheight);
@@ -379,9 +407,9 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   foreach ( $skillarray as $skill ) {
     pdf_set_text_pos($pdf, $skillsxpos, $skillsheight);
     pdf_show($pdf, $skill['name']);
-
     pdf_set_text_pos($pdf, $levelxpos, $skillsheight);
     pdf_show($pdf, $skill['value']);
+    $hasskillbonus = printbonus($pdf, $skill, $hasskillbonus, $bonusxpos, $bonus2xpos, $skillsheight);
     $skillsheight -= 12;
     $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
 	if ($skillexpertise) {
@@ -399,6 +427,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
     pdf_set_text_pos($pdf, $levelxpos, $skillsheight);
     $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
     pdf_show($pdf, $skill['value']);
+    $hasskillbonus = printbonus($pdf, $skill, $hasskillbonus, $bonusxpos, $bonus2xpos, $skillsheight);
     $skillsheight -= 12;
     $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
     if ($skillexpertise) {
@@ -416,6 +445,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
 
     pdf_set_text_pos($pdf, $levelxpos, $skillsheight);
     pdf_show($pdf, $skill['value']);
+    $hasskillbonus = printbonus($pdf, $skill, $hasskillbonus, $bonusxpos, $bonus2xpos, $skillsheight);
     $skillsheight -= 12;
     $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
     if ($skillexpertise) {
@@ -433,6 +463,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
 
     pdf_set_text_pos($pdf, $levelxpos, $skillsheight);
     pdf_show($pdf, $skill['value']);
+    $hasskillbonus = printbonus($pdf, $skill, $hasskillbonus, $bonusxpos, $bonus2xpos, $skillsheight);
     $skillsheight -= 12;
     
     $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
@@ -451,6 +482,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
 
     pdf_set_text_pos($pdf, $levelxpos, $skillsheight);
     pdf_show($pdf, $skill['value']);
+    $hasskillbonus = printbonus($pdf, $skill, $hasskillbonus, $bonusxpos, $bonus2xpos, $skillsheight);
     $skillsheight -= 12;
     $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
     if ($skillexpertise) {
@@ -461,6 +493,13 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
 
   }
   $skillsheight -= 12;
+  
+  if($hasskillbonus) {
+	fontbold($font, $pdf);
+	pdf_set_text_pos($pdf, $bonusxpos, 772);
+	pdf_show($pdf, "Bonus");
+	fontregular($font, $pdf);
+  }
   
   pdf_set_text_pos($pdf, 500, 810);
   pdf_show($pdf, "www.uscm.se");

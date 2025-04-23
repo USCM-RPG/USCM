@@ -655,12 +655,14 @@ class Character extends DbEntity {
   }
   
   private function skillsv3($skilltype) {
-    $sql = "SELECT skill_name_id, value, skill_name FROM uscm_skills s
+    $sql = "SELECT skill_name_id, value, skill_name, ba.always, bs.sometimes FROM uscm_skills s
           LEFT JOIN uscm_skill_names sn ON sn.id=s.skill_name_id
           LEFT JOIN uscm_skill_groups sg ON sg.id=sn.skill_group_id
-          WHERE character_id=:cid AND skill_group_name=:skilltype
+          LEFT JOIN (SELECT column_id, SUM(modifier_dice_value) as 'always' FROM uscm_advdisadv_bonus b LEFT JOIN uscm_advantages a ON b.advid=a.advantage_name_id LEFT JOIN uscm_traits t ON b.traitid=t.trait_name_id WHERE (a.character_id=:cid OR t.character_id=:cid) AND value_always_active=1 AND column_id IS NOT NULL AND table_point_name='skill_names' GROUP BY column_id) ba ON ba.column_id=skill_name_id
+          LEFT JOIN (SELECT column_id, SUM(modifier_dice_value) as 'sometimes' FROM uscm_advdisadv_bonus b LEFT JOIN uscm_advantages a ON b.advid=a.advantage_name_id LEFT JOIN uscm_traits t ON b.traitid=t.trait_name_id WHERE (a.character_id=:cid OR t.character_id=:cid) AND value_always_active=0 AND column_id IS NOT NULL AND table_point_name='skill_names' GROUP BY column_id) bs ON bs.column_id=skill_name_id
+          WHERE s.character_id=:cid AND skill_group_name=:skilltype
           ORDER BY skill_name";
-    $certallarray = $this->allCertificateRequirements();
+
     $skillarray = array ();
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
@@ -670,6 +672,8 @@ class Character extends DbEntity {
       $skillarray[$row['skill_name_id']]['id'] = $row['skill_name_id'];
       $skillarray[$row['skill_name_id']]['value'] = $row['value'];
       $skillarray[$row['skill_name_id']]['name'] = $row['skill_name'];
+      $skillarray[$row['skill_name_id']]['bonus_always'] = $row['always'];
+      $skillarray[$row['skill_name_id']]['bonus_sometimes'] = $row['sometimes'];
     }
     return $skillarray;
   }
