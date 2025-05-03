@@ -37,6 +37,7 @@ class Character extends DbEntity {
   private $disadvantagesVisible = NULL;
   private $disadvantagesAll = NULL;
   private $disadvantageIds = NULL;
+  private $psychodisadvantagesAll = NULL;
   private $encounteralien = NULL;
   private $encountergrey = NULL;
   private $encounterpredator = NULL;
@@ -389,24 +390,32 @@ class Character extends DbEntity {
   public function setDisadvantagesAll($disadvantageProvider) {
     $this->disadvantagesAll = new LazyLoader($disadvantageProvider);
   }
-
-  //TODO:remove
-  function getDisadvantages($onlyvisible = false) {
-    $disadvarray = array ();
-    $sql = "SELECT dn.id, disadvantage_name, d.id as uid
-          FROM uscm_disadvantage_names dn
-          LEFT JOIN uscm_disadvantages d ON d.disadvantage_name_id=dn.id
-          LEFT JOIN uscm_characters c ON c.id=d.character_id
-          WHERE d.character_id=:cid ORDER BY disadvantage_name";
-    $stmt = $this->db->prepare($sql);
-    $stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      $disadvarray[$row['id']]['disadvantage_name'] = $row['disadvantage_name'];
-      $disadvarray[$row['id']]['uid'] = $row['uid'];
-    }
-    return $disadvarray;
+  
+  public function getPsychoDisadvantagesAll() {
+    return call_user_func($this->psychodisadvantagesAll);
   }
+
+  public function setPsychoDisadvantagesAll($psychodisadvantageProvider) {
+    $this->psychodisadvantagesAll = new LazyLoader($psychodisadvantageProvider);
+  }
+  
+  //TODO:remove
+  //function getDisadvantages($onlyvisible = false) {
+    //$disadvarray = array ();
+    //$sql = "SELECT dn.id, disadvantage_name, d.id as uid
+          //FROM uscm_disadvantage_names dn
+          //LEFT JOIN uscm_disadvantages d ON d.disadvantage_name_id=dn.id
+          //LEFT JOIN uscm_characters c ON c.id=d.character_id
+          //WHERE d.character_id=:cid ORDER BY disadvantage_name";
+    //$stmt = $this->db->prepare($sql);
+    //$stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
+    //$stmt->execute();
+    //while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+      //$disadvarray[$row['id']]['disadvantage_name'] = $row['disadvantage_name'];
+      //$disadvarray[$row['id']]['uid'] = $row['uid'];
+    //}
+    //return $disadvarray;
+  //}
 
   public function getAwareness() {
     $sql = "SELECT (value * 2)  as value FROM uscm_attributes a

@@ -390,6 +390,13 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
     PDF_show_boxed($pdf, $disadvantage->getName(), 280, $disadvheight, 95, 12, 'L', '');
     $disadvheight -= 12;
   }
+  
+  $psychoDisadvantages = $character->getPsychoDisadvantagesAll();
+  $disadvheight -= 12;
+  foreach ( $psychoDisadvantages as $disadvantage ) {
+    PDF_show_boxed($pdf, $disadvantage->getName(), 280, $disadvheight, 95, 12, 'L', '');
+    $disadvheight -= 12;
+  }
 
   // Right column
   // Skills
