@@ -68,7 +68,7 @@
 
 <h3 class="heading heading-h3">Campaign material</h3>
 <a href="assets/files/EquipmentListPrint2.pdf" target="_blank">Equipment list</a> (PDF) Overview for printing<br/>
-<a href="assets/files/EquipmentBookletPrint.pdf" target="_blank">Reference Booklet</a> (PDF) Background info and equipment details. 2019 version<br/>
+<a href="assets/files/EquipmentBookletPrint.pdf" target="_blank">Reference Booklet</a> (PDF) Background info and equipment details.<br/>
 <br/>
 <a href="assets/files/InofficiellBriefingBF5.pdf" target="_blank">Unofficial briefing</a> (PDF) BF5s knowledge about aliens, in swedish<br/>
 
