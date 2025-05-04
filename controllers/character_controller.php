@@ -89,6 +89,9 @@ Class CharacterController {
       $character->setDisadvantagesAll(function () use ($thisController, $characterId) {
         return $thisController->getCharactersAllDisadvantages($characterId);
       });
+      $character->setPsychoDisadvantagesAll(function () use ($thisController, $characterId) {
+        return $thisController->getCharacterPsychoDisadv($characterId);
+      });
     }
     return $character;
   }
@@ -573,6 +576,30 @@ WHERE e.character_id=:cid AND es.skillid=:sid";
       $disadvantage->setDescription($row['description']);
       $disadvantage->setValue($row['value']);
       $disadvantage->setVisible($row['visible']);
+      $disadvantages[$row['uid']] = $disadvantage;
+    }
+    return $disadvantages;
+  }
+  
+  function getCharacterAllPsychoDisadvantages($characterId) {
+    return $this->getCharacterPsychoDisadv($characterId);
+  }
+
+  private function getCharacterPsychoDisadv($characterId) {
+    $disadvarray = array ();
+    $sql = "SELECT psychodis_id as pdid, name, value, p.id as uid FROM psychodisadvantages p 
+JOIN psychodis_names pn ON p.psychodis_id=pn.id
+WHERE p.character_id=:cid";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':cid', $characterId, PDO::PARAM_INT);
+    $stmt->execute();
+    $disadvantages = array();
+    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+      $disadvantage = new PsychoDisadvantage();
+      $disadvantage->setId($row['pdid']);
+      $disadvantage->setName($row['name']);
+      //$disadvantage->setDescription($row['description']);
+      $disadvantage->setValue($row['value']);
       $disadvantages[$row['uid']] = $disadvantage;
     }
     return $disadvantages;
