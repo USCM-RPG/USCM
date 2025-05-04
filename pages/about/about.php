@@ -78,7 +78,9 @@
 </h3>
 <a href="assets/files/v3/USCM-Rules2v3.pdf" target="_blank">Gameworld Reference - Skills/Traits/Expertise etc</a> (PDF)<br/>
 <a href="assets/files/v3/CharacterSheet.ods" target="_blank">Simple character sheet for manual character generation</a> (OpenDocument)<br/>
+<a href="https://github.com/USCM-RPG/character-generator" target="_blank">Character Generator</a> (github project)<br/>
 
+<br/>
 <h3 class="heading heading-h3">
   USCM v2 <span class="tag">old version</span>
 </h3>
@@ -87,7 +89,7 @@
 <a href="assets/files/v2/USCM-Rules2.pdf" target="_blank">Rules - Properties/Cert</a> (PDF)<br/><br/>
 
 <a href="assets/files/v2/USCM_Generator.ods" target="_blank">Character Generator</a> (OpenDocument - LibreOffice)<br/>
-To use the Character Generator you need <a href="http://www.libreoffice.org" target="_blank">LibreOffice</a> (free, open source).<br/>
+To use the old Character Generator you need <a href="http://www.libreoffice.org" target="_blank">LibreOffice</a> (free, open source).<br/>
 You need to activate macros under Tools->Options->LibreOffice->Security. A good way to do it is to set the folder with the Character generator in it as a "Trusted Source".<br/><br/>
 </section>
 
