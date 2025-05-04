@@ -290,10 +290,13 @@ if ($character->getVersion() < 3) {
     </tbody>
 	</table>
 	<?php
-  }
-  ?>
+  } else if ($character->getExtraSims() > 0) {
+		?>
+		</br>
+		Simulated missions: <?php echo $character->getExtraSims(); ?>
+		<?php
+	}
 
-  <?php
 } else {
     include("components/403.php");
 }
