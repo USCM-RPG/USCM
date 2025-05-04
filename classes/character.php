@@ -43,6 +43,8 @@ class Character extends DbEntity {
   private $encounterpredator = NULL;
   private $encounterai = NULL;
   private $encounterarachnid = NULL;
+  private $extramissions = NULL;
+  private $extrasims = NULL;
   private $version = NULL;
 
   function __construct($characterId = NULL) {
@@ -337,6 +339,22 @@ class Character extends DbEntity {
 
   public function setEncounterArachnid($val) {
 	  $this->encounterarachnid = $val;
+  }
+  
+  public function getExtraMissions() {
+	  return $this->extramissions;
+  }
+
+  public function setExtraMissions($val) {
+	  $this->extramissions = $val;
+  }
+  
+  public function getExtraSims() {
+	  return $this->extrasims;
+  }
+
+  public function setExtraSims($val) {
+	  $this->extrasims = $val;
   }
   
     public function getVersion() {

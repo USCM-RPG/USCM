@@ -129,6 +129,19 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 	</table>
 	
 	<?php
+	if ($character->getExtraMissions() > 0) {
+		?>
+		</br>
+		Additional missions: <?php echo $character->getExtraMissions(); ?>
+		<?php
+	}
+	if ($character->getExtraSims() > 0) {
+		?>
+		</br>
+		Simulated missions: <?php echo $character->getExtraSims(); ?>
+		<?php
+	}
+	
     $missiontags = getMissionTagsForCharacter($characterId);
     if ($missiontags) {
     ?>

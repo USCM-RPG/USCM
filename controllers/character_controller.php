@@ -19,7 +19,7 @@ Class CharacterController {
     $sql = "SELECT userid, platoon_id, forname, lastname, Enlisted, Age, Gender, UnusedXP,
         AwarenessPoints, CoolPoints, ExhaustionPoints, FearPoints, LeadershipPoints, PsychoPoints,
         TraumaPoints, MentalPoints, status, status_desc, specialty_name, uscm_specialty_names.id as specialty_id,
-        rank_id, rank_short, rank_long, rank_desc, encalien, encgrey, encpred, encai, encarach, version
+        rank_id, rank_short, rank_long, rank_desc, encalien, encgrey, encpred, encai, encarach, extramissions, extrasims, version
         FROM uscm_characters
         LEFT JOIN uscm_ranks ON uscm_characters.id = uscm_ranks.character_id
         LEFT JOIN uscm_rank_names ON  uscm_ranks.rank_id = uscm_rank_names.id
@@ -63,6 +63,8 @@ Class CharacterController {
 	  $character->setEncounterPredator($row['encpred']);
 	  $character->setEncounterAI($row['encai']);
 	  $character->setEncounterArachnid($row['encarach']);
+	  $character->setExtraMissions($row['extramissions']);
+	  $character->setExtraSims($row['extrasims']);
 	  $character->setVersion($row['version']);
       $platoonController = new PlatoonController();
       $playerController = new PlayerController();

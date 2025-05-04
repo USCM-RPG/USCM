@@ -233,7 +233,7 @@ function getMissionTerrainForCharacter($characterId) {
 function getNumberOfMissionsForCharacter($characterId) {
   $db = getDatabaseConnection();
   $chosencertarray = array ();
-  $missionssql = "SELECT count(id) as missions FROM uscm_missions
+  $missionssql = "SELECT count(id)+(SELECT extramissions FROM uscm_characters WHERE id=:cid) as missions FROM uscm_missions
                   WHERE character_id=:cid";
   $stmt = $db->prepare($missionssql);
   $stmt->bindValue(':cid', $characterId, PDO::PARAM_INT);
@@ -330,7 +330,7 @@ function setMedalsAndGloryOnCharacter(&$characters, $key, $character) {
   $glory = "";
   $characterId = $character ['cid'];
   $db = getDatabaseConnection();
-  $sql = 'SELECT count(m.id) as missions FROM uscm_missions m
+  $sql = 'SELECT count(m.id)+(SELECT extramissions FROM uscm_characters WHERE id=:cid) as missions FROM uscm_missions m
         LEFT JOIN uscm_mission_names mn ON mn.id=m.mission_id
                 WHERE character_id=:cid AND mn.date < NOW()';
   $stmt = $db->prepare($sql);

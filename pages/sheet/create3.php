@@ -275,8 +275,17 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   pdf_set_text_pos($pdf, 50, $missionheight);
   pdf_show($pdf, "Missions");
   fontregular($font, $pdf);
-  $missionarray = $character->getMissionsShort();
   $missionheight -= 12;
+  $missionarray = $character->getMissionsShort();
+  if ( $character->getExtraSims() > 0 || $character->getExtraMissions() > 0 ) {
+	  pdf_set_text_pos($pdf, 50, $missionheight);
+	  pdf_show($pdf, "Simulated: " . $character->getExtraSims());
+	  $missionheight -= 12;
+	  pdf_set_text_pos($pdf, 50, $missionheight);
+	  pdf_show($pdf, "Combat: " . $character->getExtraMissions() + count($missionarray));
+	  $missionheight -= 24;
+  }
+  
   foreach ( $missionarray as $mission ) {
     pdf_set_text_pos($pdf, 50, $missionheight);
     pdf_show($pdf, $mission['mission_name']);
