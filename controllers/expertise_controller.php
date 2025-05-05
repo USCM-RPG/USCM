@@ -25,6 +25,16 @@ Class ExpertiseController {
     return $expertisearray;
   }
   
+  public function getAllExpertiseGroups() {
+	$expertisegroups = array();
+	$db = getDatabaseConnection();
+	$stmt = $db->query("SELECT id, expertise_group_name FROM expertise_groups ORDER BY id ASC");
+	while ( $group = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+		$expertisegroups [$group ['id']] ['name'] = $group ['expertise_group_name'];
+	}
+    return $expertisegroups;
+  }
+  
   public function getAllTerrain() {
 	$expertisearray = array();
 	$expertisesql = "SELECT en.id,expertise_name, expertise_group_id, value FROM expertise_names en
@@ -44,7 +54,27 @@ Class ExpertiseController {
     
     return $expertisearray;
   }
-
+  
+  public function getExpertiseByGroup($groupid) {
+	$expertisearray = array();
+	$expertisesql = "SELECT en.id,expertise_name, value FROM expertise_names en
+              WHERE expertise_group_id=:gid ORDER BY expertise_name ASC";
+	$db = getDatabaseConnection();
+	$stmt = $db->prepare($expertisesql);
+	$stmt->bindValue(':gid', $groupid, PDO::PARAM_INT);
+    $stmt->execute();
+    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+	  $expertise = new Expertise();
+	  $expertise->setId($row['id']);
+	  $expertise->setExpertiseGroupId($row['expertise_group_id']);
+	  $expertise->setName($row['expertise_name']);
+	  $expertise->setValue($row['value']);
+	  $expertisearray[] = $expertise;
+    }
+    
+    return $expertisearray;
+  }
+  
 public function getMissionTerrain($missionId) {
   $terrain = '';
 	$expertisesql = "SELECT GROUP_CONCAT(expertise_name ORDER BY expertise_name ASC SEPARATOR ', ') as terrain

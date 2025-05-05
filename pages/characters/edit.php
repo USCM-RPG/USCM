@@ -240,23 +240,28 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 
 <?php
 if ($character->getVersion() > 2) {
-	$allExpertise = $expertiseController->getAllExpertise();
 	$characterExpertise  = $character->getExpertise();
-?>
-  <fieldset class="form--inline grid grid--small grid--leftalign">
-    <legend>Expertise</legend>
-		<?php
-		foreach($allExpertise as $expertise) {
-			$expertiseId = $expertise->getId();
-			?>
-			<label for="expertise_<?php echo $expertiseId; ?>">
-				<input type="checkbox" id="expertise_<?php echo $expertiseId; ?>" name="expertise[<?php echo $expertiseId; ?>]" <?php echo (array_key_exists($expertiseId, $characterExpertise)) ? ("checked") : (""); ?>>
-				<?php echo $expertise->getName(); ?> (<?php echo $expertise->getValue(); ?>)
-			</label>
+	$expertiseGroups = $expertiseController->getAllExpertiseGroups();
+
+	foreach($expertiseGroups as $key => $value) {
+		?>
+		<fieldset class="form--inline grid grid--small grid--leftalign">
+			<legend><?php echo $value['name'] . ' Expertise' ?></legend>
 			<?php
-		} ?>
-  </fieldset>
-<?php
+			$expertises = $expertiseController->getExpertiseByGroup($key);
+			foreach($expertises as $expertise) {
+				$expertiseId = $expertise->getId();
+				?>
+				<label for="expertise_<?php echo $expertiseId; ?>">
+					<input type="checkbox" id="expertise_<?php echo $expertiseId; ?>" name="expertise[<?php echo $expertiseId; ?>]" <?php echo (array_key_exists($expertiseId, $characterExpertise)) ? ("checked") : (""); ?>>
+					<?php echo $expertise->getName(); ?> (<?php echo $expertise->getValue(); ?>)
+				</label>
+				<?php
+			}
+			?>
+		</fieldset>
+		<?php
+	}
 }
 ?>
 
