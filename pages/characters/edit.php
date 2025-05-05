@@ -251,7 +251,7 @@ if ($character->getVersion() > 2) {
 			?>
 			<label for="expertise_<?php echo $expertiseId; ?>">
 				<input type="checkbox" id="expertise_<?php echo $expertiseId; ?>" name="expertise[<?php echo $expertiseId; ?>]" <?php echo (array_key_exists($expertiseId, $characterExpertise)) ? ("checked") : (""); ?>>
-				<?php echo $expertise->getName(); ?>
+				<?php echo $expertise->getName(); ?> (<?php echo $expertise->getValue(); ?>)
 			</label>
 			<?php
 		} ?>
