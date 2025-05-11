@@ -87,32 +87,11 @@ Class PlayerController {
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($row != null) {
-//       $player->setId($playerId);
-//       $player->setGivenName($row ['forname']);
-//       $player->setNickname($row ['nickname']);
-//       $player->setSurname($row ['lastname']);
-//       $player->setEmailaddress($row ['emailadress']);
-//       $player->setUseNickname($row ['use_nickname']);
-//       $player->setPlatoonId($row ['platoon_id']);
-//       $player->setLoginTime($row ['logintime']);
-//       $player->setLastLoginTime($row ['lastlogintime']);
-//       if ($row['gm']) {
-//         $player->setGm(TRUE);
-//       } else {
-//         $player->setGm(FALSE);
-//       }
-//       $player->setGmRpgId($row['RPG_id']);
-//       $player->setGmActive($row['active']);
-//       if ($row['admin']) {
-//         $player->setAdmin(TRUE);
-//       } else {
-//         $player->setAdmin(FALSE);
-//       }
       $player = $this->assignPlayerData($row);
     }
     return $player;
   }
-  
+
   /**
    *
    * @return Player[]
@@ -143,7 +122,7 @@ Class PlayerController {
     return $playerList;
   }
 
-  private function  assignPlayerData($data) {
+  private function assignPlayerData($data) {
     $player = new Player();
     $player->setId($data ['id']);
     $player->setGivenName($data ['forname']);
@@ -161,8 +140,8 @@ Class PlayerController {
     }
     $player->setGmRpgId($data['RPG_id']);
     $player->setGmActive($data['gmactive']);
-	$player->setPlayerActive($data['playeractive']);
-	$player->setDiscordId($data['discordid']);
+	  $player->setPlayerActive($data['playeractive']);
+	  $player->setDiscordId($data['discordid'] ?? NULL);
     if ($data['admin']) {
       $player->setAdmin(TRUE);
     } else {
@@ -170,7 +149,7 @@ Class PlayerController {
     }
     return $player;
   }
-  
+
   public function getActivePlayersInPlatoon($platoonId) {
     $playersql = "SELECT Users.id,forname,lastname,name_short FROM Users
                   LEFT JOIN uscm_platoon_names pn ON pn.id=Users.platoon_id
@@ -205,6 +184,5 @@ Class PlayerController {
       $gms[] = $gm;
     }
     return $gms;
-
   }
 }

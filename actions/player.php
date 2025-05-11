@@ -36,8 +36,8 @@ if ($_GET['what']=="create" && ($user->isAdmin() || $user->isGm())) {
 }
 elseif ($_GET['what']=="modify" && ($user->isAdmin() || $user->isGm() || $user->getId() == $_POST['id'])) {
   $player = $playerController->getPlayer($_POST['id']);
-  if ($_POST['password']) {
-    $player->setPassword($_POST['password']);
+  if ($password) {
+    $player->setPassword($password);
     $playerController->updatePassword($player);
   }
   $player->setGivenName($forname);
@@ -47,11 +47,12 @@ elseif ($_GET['what']=="modify" && ($user->isAdmin() || $user->isGm() || $user->
   $player->setPassword($password);
   $player->setUseNickname($use_nickname);
   $player->setPlatoonId($platoon_id);
-  $player->setDiscordId($discordid);
+  if(preg_match("/\d{17,18}/", $discordid)) {
+    $player->setDiscordId($discordid);
+  }
   $player->setPlayerActive($active);
   $playerController->update($player);
 }
 
 header("location:{$url_root}/index.php?url=player/edit.php");
-
 ?>

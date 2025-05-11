@@ -231,6 +231,10 @@ label:has(:disabled) {
 input {
   accent-color: var(--uscm-color-green);
 }
+input:invalid {
+  accent-color: red;
+  border-color: red;
+}
 
 legend {
   background-color:  var(--uscm-color-green);
