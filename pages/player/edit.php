@@ -97,23 +97,29 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
     } else {
         $players = $playerController->getAllPlayers();
         ?>
-        <table class="table">
+        <ul class="list">
         <?php
-        foreach ($players as $player) { ?>
-                <tr>
-                    <td><?php if ($user->isAdmin() || $user->getId() == $player->getId()) { ?>
+        $previousLetter = null;
+        foreach ($players as $player) {
+          $currentLetter = $player->getNameWithNickname()[0];
+          if ($previousLetter != $currentLetter) {
+            echo "<li>". $currentLetter ."</li>";
+          }
+          $previousLetter = $currentLetter; ?>
+                <li>
+                    <?php if ($user->isAdmin() || $user->getId() == $player->getId()) { ?>
                       <a href="index.php?url=player/edit.php&player=<?php echo $player->getId(); ?>"><?php
                     }
                     echo stripslashes($player->getNameWithNickname());
                     if ($user->isAdmin() || $user->getId() == $player->getId()) { ?>
                       </a><?php
                     }
-                    ?></td>
-                </tr>
+                    ?>
+                </li>
         <?php }
     }
     ?>
-    </table>
+    </ul>
 <?php
 } else {
     include("components/403.php");
