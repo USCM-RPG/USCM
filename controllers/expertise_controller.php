@@ -5,7 +5,7 @@ Class ExpertiseController {
   function __construct() {
     $this->db = getDatabaseConnection();
   }
-  
+
   public function getAllExpertise() {
 	$expertisearray = array();
 	$expertisesql = "SELECT en.id,expertise_name, expertise_group_id, value FROM expertise_names en
@@ -21,10 +21,10 @@ Class ExpertiseController {
 	  $expertise->setValue($row['value']);
 	  $expertisearray[] = $expertise;
     }
-    
+
     return $expertisearray;
   }
-  
+
   public function getAllExpertiseGroups() {
 	$expertisegroups = array();
 	$db = getDatabaseConnection();
@@ -34,7 +34,7 @@ Class ExpertiseController {
 	}
     return $expertisegroups;
   }
-  
+
   public function getAllTerrain() {
 	$expertisearray = array();
 	$expertisesql = "SELECT en.id,expertise_name, expertise_group_id, value FROM expertise_names en
@@ -51,13 +51,13 @@ Class ExpertiseController {
 	  $expertise->setValue($row['value']);
 	  $expertisearray[] = $expertise;
     }
-    
+
     return $expertisearray;
   }
-  
+
   public function getExpertiseByGroup($groupid) {
 	$expertisearray = array();
-	$expertisesql = "SELECT en.id,expertise_name, value FROM expertise_names en
+	$expertisesql = "SELECT en.id,expertise_name,expertise_group_id,value FROM expertise_names en
               WHERE expertise_group_id=:gid ORDER BY expertise_name ASC";
 	$db = getDatabaseConnection();
 	$stmt = $db->prepare($expertisesql);
@@ -71,14 +71,14 @@ Class ExpertiseController {
 	  $expertise->setValue($row['value']);
 	  $expertisearray[] = $expertise;
     }
-    
+
     return $expertisearray;
   }
-  
+
 public function getMissionTerrain($missionId) {
   $terrain = '';
 	$expertisesql = "SELECT GROUP_CONCAT(expertise_name ORDER BY expertise_name ASC SEPARATOR ', ') as terrain
-	            FROM expertise_names en 
+	            FROM expertise_names en
 	            JOIN terrain_mission tm ON tm.expertise_id=en.id
 	            WHERE tm.mission_id=:missionId
 	            ORDER BY expertise_name ASC LIMIT 1";
@@ -87,13 +87,13 @@ public function getMissionTerrain($missionId) {
 	$stmt->bindValue(':missionId', $missionId, PDO::PARAM_INT);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    try {  
+    try {
       if (!empty($row)) {
          $terrain = $row['terrain'];
         }
     } catch (PDOException $e) {
     }
-    
+
     return $terrain;
   }
 }
