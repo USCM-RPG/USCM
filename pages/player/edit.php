@@ -29,7 +29,7 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
 
           <label for="forname">
             Firstname
-            <input type="text" id="forname" name="forname" value="<?php echo stripslashes($player->getGivenName()); ?>">
+            <input type="text" id="forname" name="forname" required value="<?php echo stripslashes($player->getGivenName()); ?>">
           </label>
 
           <label for="lastname">
@@ -54,7 +54,7 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
 
           <label for="emailadress">
             Email
-            <input type="email" id="emailadress" name="emailadress" value="<?php echo stripslashes($player->getEmailaddress()); ?>">
+            <input type="email" id="emailadress" name="emailadress" required pattern=".+@.+\..+" value="<?php echo stripslashes($player->getEmailaddress()); ?>">
           </label>
 
           <label for="password">

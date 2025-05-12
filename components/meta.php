@@ -5,4 +5,4 @@
 <link rel="icon" href="<?php echo $url_root ?>/assets/logo/uscm-blip-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="<?php echo $url_root ?>/assets/logo/uscm-blip-logo@180px.png">
 <link rel="manifest" href="<?php echo $url_root ?>/assets/manifest.json">
-<link href="<?php echo $url_root ?>/assets/style.css?v29032025" rel="stylesheet">
+<link href="<?php echo $url_root ?>/assets/style.css?v13052025" rel="stylesheet">

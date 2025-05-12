@@ -10,17 +10,17 @@ if ($user->isAdmin() || $user->isGm()) {
 
   <label for="mission">
     Mission
-    <input type="text" id="mission" name="mission">
+    <input type="text" id="mission" name="mission" required>
   </label>
 
   <label for="name">
     Name
-    <input type="text" id="name" name="name">
+    <input type="text" id="name" name="name" required>
   </label>
 
   <label for="date">
     Date
-    <input type="text" id="date" name="date">
+    <input type="text" id="date" name="date" pattern="\d{4}-\d{2}-\d{2}">
   </label>
 
   <label for="briefing">

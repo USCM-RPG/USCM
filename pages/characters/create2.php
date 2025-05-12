@@ -67,8 +67,8 @@ if ($user->isAdmin() || $user->isGm()) { ?>
     </label>
 
     <label for="enlisted">
-      Enlisted (format: YYYYMMDD)
-      <input type="text" id="enlisted" name="enlisted">
+      Enlisted (format: YYYY-MM-DD)
+      <input type="text" id="enlisted" name="enlisted" pattern="\d{4}-\d{2}-\d{2}">
     </label>
 
     <label for="age">

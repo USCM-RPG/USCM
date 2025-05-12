@@ -98,8 +98,8 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
     </label>
 
     <label for="enlisted">
-      Enlisted (format: YYYYMMDD)
-      <input type="text" id="enlisted" name="enlisted" value="<?php echo $character->getEnlistedDate(); ?>">
+      Enlisted (format: YYYY-MM-DD)
+      <input type="text" id="enlisted" name="enlisted" pattern="\d{4}-\d{2}-\d{2}" value="<?php echo $character->getEnlistedDate(); ?>">
     </label>
 
     <label for="age">

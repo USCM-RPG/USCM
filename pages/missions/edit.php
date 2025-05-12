@@ -30,17 +30,17 @@ if ($admin || $gm) {
       <form class="form" method="post" action="actions/mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
         <label for="mission_name_short">
           Mission
-          <input type="text" id="mission_name_short" name="mission_name_short" value="<?php echo $mission->getShortName(); ?>">
+          <input type="text" id="mission_name_short" name="mission_name_short" required value="<?php echo $mission->getShortName(); ?>">
         </label>
 
         <label for="mission_name">
           Name
-          <input type="text" id="mission_name" name="mission_name" value="<?php echo $mission->getName(); ?>">
+          <input type="text" id="mission_name" name="mission_name" required value="<?php echo $mission->getName(); ?>">
         </label>
 
         <label for="date">
           Date
-          <input type="text" id="date" name="date" value="<?php echo $mission->getDate(); ?>">
+          <input type="text" id="date" name="date" pattern="\d{4}-\d{2}-\d{2}" value="<?php echo $mission->getDate(); ?>">
         </label>
 
         <label for="platoon_id">
