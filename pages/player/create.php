@@ -9,7 +9,7 @@ if ($user->isAdmin()) {
 <form class="form" method="post" action="actions/player.php?what=create">
   <label for="forname">
     Firstname
-    <input type="text" id="forname" name="forname">
+    <input type="text" id="forname" name="forname" required>
   </label>
 
   <label for="lastname">
@@ -34,12 +34,12 @@ if ($user->isAdmin()) {
 
   <label for="emailadress">
     Email
-    <input type="email" id="emailadress" name="emailadress">
+    <input type="email" id="emailadress" name="emailadress" required pattern=".+@.+\..+">
   </label>
 
   <label for="password">
     Password
-    <input type="password" id="password" name="password">
+    <input type="password" id="password" name="password" required>
   </label>
 
   <label for="platoon_id">

@@ -38,12 +38,12 @@ if ($user->isAdmin() || $user->isGm()) {
     <form class="form" action="index.php?url=news/news.php&action=post" method="post">
       <label for="date">
         Datum
-        <input type="text" id="date" name="date">
+        <input type="text" id="date" name="date" required pattern="\d{4}-\d{2}-\d{2}">
       </label>
 
       <label for="written_by">
         Skrivet av
-        <input type="text" id="written_by" name="written_by">
+        <input type="text" id="written_by" name="written_by" required>
       </label>
 
       <label for="text">
@@ -52,7 +52,7 @@ if ($user->isAdmin() || $user->isGm()) {
         <code>
           &lt;a href="index.php?url=missions/details.php&id=224"&gt;Mission 192&lt;/a&gt;
         </code>
-        <textarea name="text" rows="7"></textarea>
+        <textarea name="text" rows="7" required></textarea>
       </label>
 
       <input class="button" type="submit" value="Create News">

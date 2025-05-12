@@ -37,12 +37,12 @@ if ($user->isAdmin() || $user->isGm()) { ?>
 
     <label for="forname">
       Firstname
-      <input type="text" id="forname" name="forname">
+      <input type="text" id="forname" name="forname" required>
     </label>
 
     <label for="lastname">
       Lastname
-      <input type="text" id="lastname" name="lastname">
+      <input type="text" id="lastname" name="lastname" required>
     </label>
 
     <label for="specialty">
@@ -67,8 +67,8 @@ if ($user->isAdmin() || $user->isGm()) { ?>
     </label>
 
     <label for="enlisted">
-      Enlisted (format: YYYYMMDD)
-      <input type="text" id="enlisted" name="enlisted" value="<?php echo date('Y-m-d'); ?>">
+      Enlisted (format: YYYY-MM-DD)
+      <input type="text" id="enlisted" name="enlisted" pattern="\d{4}-\d{2}-\d{2}" value="<?php echo date('Y-m-d'); ?>">
     </label>
 
     <label for="age">
