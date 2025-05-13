@@ -490,6 +490,18 @@ class Character extends DbEntity {
       return ($row['mvalue'] + $modifier);
     }
   }
+  
+  function getUnarmedDamage() {
+	  return $this->getAttribute('Strength') + 3;
+  }
+  
+  function getUnarmedDamageBonus() {
+    $modifier = 0;
+    if ($this->hasCharacterAdvantage(/*Iron-fist*/25)) {
+      $modifier = $modifier + 1;
+    }
+    return $modifier;
+  }
 
   public function getLeadership() {
     $sql = "SELECT value  + IF(r.rank_id>2, r.rank_id - 2, 0) as value FROM uscm_attributes a

@@ -238,10 +238,18 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   pdf_set_text_pos($pdf, $aapcolumnsix, 362);
   $combatbonus = $bonuses->combatLoad();
   print_pdf_bonus($pdf, $combatbonus);
-  
   pdf_set_text_pos($pdf, $aapcolumnfour, 350);
+  pdf_show($pdf, "Unarmed damage:");
+  pdf_set_text_pos($pdf, $aapcolumnfive, 350);
+  pdf_show($pdf, $character->getUnarmedDamage());
+  if ($character->getUnarmedDamageBonus() > 0) {
+    pdf_set_text_pos($pdf, $aapcolumnsix, 350);
+    pdf_show($pdf, "+" . $character->getUnarmedDamageBonus());
+}
+  
+  pdf_set_text_pos($pdf, $aapcolumnfour, 338);
   pdf_show($pdf, "Risk:");
-  drawwhiteboxes($pdf, $aapcolumnfour+35, 350, 5);
+  drawwhiteboxes($pdf, $aapcolumnfour+35, 338, 5);
   
   //pdf_set_text_pos($pdf, $aapcolumnfour, 350);
   //pdf_show($pdf, "Stress Limit:");
