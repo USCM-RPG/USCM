@@ -32,7 +32,7 @@
   font-family: Verdana, sans-serif;
   font-size: 1rem;
   font-style: normal;
-  text-underline-offset: 2px;
+  text-underline-offset: 1px;
 }
 
 @view-transition {
@@ -74,11 +74,10 @@ a:hover {
   min-height: 100vh;
   padding: 20px;
   position: relative;
-}
 
-@media (min-width: 799px) {
-  .wrapper {
-    max-width: 800px;
+  @media (width >= 720px) {
+    font-size: calc(14rem / 16);
+    max-width: 920px;
   }
 }
 
@@ -276,10 +275,8 @@ legend {
 
 .grid--small {
   grid-template-columns: 1fr 1fr;
-}
 
-@media (min-width: 599px) {
-  .grid--small {
+  @media (width >= 600px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
