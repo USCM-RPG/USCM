@@ -25,8 +25,7 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
       <h2 class="heading heading-h2"><?php echo stripslashes($player->getNameWithNickname()); ?></h2>
 
         <form class="form" method="post" action="actions/player.php?what=modify">
-                <input type="hidden" name="id" value="<?php echo $player->getId(); ?>">
-                <input type="hidden" name="res" value="<?php //echo $player['password']; ?>">
+          <input type="hidden" name="id" value="<?php echo $player->getId(); ?>">
 
           <label for="forname">
             Firstname
@@ -93,33 +92,7 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
 
           <input class="button" type="submit" value="Modify Player">
         </form>
-    <?php
-    } else {
-        $players = $playerController->getAllPlayers();
-        ?>
-        <ul class="list">
-        <?php
-        $previousLetter = null;
-        foreach ($players as $player) {
-          $currentLetter = $player->getNameWithNickname()[0];
-          if ($previousLetter != $currentLetter) {
-            echo "<li>". $currentLetter ."</li>";
-          }
-          $previousLetter = $currentLetter; ?>
-                <li>
-                    <?php if ($user->isAdmin() || $user->getId() == $player->getId()) { ?>
-                      <a href="index.php?url=player/edit.php&player=<?php echo $player->getId(); ?>"><?php
-                    }
-                    echo stripslashes($player->getNameWithNickname());
-                    if ($user->isAdmin() || $user->getId() == $player->getId()) { ?>
-                      </a><?php
-                    }
-                    ?>
-                </li>
-        <?php }
-    }
-    ?>
-    </ul>
+    <?php } ?>
 <?php
 } else {
     include("components/403.php");

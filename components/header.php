@@ -27,7 +27,7 @@
       </li>
       <?php if ($_SESSION['level']==3): ?>
         <li>
-          <a href="index.php?url=player/edit.php" <?php echo $urlParam == "player/edit.php" ? "aria-current='page'" : ""?>>
+          <a href="index.php?url=player/list.php" <?php echo $urlParam == "player/list.php" ? "aria-current='page'" : ""?>>
             Players
           </a>
         </li>
