@@ -76,6 +76,7 @@
 <h3 class="heading heading-h3">
   USCM v3 <span class="tag tag-bf5">current version</span>
 </h3>
+<a href="assets/files/v3/USCM-RulesSummary.pdf" target="_blank">One page rules summary</a> (PDF)<br/>
 <a href="assets/files/v3/USCM-Rules2v3.pdf" target="_blank">Gameworld Reference - Skills/Traits/Expertise etc</a> (PDF)<br/>
 <a href="assets/files/v3/CharacterSheet.ods" target="_blank">Simple character sheet for manual character generation</a> (OpenDocument)<br/>
 <a href="https://github.com/USCM-RPG/character-generator" target="_blank">Character Generator</a> (github project)<br/>
