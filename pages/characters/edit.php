@@ -30,7 +30,8 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
     </span>
   </h2>
 
-  <a href="pages/sheet/create<?php echo $character->getVersion(); ?>.php?character_id=<?php echo $characterId; ?>" target="_blank">Generate character sheet</a>
+  <a href="pages/sheet/create<?php echo $character->getVersion(); ?>.php?character_id=<?php echo $characterId; ?>" target="_blank">Generate character sheet</a> |
+  <a href="pages/sheet/create<?php echo $character->getVersion(); ?>.php?character_id=<?php echo $characterId; ?>&backside=1" target="_blank">Generate 2-page character sheet</a>
 
     <?php
 	if ($user->isAdmin() || ($user->isGm() && $character->getPlatoonId() == $user->getPlatoonId())) {
