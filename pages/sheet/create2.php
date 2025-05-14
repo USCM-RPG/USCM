@@ -7,6 +7,7 @@ require_once("../../functions.php");
 require_once("../../classes/iconpdf.php");
 
 $characterId = $_GET['character_id'];
+$backside = $_GET['backside'];
 $characterController = new CharacterController();
 $playerController = new PlayerController();
 $character = $characterController->getCharacter($characterId);
@@ -544,6 +545,11 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   }
 
   pdf_end_page($pdf);
+  if($backside) {
+    pdf_begin_page($pdf, 595, 842);
+    PDF_image($pdf, "../../assets/images/CharacterSheetBack.png", 0, 0, 595, 842);
+    pdf_end_page($pdf);
+  }
   pdf_close($pdf);
 
   $buf = pdf_get_buffer($pdf);
