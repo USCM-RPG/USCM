@@ -1,7 +1,12 @@
 <?php
-ini_set('session.gc_maxlifetime', 24 * 60 * 60);
+$cookie_lifetime = 24 * 60 * 60;
+ini_set('session.cookie_lifetime', $cookie_lifetime);
 ini_set('session.cookie_secure', 1);
-session_start(['cookie_lifetime' => 24 * 60 * 60]);
+ini_set('session.gc_maxlifetime', $cookie_lifetime);
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+ini_set('session.save_path', "/tmp");
+session_start();
 
 if (!array_key_exists('last_activity', $_SESSION) || time() - $_SESSION['last_activity'] > 30 * 60) {
   session_regenerate_id(true);
