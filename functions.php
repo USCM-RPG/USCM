@@ -90,12 +90,14 @@ function login($level) {
       unset($_SESSION['table_prefix']);
       unset($_SESSION['user_id']);
       unset($_SESSION['platoon_id']);
+      session_unset();
       session_destroy();
       return 0;
     } elseif ($alt == "login") {
       if (empty($_POST['anvandarnamn']) || empty($_POST['losenord'])) {
         $_SESSION['inloggad'] = 0;
         $_SESSION['level'] = "0";
+        session_unset();
         session_destroy();
         return 0;
       }

@@ -1,6 +1,8 @@
 <?php
 $cookie_lifetime = 24 * 60 * 60;
 ini_set('session.cookie_lifetime', $cookie_lifetime);
+ini_set('session.cookie_httponly', 1);
+ini_set('session.cookie_samesite', "Strict");
 ini_set('session.cookie_secure', 1);
 ini_set('session.gc_maxlifetime', $cookie_lifetime);
 ini_set('session.gc_probability', 1);
