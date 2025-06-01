@@ -230,7 +230,7 @@ label:has(:disabled) {
 input {
   accent-color: var(--uscm-color-green);
 }
-input:invalid {
+input:user-invalid {
   accent-color: red;
   border-color: red;
 }
