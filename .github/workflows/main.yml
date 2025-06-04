@@ -2,17 +2,15 @@ on:
   push:
     branches:
       - main
-      - master
   pull_request:
     branches:
       - main
-      - master
 name: Deploy
 jobs:
   deploy:
     name: Deploy Job
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/main' && 'main' || github.ref == 'refs/heads/master' && 'main' || 'branch' }}
+    environment: ${{ github.ref == 'refs/heads/main' && 'main' || 'branch' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
