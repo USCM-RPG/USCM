@@ -68,7 +68,10 @@
 
 <h3 class="heading heading-h3">Campaign material</h3>
 <a href="assets/files/EquipmentListPrint2.pdf" target="_blank">Equipment list</a> (PDF) Overview for printing<br/>
-<a href="assets/files/EquipmentBookletPrint.pdf" target="_blank">Reference Booklet</a> (PDF) Background info and equipment details.<br/>
+<a href="assets/files/EquipmentBookletPrint.pdf" target="_blank">Reference Booklet</a> (PDF) USCM background info and equipment details.<br/>
+<a href="assets/files/v3/USCM-Rules2-cm.pdf" target="_blank">Campaign world Reference, USCM edition - Skills/Traits/Expertise etc</a> (PDF)<br/>
+Campaign world Reference, UPP edition - Skills/Traits/Expertise etc</a> (Coming..)<br/>
+<a href="assets/files/v3/USCM-Rules2-complete.pdf" target="_blank">Campaign world Reference, Complete edition</a> (PDF) You typically won't need this, pick the slimmed version for your campaign instead<br/>
 <br/>
 <a href="assets/files/InofficiellBriefingBF5.pdf" target="_blank">Unofficial briefing</a> (PDF) BF5s knowledge about aliens, in swedish<br/>
 
@@ -77,7 +80,6 @@
   USCM v3 <span class="tag tag-bf5">current version</span>
 </h3>
 <a href="assets/files/v3/USCM-RulesSummary.pdf" target="_blank">One page rules summary</a> (PDF)<br/>
-<a href="assets/files/v3/USCM-Rules2v3.pdf" target="_blank">Gameworld Reference - Skills/Traits/Expertise etc</a> (PDF)<br/>
 <a href="assets/files/v3/CharacterSheet.ods" target="_blank">Simple character sheet for manual character generation</a> (OpenDocument)<br/>
 <a href="https://github.com/USCM-RPG/character-generator" target="_blank">Character Generator</a> (github project)<br/>
 
