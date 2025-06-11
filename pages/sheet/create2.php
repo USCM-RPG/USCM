@@ -193,9 +193,6 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   pdf_show($pdf, "Leadership:");
   $leadership = $character->getLeadership();
   $leadershipbonus = $bonuses->pointAndLimitBonus("leadership");
-  if ($leadershipbonus['always'] != 0) {
-    $leadership += $leadershipbonus['always'];
-  }
   $leadershipbonussometimes = 0;
   if (is_array($leadershipbonus['sometimes'])) {
     foreach ( $leadershipbonus['sometimes'] as $bonus ) {

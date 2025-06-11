@@ -191,10 +191,6 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 pdf_set_text_pos($pdf, $aapcolumnone, 374);
   pdf_show($pdf, "Leadership:");
   $leadership = $character->getLeadership();
-  $leadershipbonus = $bonuses->pointAndLimitBonus("leadership");
-  if ($leadershipbonus['always'] != 0) {
-    $leadership += $leadershipbonus['always'];
-  }
   $xpos = $aapcolumntwo;
   drawwhiteboxes($pdf, $xpos, 374, $leadership);
 
