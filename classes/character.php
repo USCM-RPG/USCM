@@ -504,12 +504,12 @@ class Character extends DbEntity {
   }
 
   public function getLeadership() {
-    $sql = "SELECT value  + IF(r.rank_id>2, r.rank_id - 2, 0) as value FROM uscm_attributes a
+    $sql = "SELECT value+rn.rank_value+IF(rank_type='E', -2, 0)+COALESCE((SELECT SUM(modifier_basic_value) FROM uscm_advdisadv_bonus b LEFT JOIN uscm_advantages a ON b.advid=a.advantage_name_id WHERE a.character_id=:cid AND value_always_active=1 AND table_point_name='leadership'),0)+COALESCE((SELECT SUM(modifier_basic_value) FROM uscm_advdisadv_bonus b LEFT JOIN uscm_disadvantages d ON b.advid=d.disadvantage_name_id WHERE d.character_id=:cid AND value_always_active=1 AND table_point_name='leadership'),0) as value FROM uscm_attributes a
           LEFT JOIN uscm_attribute_names an ON an.id=a.attribute_id
           LEFT JOIN uscm_characters c ON c.id=a.character_id
           LEFT JOIN uscm_ranks r ON r.character_id=c.id
+          LEFT JOIN uscm_rank_names rn ON rn.id=r.rank_id
           WHERE an.attribute_name='Charisma' AND a.character_id=:cid";
-	//Need fix for Msgt + advantages
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
     $stmt->execute();
