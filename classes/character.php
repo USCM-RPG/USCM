@@ -504,7 +504,7 @@ class Character extends DbEntity {
   }
 
   public function getLeadership() {
-    $sql = "SELECT value+rn.rank_value/2+IF(rank_type='E', -2, 0)+COALESCE((SELECT SUM(modifier_basic_value) FROM uscm_advdisadv_bonus b LEFT JOIN uscm_advantages a ON b.advid=a.advantage_name_id WHERE a.character_id=:cid AND value_always_active=1 AND table_point_name='leadership'),0)+COALESCE((SELECT SUM(modifier_basic_value) FROM uscm_advdisadv_bonus b LEFT JOIN uscm_disadvantages d ON b.advid=d.disadvantage_name_id WHERE d.character_id=:cid AND value_always_active=1 AND table_point_name='leadership'),0) as value FROM uscm_attributes a
+    $sql = "SELECT ROUND(value+rn.rank_value/2+IF(rank_type='E', -2, 0)+COALESCE((SELECT SUM(modifier_basic_value) FROM uscm_advdisadv_bonus b LEFT JOIN uscm_advantages a ON b.advid=a.advantage_name_id WHERE a.character_id=:cid AND value_always_active=1 AND table_point_name='leadership'),0)+COALESCE((SELECT SUM(modifier_basic_value) FROM uscm_advdisadv_bonus b LEFT JOIN uscm_disadvantages d ON b.advid=d.disadvantage_name_id WHERE d.character_id=:cid AND value_always_active=1 AND table_point_name='leadership'),0)) AS lp FROM uscm_attributes a
           LEFT JOIN uscm_attribute_names an ON an.id=a.attribute_id
           LEFT JOIN uscm_characters c ON c.id=a.character_id
           LEFT JOIN uscm_ranks r ON r.character_id=c.id
@@ -514,7 +514,7 @@ class Character extends DbEntity {
     $stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $row['value'];
+    return $row['lp'];
   }
 
   public function getPlayer() {
