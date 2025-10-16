@@ -213,7 +213,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
     </label>
     
     <label for="scrating">
-      Unused XP
+      Ship Class Rating
       <input type="number" id="scrating" name="scrating" min="0" value="<?php echo $character->getShipClassRating(); ?>">
     </label>
   </fieldset>
