@@ -55,6 +55,7 @@ if ($_GET['action'] == "update_character") {
   $age = $_POST['age'];
   $gender = $_POST['gender'];
   $xp = $_POST['xp'];
+  $scrating = $_POST['scrating'];
   //$ap = $_POST['ap'];
   $cp = $_POST['cp'];
   //$ep = $_POST['ep'];
@@ -88,6 +89,7 @@ if ($_GET['action'] == "update_character") {
                          FearPoints=:fp,
                          LeadershipPoints=:lp,
                          PsychoPoints=:pp,
+                         scrating=:scrating,
                          status=:status,
                          status_desc=:status_desc,
 						 encalien=:cbalien,
@@ -106,6 +108,7 @@ if ($_GET['action'] == "update_character") {
   $stmt->bindValue(':age', $age, PDO::PARAM_INT);
   $stmt->bindValue(':gender', $gender, PDO::PARAM_STR);
   $stmt->bindValue(':xp', $xp, PDO::PARAM_INT);
+  $stmt->bindValue(':scrating', $scrating, PDO::PARAM_INT);
   //$stmt->bindValue(':ap', $ap, PDO::PARAM_INT);
   //$stmt->bindValue(':ep', $ep, PDO::PARAM_INT);
   $stmt->bindValue(':cp', $cp, PDO::PARAM_INT);
