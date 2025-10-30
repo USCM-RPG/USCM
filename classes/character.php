@@ -21,6 +21,7 @@ class Character extends DbEntity {
   private $psychoPoints = NULL;
   private $traumaPoints = NULL;
   private $mentalPoints = NULL;
+  private $scrating = NULL;
   private $status = NULL;
   private $statusDesc = NULL;
   private $rankLong = NULL;
@@ -235,6 +236,14 @@ class Character extends DbEntity {
 
   public function setMentalPoints($points) {
     $this->mentalPoints = $points;
+  }
+
+  public function getShipClassRating() {
+    return $this->scrating;
+  }
+
+  public function setShipClassRating($value) {
+    $this->scrating = $value;
   }
 
   public function getStatus() {
@@ -1052,7 +1061,7 @@ left join (select character_id as cid, sum(value) as dadvxp from uscm_disadvanta
 left join (select character_id as cid, count(distinct certificate_name_id)*2 as certxp from uscm_certificates group by cid) as ce on c.id=ce.cid
 where c.id=:cid";
 	  } else {
-		  $sql = "select UnusedXP+coalesce(s.skillxp,0)+coalesce(a.attrxp,0)+coalesce(av.advxp,0)+coalesce(dv.dadvxp,0)+coalesce(ex.expxp,0) as xpval from uscm_characters as c
+		  $sql = "select UnusedXP+coalesce(s.skillxp,0)+coalesce(a.attrxp,0)+coalesce(av.advxp,0)+coalesce(dv.dadvxp,0)+coalesce(ex.expxp,0)+c.scrating*8 as xpval from uscm_characters as c
 left join (select character_id as cid, sum(round(value*(value+1)/2)) as skillxp from uscm_skills as s join uscm_skill_names as n on s.skill_name_id=n.id group by cid) as s on c.id=s.cid
 left join (select character_id as cid, sum(value*8)-200 as attrxp from uscm_attributes where attribute_id !=9 group by character_id) as a on c.id=a.cid
 left join (select character_id as cid, sum(value) as advxp from uscm_advantages as a join uscm_advantage_names as n on a.advantage_name_id=n.id group by cid) as av on c.id=av.cid

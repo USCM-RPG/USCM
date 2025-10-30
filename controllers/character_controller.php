@@ -18,7 +18,7 @@ Class CharacterController {
     $character = new Character();
     $sql = "SELECT userid, platoon_id, forname, lastname, Enlisted, Age, Gender, UnusedXP,
         AwarenessPoints, CoolPoints, ExhaustionPoints, FearPoints, LeadershipPoints, PsychoPoints,
-        TraumaPoints, MentalPoints, status, status_desc, specialty_name, uscm_specialty_names.id as specialty_id,
+        TraumaPoints, MentalPoints, scrating, status, status_desc, specialty_name, uscm_specialty_names.id as specialty_id,
         rank_id, rank_short, rank_long, rank_desc, encalien, encgrey, encpred, encai, encarach, extramissions, extrasims, version
         FROM uscm_characters
         LEFT JOIN uscm_ranks ON uscm_characters.id = uscm_ranks.character_id
@@ -50,6 +50,7 @@ Class CharacterController {
       $character->setPsychoPoints($row['PsychoPoints']);
       $character->setTraumaPoints($row['TraumaPoints']);
       $character->setMentalPoints($row['MentalPoints']);
+      $character->setShipClassRating($row['scrating']);
       $character->setStatus($row['status']);
       $character->setStatusDescription($row['status_desc']);
       $character->setRankShort($row['rank_short']);

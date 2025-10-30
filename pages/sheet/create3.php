@@ -219,7 +219,13 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   pdf_set_text_pos($pdf, $aapcolumntwo, 326);
   pdf_show($pdf, $character->getUnusedXp());
 
-
+  if ($character->getShipClassRating() > 0) {
+    pdf_set_text_pos($pdf, $aapcolumnfour, 388);
+    pdf_show($pdf, "Ship Class Rating:");
+    pdf_set_text_pos($pdf, $aapcolumnfive, 388);
+    pdf_show($pdf, $character->getShipClassRating());
+  }
+  
   pdf_set_text_pos($pdf, $aapcolumnfour, 374);
   pdf_show($pdf, "Carry Capacity:");
   pdf_set_text_pos($pdf, $aapcolumnfive, 374);

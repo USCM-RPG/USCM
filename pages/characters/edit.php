@@ -211,6 +211,11 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
       Unused XP
       <input type="number" id="xp" name="xp" min="0" value="<?php echo $character->getUnusedXp(); ?>">
     </label>
+    
+    <label for="scrating">
+      Ship Class Rating
+      <input type="number" id="scrating" name="scrating" min="0" value="<?php echo $character->getShipClassRating(); ?>">
+    </label>
   </fieldset>
 
   <fieldset class="form--inline grid grid--small">
