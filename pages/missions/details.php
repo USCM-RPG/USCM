@@ -92,6 +92,7 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
   <dt>Terrain</dt>
 <dd>
  <?php echo $terrain;?><br>
+ <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=terrain" class="colorfont">Change</a><?php } ?>
   </dd>
   <!--stuff to show terrain in missions ends here-->
 
