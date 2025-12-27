@@ -91,7 +91,7 @@ if ($admin || $gm) {
 <?php } elseif ($_GET['what'] == "terrain") {
                 ?>
 
-    <form class="form" method="post" action="actions/tags.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
+    <form class="form" method="post" action="actions/terrain.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
 
   <fieldset class="form--inline grid grid--small grid--leftalign">
     <legend>Terrain</legend>
