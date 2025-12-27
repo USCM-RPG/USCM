@@ -59,20 +59,24 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
   <?php } ?>
   <dt>Commendations</dt>
   <dd>
+  <div>
     <?php
     $commendations = $missionController->getCommendations($mission);
     foreach ($commendations as $commendation) {
       echo $commendation['forname'] . " " . $commendation['lastname'] . " - " .  $commendation['medal_short'] . "<br>";
     } ?>
+    </div>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=commendations" class="colorfont">Change</a><?php } ?>
   </dd>
   <dt>Promotions</dt>
   <dd>
+  <div>
     <?php
     $promotions = $missionController->getPromotions($mission);
     foreach ($promotions as $promotion) {
       echo $promotion['forname'] . " " . $promotion['lastname'] . " - " .  $promotion['rank_short'] . "<br>";
     } ?>
+    </div>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=promotions" class="colorfont">Change</a><?php } ?>
   </dd>
   <dt>
@@ -92,6 +96,7 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
   <dt>Terrain</dt>
 <dd>
  <?php echo $terrain;?><br>
+ <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=terrain" class="colorfont">Change</a><?php } ?>
   </dd>
   <!--stuff to show terrain in missions ends here-->
 

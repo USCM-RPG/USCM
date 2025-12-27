@@ -10,8 +10,9 @@ if ($admin || $gm) {
     $rankController = new RankController();
     $medalController = new MedalController();
     $tagController = new TagController();
+    $expertiseController = new ExpertiseController();
     $mission = $missionController->getMission($missionId);
-    $platoons = $platoonController->getPlatoons();
+    $platoons = $platoonController->getPlatoons(); 
     if (array_key_exists('characters', $_POST)) {
       $postCharacters = $_POST['characters'];
     } else {
@@ -79,6 +80,39 @@ if ($admin || $gm) {
               name="tag[<?php echo $tagId; ?>]"
               <?php echo (array_key_exists($tagId, $missionTagsAsArray)) ? ("checked") : (""); ?>>
             <?php echo $tag->getName(); ?>
+          </label>
+        <?php } ?>
+        </fieldset>
+
+        <input class="button" type="submit" value="Modify Mission">
+      </form>
+      
+<!--terrain-grejer-->
+<?php } elseif ($_GET['what'] == "terrain") {
+                ?>
+
+    <form class="form" method="post" action="actions/terrain.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
+
+  <fieldset class="form--inline grid grid--small grid--leftalign">
+    <legend>Terrain</legend>
+          <?php
+          $allTerrains = $expertiseController->getExpertiseByGroup(7);
+          // $allTags = $tagController->getAllTags();
+          $missionTerrains = $missionController->getTerrain($mission);
+          $missionTerrainsAsArray = array ();
+          foreach ( $missionTerrains as $terrain ) {
+            $missionTerrainsAsArray[$terrain->getId()] = $terrain->getId();
+          }
+          foreach ($allTerrains as $terrain) {
+            $terrainId = $terrain->getId();
+              ?>
+            <label for="terrain_<?php echo $terrainId; ?>">
+              <input
+              type="checkbox"
+              id="terrain_<?php echo $terrainId; ?>"
+              name="terrain[<?php echo $terrainId; ?>]"
+              <?php echo (array_key_exists($terrainId, $missionTerrainsAsArray)) ? ("checked") : (""); ?>>
+            <?php echo $terrain->getName(); ?>
           </label>
         <?php } ?>
         </fieldset>
