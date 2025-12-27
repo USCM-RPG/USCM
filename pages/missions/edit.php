@@ -101,7 +101,7 @@ if ($admin || $gm) {
           $missionTerrains = $missionController->getTerrain($mission);
           $missionTerrainsAsArray = array ();
           foreach ( $missionTerrains as $terrain ) {
-            $missionTerrainAsArray[$terrain->getId()] = $terrain->getId();
+            $missionTerrainsAsArray[$terrain->getId()] = $terrain->getId();
           }
           foreach ($allTerrains as $terrain) {
             $terrainId = $terrain->getId();
@@ -111,7 +111,7 @@ if ($admin || $gm) {
               type="checkbox"
               id="terrain_<?php echo $terrainId; ?>"
               name="terrain[<?php echo $terrainId; ?>]"
-              <?php echo (array_key_exists($terrainId, $missionTerrainAsArray)) ? ("checked") : (""); ?>>
+              <?php echo (array_key_exists($terrainId, $missionTerrainsAsArray)) ? ("checked") : (""); ?>>
             <?php echo $terrain->getName(); ?>
           </label>
         <?php } ?>
