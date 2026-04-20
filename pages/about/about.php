@@ -82,6 +82,7 @@ Campaign world Reference, UPP edition - Skills/Traits/Expertise etc</a> (Coming.
 <a href="assets/files/v3/USCM-RulesSummary.pdf" target="_blank">One page rules summary</a> (PDF)<br/>
 <a href="assets/files/v3/CharacterSheet.ods" target="_blank">Simple character sheet for manual character generation</a> (OpenDocument)<br/>
 <a href="https://github.com/USCM-RPG/character-generator" target="_blank">Character Generator</a> (github project)<br/>
+<a href="https://github.com/USCM-RPG/character-generator/archive/refs/heads/main.zip" target="_blank">Download Character Generator</a> (zip file) Read the README for further instructions.<br/>
 
 <br/>
 <h3 class="heading heading-h3">
