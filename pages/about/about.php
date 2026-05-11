@@ -3,9 +3,26 @@
 <section>
   <h2 class="heading heading-h2">USCM Roleplaying game</h2>
 
-  <section lang="sv">
-    <h3 class="heading heading-h3">Swedish info</h3>
+  <p>This is the homepage for a roleplaying game set in a universe inspired mainly by the Alien movies.</p>
 
+  <p>
+    The goal of this campaign is to mix the atmosphere of the Alien movies with a military-style RPG campaign
+    where we focus on action and tactical planning.
+  </p>
+
+  <p>
+    Most roleplaying sessions are done in the traditional tabletop style, but there are occasional PBM or online
+    scenarios as well.
+  </p>
+
+  <details class="details">
+    <summary>
+      <h3 class="heading heading-h3">
+        Extended info <span class="tag  tag-bf5">in swedish</span>
+      </h3>
+    </summary>
+
+  <div lang="sv">
     <p>
       Det här är en rollspelskampanj i militär science fiction-miljö inspirerad främst av Alien-filmerna,
       men även Starship Troopers, XCOM m.m. Spelarnas karaktärer är soldater i framtidens motsvarighet till
@@ -42,23 +59,8 @@
       Det finns för tillfället plats för fler spelare, kom in på vår
       <a href="https://discord.gg/nEp7kwd4h7" target="_blank">Discord</a> om du är intresserad.
     </p>
-  </section>
-
-  <section>
-    <h3 class="heading heading-h3">English info</h3>
-
-    <p>This is the homepage for a roleplaying game set in a universe inspired mainly by the Alien movies.</p>
-
-    <p>
-      The goal of this campaign is to mix the atmosphere of the Alien movies with a military-style RPG campaign
-      where we focus on action and tactical planning.
-    </p>
-
-    <p>
-      Most roleplaying sessions are done in the traditional tabletop style, but there are occasional PBM or online
-      scenarios as well.
-    </p>
-  </section>
+  </div>
+  </details>
 </section>
 
 <hr class="line">
@@ -75,7 +77,6 @@ Campaign world Reference, UPP edition - Skills/Traits/Expertise etc</a> (Coming.
 <br/>
 <a href="assets/files/InofficiellBriefingBF5.pdf" target="_blank">Unofficial briefing</a> (PDF) BF5s knowledge about aliens, in swedish<br/>
 
-
 <h3 class="heading heading-h3">
   USCM v3 <span class="tag tag-bf5">current version</span>
 </h3>
@@ -85,9 +86,12 @@ Campaign world Reference, UPP edition - Skills/Traits/Expertise etc</a> (Coming.
 <a href="https://github.com/USCM-RPG/character-generator/archive/refs/heads/main.zip" target="_blank">Download Character Generator</a> (zip file) Read the README for further instructions.<br/>
 
 <br/>
-<h3 class="heading heading-h3">
-  USCM v2 <span class="tag">old version</span>
-</h3>
+<details class="details">
+  <summary>
+    <h3 class="heading heading-h3">
+      USCM v2 <span class="tag">old version</span>
+    </h3>
+  </summary>
 
 <a href="assets/files/v2/charactersheet.pdf" target="_blank">Character Sheet</a> (PDF)<br/>
 <a href="assets/files/v2/USCM-Rules2.pdf" target="_blank">Rules - Properties/Cert</a> (PDF)<br/><br/>
@@ -95,6 +99,7 @@ Campaign world Reference, UPP edition - Skills/Traits/Expertise etc</a> (Coming.
 <a href="assets/files/v2/USCM_Generator.ods" target="_blank">Character Generator</a> (OpenDocument - LibreOffice)<br/>
 To use the old Character Generator you need <a href="http://www.libreoffice.org" target="_blank">LibreOffice</a> (free, open source).<br/>
 You need to activate macros under Tools->Options->LibreOffice->Security. A good way to do it is to set the folder with the Character generator in it as a "Trusted Source".<br/><br/>
+</details>
 </section>
 
 <hr class="line">
@@ -111,9 +116,11 @@ You need to activate macros under Tools->Options->LibreOffice->Security. A good 
     $dbReference = getDatabaseConnection();
     $stmt = $dbReference->query($sql);
     $stmt->execute();
+    $gms = array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      echo $row['forname'] .' '. $row['lastname'] .', ';
+      $gms[] = $row['forname'] .' '. $row['lastname'];
     }
+    echo implode(", ", $gms);
     ?>
   </p>
 

@@ -146,7 +146,10 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
     <?php
     if ($missions) {
       ?>
-      <h3 class="heading heading-h3">My GMed missions</h3>
+      <details class="details">
+      <summary>
+        <h3 class="heading heading-h3">My GMed missions</h3>
+      </summary>
       <ul class="list">
         <?php
         foreach ($missions as $mission) {
@@ -160,6 +163,7 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
         }
         ?>
       </ul>
+      </details>
       <?php
     }
     ?>
