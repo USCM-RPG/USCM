@@ -255,12 +255,13 @@ legend {
 }
 
 .form .form--inline label {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
   justify-content: space-between;
 }
 
 .form .form--inline input {
+  cursor: pointer;
   width: 40px;
 }
 
