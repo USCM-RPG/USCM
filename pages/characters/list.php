@@ -198,7 +198,7 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
         }
         else {
           if ($character['version'] < 3) {
-          echo '<svg class="icon--text" title="In cryo"><title>In cryo</title><use href="assets/icons/snowflake.svg"></use></svg>';
+          echo '<svg class="icon--text" title="In cryo"><title>In cryo</title><use href="assets/icons/snowflake.svg#snowflake"></use></svg>';
           }
         }
       ?>
@@ -324,7 +324,7 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
         }
         else {
           if ($npc['version'] < 3) {
-          echo '<svg class="icon--text" title="In cryo"><title>In cryo</title><use href="assets/icons/snowflake.svg"></use></svg>';
+          echo '<svg class="icon--text" title="In cryo"><title>In cryo</title><use href="assets/icons/snowflake.svg#snowflake"></use></svg>';
           }
         }
       ?>
