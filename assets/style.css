@@ -63,8 +63,6 @@ a:hover {
 
 .wrapper {
   background-color: var(--uscm-color-background);
-  border: 2px solid var(--uscm-color-green);
-  border-top: 0;
   border-bottom: 0;
   display: flex;
   flex-direction: column;
@@ -79,13 +77,19 @@ a:hover {
     font-size: calc(14rem / 16);
     max-width: 920px;
   }
+
+  @media (width >= 920px) {
+    border: 2px solid var(--uscm-color-green);
+    border-top: 0;
+  }
 }
 
 .header {
 }
 
 .icon--text {
-  height: calc(12rem / 16);
+  height: calc(14rem / 16);
+  width: calc(14rem / 16);
 }
 
 .logo {
@@ -372,6 +376,9 @@ legend {
 
 .details > summary {
   cursor: pointer;
+}
+.details .heading {
+  display: inline-block;
 }
 
 .span {
