@@ -435,7 +435,7 @@ WHERE e.character_id=:cid AND es.skillid=:sid";
    * @return CharacterTrait[]
    */
   function getTraits() {
-    $sql = "SELECT tn.id,trait_name, description FROM uscm_trait_names tn ORDER BY tn.trait_name";
+    $sql = "SELECT tn.id,trait_name, description, version FROM uscm_trait_names tn ORDER BY tn.trait_name";
     $stmt = $this->db->prepare($sql);
     $stmt->execute();
     $traits = array();
@@ -444,6 +444,7 @@ WHERE e.character_id=:cid AND es.skillid=:sid";
       $trait->setId($row['id']);
       $trait->setName($row['trait_name']);
       $trait->setDescription($row['description']);
+      $trait->setVersion($row['version']);
       $traits[] = $trait;
     }
     return $traits;
@@ -583,14 +584,14 @@ WHERE e.character_id=:cid AND es.skillid=:sid";
     }
     return $disadvantages;
   }
-  
+
   function getCharacterAllPsychoDisadvantages($characterId) {
     return $this->getCharacterPsychoDisadv($characterId);
   }
 
   private function getCharacterPsychoDisadv($characterId) {
     $disadvarray = array ();
-    $sql = "SELECT psychodis_id as pdid, name, value, p.id as uid FROM psychodisadvantages p 
+    $sql = "SELECT psychodis_id as pdid, name, value, p.id as uid FROM psychodisadvantages p
 JOIN psychodis_names pn ON p.psychodis_id=pn.id
 WHERE p.character_id=:cid";
     $stmt = $this->db->prepare($sql);

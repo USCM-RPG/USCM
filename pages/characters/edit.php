@@ -278,12 +278,13 @@ if ($character->getVersion() > 2) {
             $characterTraits = $character->getTraits();
             foreach ($allTraits as $trait) {
               $traitId = $trait->getId();
+              if ($trait->getVersion() >= $character->getVersion() || array_key_exists($traitId, $characterTraits)) {
                 ?>
               <label for="traits_<?php echo $traitId; ?>">
                 <input type="checkbox" id="traits_<?php echo $traitId; ?>" name="traits[<?php echo $traitId; ?>]" <?php echo (array_key_exists($traitId, $characterTraits)) ? ("checked") : (""); ?>>
                 <?php echo $trait->getName(); ?>
               </label>
-            <?php } ?>
+            <?php } } ?>
   </fieldset>
 
   <fieldset class="form--inline grid grid--small grid--leftalign">

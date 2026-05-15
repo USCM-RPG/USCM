@@ -2,6 +2,7 @@
 Class CharacterTrait extends DbEntity {
   private $name = NULL;
   private $description = NULL;
+  private $version = NULL;
 
   public function getName() {
     return $this->name;
@@ -17,5 +18,13 @@ Class CharacterTrait extends DbEntity {
 
   public function setDescription($description) {
     $this->description = $description;
+  }
+
+  public function getVersion() {
+    return $this->version;
+  }
+
+  public function setVersion($version) {
+    $this->version = $version;
   }
 }
