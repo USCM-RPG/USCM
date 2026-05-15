@@ -112,13 +112,13 @@ You need to activate macros under Tools->Options->LibreOffice->Security. A good 
   <p>
     Campaign missions by<br>
     <?php
-    $sql = "select forname, lastname from GMs left join Users on GMs.userid = Users.id;";
+    $sql = "select forname, lastname, userid from GMs left join Users on GMs.userid = Users.id;";
     $dbReference = getDatabaseConnection();
     $stmt = $dbReference->query($sql);
     $stmt->execute();
     $gms = array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $gms[] = $row['forname'] .' '. $row['lastname'];
+      $gms[] = '<a href="index.php?url=missions/list.php&gm='. $row['userid'] .'">'. $row['forname'] .' '. $row['lastname'] .'</a>';
     }
     echo implode(", ", $gms);
     ?>
