@@ -260,9 +260,7 @@ if ($_GET['action'] == "update_character") {
     $old_expertise[$expertise_name_id]['id'] = $expertise['uid'];
   }
   // walks through $_POST[] and decides what to delete, update and insert in database
-  if ($_POST['expertise'] == NULL)
-    $_POST['expertise'] = array ();
-  foreach ( $_POST['expertise'] as $expertise_id => $value ) {
+  foreach (($_POST['expertise'] ?? array()) as $expertise_id => $value ) {
     if (array_key_exists($expertise_id, $old_expertise)) {
       // update the expertise (regardless if the value has changed)
       $updated_expertise[$expertise_id]['id'] = $old_expertise[$expertise_id]['id'];
@@ -303,9 +301,7 @@ if ($_GET['action'] == "update_character") {
     $old_traits[$trait_name_id]['id'] = $trait['uid'];
   }
   // walks through $_POST[] and decides what to delete, update and insert in database
-  if ($_POST['traits'] == NULL)
-    $_POST['traits'] = array ();
-  foreach ( $_POST['traits'] as $trait_id => $value ) {
+  foreach (($_POST['traits'] ?? array()) as $trait_id => $value ) {
     if (array_key_exists($trait_id, $old_traits)) {
       // update the traits (regardless if the value has changed)
       $updated_traits[$trait_id]['id'] = $old_traits[$trait_id]['id'];
@@ -347,9 +343,7 @@ if ($_GET['action'] == "update_character") {
   }
 
   // walks through $_POST[] and decides what to delete, update and insert in database
-  if ($_POST['advs'] == NULL)
-    $_POST['advs'] = array ();
-  foreach ( $_POST['advs'] as $adv_id => $value ) {
+  foreach (($_POST['advs'] ?? array()) as $adv_id => $value ) {
     if (array_key_exists($adv_id, $old_advs)) {
       // update the advantages (regardless if the value has changed)
       $updated_advs[$adv_id]['id'] = $old_advs[$adv_id]['id'];
@@ -392,9 +386,7 @@ if ($_GET['action'] == "update_character") {
   }
 
   // walks through $_POST[] and decides what to delete, update and insert in database
-  if ($_POST['disadvs'] == NULL)
-    $_POST['disadvs'] = array ();
-  foreach ( $_POST['disadvs'] as $disadv_id => $value ) {
+  foreach (($_POST['disadvs'] ?? array()) as $disadv_id => $value ) {
     if (array_key_exists($disadv_id, $old_disadvs)) {
       // update the advantages (regardless if the value has changed)
       $updated_disadvs[$disadv_id]['id'] = $old_disadvs[$disadv_id]['id'];
@@ -435,9 +427,7 @@ if ($_GET['action'] == "update_character") {
     $old_certificate[$certificate_name_id]['id'] = $certificate['uid'];
   }
   // walks through $_POST[] and decides what to delete, update and insert in database
-  if ($_POST['certs'] == NULL)
-    $_POST['certs'] = array ();
-  foreach ( $_POST['certs'] as $certificate_id => $value ) {
+  foreach (($_POST['certs'] ?? array()) as $certificate_id => $value ) {
     if (array_key_exists($certificate_id, $old_certificate)) {
       // update the certificates (regardless if the value has changed)
       $updated_certificate[$certificate_id]['id'] = $old_certificate[$certificate_id]['id'];
