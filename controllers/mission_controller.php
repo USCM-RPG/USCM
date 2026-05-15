@@ -526,7 +526,7 @@ order by uscm_mission_names.date desc, mission_name_short desc";
       $stmt->execute();
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $mission = new Mission();
-        $mission->setId($row['missionid']);
+        $mission->setId($row['mission_id']);
         $mission->setName($row['mission_name']);
         $mission->setShortName($row['mission_name_short']);
         $mission->setPlatoonShortName($row['platoon_name_short']);

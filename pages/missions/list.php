@@ -33,6 +33,8 @@ $missionController = new MissionController();
 
 if (isset($_GET['tag'])) {
   $missions = $tagController->getMissionsForTag($_GET['tag']);
+} else if (isset($_GET['gm'])) {
+  $missions = $missionController->getMissionsGmByUser($_GET['gm']);
 } else {
   $missions = $missionController->getMissions();
 }
