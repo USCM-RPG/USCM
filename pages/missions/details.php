@@ -33,7 +33,7 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
   </dd>
   <dt>GM</dt>
   <dd>
-    <?php echo $gmUser->getName()?><br>
+    <a href="index.php?url=missions/list.php&gm=<?php echo $gmUser->getId()?>"><?php echo $gmUser->getName()?></a><br>
     <?php if ($admin or $gm) {?><a href="index.php?url=missions/edit.php&mission=<?php echo $mission->getId();?>&what=gm" class="colorfont">Change</a><?php } ?>
   </dd>
   <dt>Characters</dt>
