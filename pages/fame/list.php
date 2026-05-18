@@ -165,8 +165,7 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
     <td><?php echo $character['missions'];?></td>
     <td><?php echo $character['rank_short'];?></td>
     <td><?php if ($admin || $gm || $_SESSION['user_id']==$character['userid']) {
-          ?><a href="index.php?url=characters/edit.php&character_id=<?php echo $character['cid'];?>"
-           style="view-transition-name: transition-character-<?php echo $character['cid'];?>;"> <?php
+          ?><a href="index.php?url=characters/edit.php&character_id=<?php echo $character['cid'];?>"> <?php
         } ?><?php echo $character['cfor'] . " " . $character['clast'];?></a></td>
     <td><?php echo $character['specialty_name'];?></td>
     <td>
@@ -198,7 +197,7 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
       <?php } ?>
     </td>
     <td>
-      <span style="view-transition-name: transition-character-player-<?php echo $character['cid'];?>;">
+      <span>
         <?php echo $character['forname'] . " " . $character['lastname'];?>
       </span>
     </td>
@@ -235,8 +234,7 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
     <td><?php echo $character['missions'];?></td>
     <td><?php echo $character['rank_short'];?></td>
     <td><?php if ($admin || $gm || $_SESSION['user_id']==$character['userid']) {
-          ?><a href="index.php?url=characters/edit.php&character_id=<?php echo $character['cid'];?>"
-          style="view-transition-name: transition-character-<?php echo $character['cid'];?>;"> <?php
+          ?><a href="index.php?url=characters/edit.php&character_id=<?php echo $character['cid'];?>"> <?php
         } ?><?php echo $character['cfor'] . " " . $character['clast'];?></a></td>
     <td><?php echo $character['specialty_name'];?></td>
     <td>
@@ -268,7 +266,7 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
       <?php } ?>
     </td>
     <td>
-      <span style="view-transition-name: transition-character-player-<?php echo $character['cid'];?>;">
+      <span>
         <?php echo $character['forname'] . " " . $character['lastname'];?>
       </span>
     </td>

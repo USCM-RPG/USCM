@@ -13,12 +13,12 @@ $terrain = $expertiseController->getMissionTerrain($missionId);
 
 <div class="mission">
 <h1 class="heading heading-h1">
-  Mission <span style="view-transition-name: transition-mission-<?php echo $mission->getId();?>;"><?php echo $mission->getShortName();?></span>
-  <span class="tag tag-<?php echo strtolower($mission->getPlatoonShortName());?>" style="view-transition-name: transition-mission-platoon-<?php echo $mission->getId();?>;"><?php echo $mission->getPlatoonShortName();?></span>
+  Mission <span><?php echo $mission->getShortName();?></span>
+  <span class="tag tag-<?php echo strtolower($mission->getPlatoonShortName());?>"><?php echo $mission->getPlatoonShortName();?></span>
 </h1>
 
 <h2 class="heading heading-h2">
-  <span style="view-transition-name: transition-mission-name-<?php echo $mission->getId();?>;">
+  <span>
     <?php echo $mission->getName();?>
   </span>
   <span class="span">

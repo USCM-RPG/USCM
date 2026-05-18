@@ -40,14 +40,13 @@ if (isset($_GET['tag'])) {
 }
 foreach ($missions as $mission) { ?>
   <li>
-    <span class="tag tag-<?php echo strtolower($mission->getPlatoonShortName());?>" style="view-transition-name: transition-mission-platoon-<?php echo $mission->getId();?>;"><?php echo $mission->getPlatoonShortName();?></span>
+    <span class="tag tag-<?php echo strtolower($mission->getPlatoonShortName());?>"><?php echo $mission->getPlatoonShortName();?></span>
     <a
       href="index.php?url=missions/details.php&id=<?php echo $mission->getId();?>"
-      style="view-transition-name: transition-mission-<?php echo $mission->getId();?>;"
     >
       <?php echo $mission->getShortName();?>
-    </a>
-    <span style="view-transition-name: transition-mission-name-<?php echo $mission->getId();?>;">
+</a>
+    <span>
       <?php echo $mission->getName();?>
     </span>
   </li>

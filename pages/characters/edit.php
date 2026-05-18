@@ -22,7 +22,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
     </span>
   </h1>
   <h2 class="heading heading-h2">
-    <span style="view-transition-name: transition-character-<?php echo $characterId; ?>;">
+    <span>
       <?php echo $character->getGivenName(); ?> <?php echo $character->getSurname(); ?>
     </span>
     <span class="span">
@@ -45,7 +45,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   <div class="grid grid--1x2 mt-20">
     <div>
       Player
-      <div style="view-transition-name: transition-character-player-<?php echo $characterId; ?>;">
+      <div>
         <?php echo $player->getName(); ?>
       </div>
     </div>
@@ -211,7 +211,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
       Unused XP
       <input type="number" id="xp" name="xp" min="0" value="<?php echo $character->getUnusedXp(); ?>">
     </label>
-    
+
     <label for="scrating">
       Ship Class Rating
       <input type="number" id="scrating" name="scrating" min="0" value="<?php echo $character->getShipClassRating(); ?>">

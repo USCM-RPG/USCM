@@ -58,7 +58,6 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
         <td>
           <a
             href="index.php?url=characters/edit.php&character_id=<?php echo $character->getId();?>"
-            style="view-transition-name: transition-character-<?php echo $character->getId();?>;"
           >
             <?php echo $character->getGivenName();?>
             <?php echo $character->getSurname();?>
@@ -130,9 +129,9 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
       foreach ($missions as $mission) {
         ?>
         <li>
-          <span class="tag tag-<?php echo strtolower($mission->getPlatoonShortName());?>" style="view-transition-name: transition-mission-platoon-<?php echo $mission->getId();?>;"><?php echo $mission->getPlatoonShortName();?></span>
-          <a href="index.php?url=missions/details.php&id=<?php echo $mission->getId();?>" style="view-transition-name: transition-mission-<?php echo $mission->getId();?>;"><?php echo $mission->getShortName();?></a>
-          <span style="view-transition-name: transition-mission-name-<?php echo $mission->getId();?>;"><?php echo $mission->getName();?></span>
+          <span class="tag tag-<?php echo strtolower($mission->getPlatoonShortName());?>"><?php echo $mission->getPlatoonShortName();?></span>
+          <a href="index.php?url=missions/details.php&id=<?php echo $mission->getId();?>"><?php echo $mission->getShortName();?></a>
+          <span><?php echo $mission->getName();?></span>
         </li>
         <?php
       }
