@@ -170,6 +170,16 @@ if ($admin || $gm) {
         ?>
 
       <form class="form" method="post" action="actions/mission.php?what=<?php echo $_GET['what']; ?>&mission=<?php echo $missionId; ?>">
+        <label for="platoon_filter">
+          Filter by platoon
+          <select id="platoon_filter">
+            <option value="">All platoons</option>
+            <?php foreach ($platoons as $platoon) { ?>
+              <option value="<?php echo $platoon->getId(); ?>"><?php echo $platoon->getName(); ?></option>
+            <?php } ?>
+          </select>
+        </label>
+
         <label for="characters">
           Characters
 
@@ -178,8 +188,9 @@ if ($admin || $gm) {
                             $withOnMission = $characterController->getCharacterIdsOnMission($mission);
                             foreach ($characters as $character) {
                               ?>
-                                <option value="<?php echo $character->getId(); ?>" <?php
-                                echo (array_key_exists($character->getId(), $withOnMission)) ? ("selected ") : (""); ?> ><?php
+                                <option value="<?php echo $character->getId(); ?>"
+                                        data-platoon-id="<?php echo $character->getPlatoonId(); ?>"
+                                        <?php echo (array_key_exists($character->getId(), $withOnMission)) ? ("selected ") : (""); ?>><?php
                                 echo $character->getName(); ?></option>
                           <?php } ?>
                         </select>
@@ -187,6 +198,17 @@ if ($admin || $gm) {
 
         <input class="button" type="submit" value="Modify Mission">
       </form>
+
+      <script>
+        document.getElementById('platoon_filter').addEventListener('change', function () {
+          var platoonId = this.value;
+          var options = document.getElementById('characters').options;
+          for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            option.hidden = platoonId !== '' && !option.selected && option.dataset.platoonId !== platoonId;
+          }
+        });
+      </script>
 
             <?php } elseif ($_GET['what'] == "commendations") {
                 ?>
