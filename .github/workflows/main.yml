@@ -1,3 +1,7 @@
+name: Deploy
+
+permissions: {}
+
 on:
   push:
     branches:
@@ -5,12 +9,14 @@ on:
   pull_request:
     branches:
       - main
-name: Deploy
+
 jobs:
   deploy:
     name: Deploy Job
     runs-on: ubuntu-latest
     environment: ${{ github.ref == 'refs/heads/main' && 'main' || 'branch' }}
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
