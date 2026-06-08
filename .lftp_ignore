@@ -1,8 +1,9 @@
 .git/
 .github/
 _debug/
+database/
 .editorconfig
 .gitignore
 .lftp_ignore
-README.md
 config.php
+README.md
