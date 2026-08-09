@@ -13,7 +13,7 @@ Web site to support the [USCM RPG](https://www.uscm.se/) campaign
 ssh -p $port $user@$machine
 ```
 
-2. Copy /var/www/html/skynet/config.php from server to repository root
+2. Copy file `/var/www/html/skynet/config.php` from server to repository root
 
 3. Edit config.php
 ```php
@@ -34,6 +34,8 @@ php -S localhost:8000
 6. Open [http://localhost:8000](http://localhost:8000)
 
 ## Database
+
+See [schema](./database/schema/skynet.sql) file.
 
 ## Icons
 
