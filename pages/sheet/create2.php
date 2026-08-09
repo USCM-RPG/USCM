@@ -7,7 +7,7 @@ require_once("../../functions.php");
 require_once("../../classes/iconpdf.php");
 
 $characterId = $_GET['character_id'];
-$backside = $_GET['backside'];
+$backside = isset($_GET['backside']) && $_GET['backside'];
 $characterController = new CharacterController();
 $playerController = new PlayerController();
 $character = $characterController->getCharacter($characterId);
@@ -540,6 +540,9 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
     pdf_set_text_pos($pdf, 500, $skillsheight);
     $skillsheight -= 12;
   }
+
+  pdf_set_text_pos($pdf, 500, 810);
+  pdf_show($pdf, "www.uscm.se");
 
   pdf_end_page($pdf);
   if($backside) {

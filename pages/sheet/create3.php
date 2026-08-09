@@ -7,7 +7,7 @@ require_once("../../functions.php");
 require_once("../../classes/iconpdf.php");
 
 $characterId = $_GET['character_id'];
-$backside = $_GET['backside'];
+$backside = isset($_GET['backside']) && $_GET['backside'];
 $characterController = new CharacterController();
 $playerController = new PlayerController();
 $character = $characterController->getCharacter($characterId);
@@ -18,7 +18,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   $platoon_id = $character->getPlatoonId();
   $player = $character->getPlayer();
   $bonuses = new Bonus($characterId); //remove v2 bonuses?
-  
+
   function drawbox($pdf, $txtarray, $xpos, $ypos, $stringlength, $minlines=0) {
     $multilinetext = explode("\n", wordwrap(implode(', ', array_map(function($e){return $e->getName();}, $txtarray)), $stringlength, "\n"));
 	$linecount = 0;
@@ -32,13 +32,13 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 		$ypos -= ($minlines - $linecount)*12;
 		$linecount = $minlines;
 	}
-	
+
 	if ($linecount > 0) {
 		PDF_rect($pdf, $xpos, $ypos+10, ($stringlength*5)+4, $linecount*12);
 	}
 	return $ypos;
   }
-  
+
   function drawwhiteboxes($pdf, $xpos, $ypos, $count, $width=8, $height=8) {
 	for($i = 1; $i <= $count; $i ++) {
 		pdf_rect($pdf, $xpos, $ypos, $width, $height);
@@ -56,7 +56,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
     $font = PDF_load_font($pdf, "Helvetica-Bold", "host", 0);
     pdf_setfont($pdf, $font, 10);
   }
-  
+
   function printbonus($pdf, $skill, $hasskillbonus, $bonusxpos, $bonus2xpos, $skillsheight) {
     if ($skill['bonus_always'] != 0) {
       if ($skill['bonus_always'] > 0) {
@@ -68,7 +68,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
       pdf_set_text_pos($pdf, $bonusxpos, $skillsheight);
       pdf_show($pdf, $bonussign . $skill['bonus_always'] . " ");
     }
-    
+
     if ($skill['bonus_sometimes'] != 0) {
       if ($skill['bonus_sometimes'] > 0) {
         $bonussign = "+";
@@ -181,7 +181,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   // Points
   pdf_set_text_pos($pdf, $aapcolumnone, 388);
   pdf_show($pdf, "Health:");
-  
+
   $health = $character->getHealthPoints();
   $xpos = $aapcolumntwo;
   drawwhiteboxes($pdf, $xpos, 388, $health, 12,12);
@@ -198,7 +198,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   pdf_show($pdf, "Stunts:");
   pdf_set_text_pos($pdf, $aapcolumntwo, 362);
   pdf_show($pdf, $character->getCoolPoints());
-  
+
   pdf_set_text_pos($pdf, $aapcolumnone, 350);
   pdf_show($pdf, "Stress:");
   drawwhiteboxes($pdf, $xpos, 350, $character->getFearLimit());
@@ -225,7 +225,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
     pdf_set_text_pos($pdf, $aapcolumnfive, 388);
     pdf_show($pdf, $character->getShipClassRating());
   }
-  
+
   pdf_set_text_pos($pdf, $aapcolumnfour, 374);
   pdf_show($pdf, "Carry Capacity:");
   pdf_set_text_pos($pdf, $aapcolumnfive, 374);
@@ -249,11 +249,11 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
     pdf_set_text_pos($pdf, $aapcolumnsix, 350);
     pdf_show($pdf, "+" . $character->getUnarmedDamageBonus());
 }
-  
+
   pdf_set_text_pos($pdf, $aapcolumnfour, 338);
   pdf_show($pdf, "Risk:");
   drawwhiteboxes($pdf, $aapcolumnfour+35, 338, 5);
-  
+
   //pdf_set_text_pos($pdf, $aapcolumnfour, 350);
   //pdf_show($pdf, "Stress Limit:");
   //pdf_set_text_pos($pdf, $aapcolumnfive, 350);
@@ -296,7 +296,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
 	  pdf_show($pdf, "Combat: " . $character->getExtraMissions() + count($missionarray));
 	  $missionheight -= 24;
   }
-  
+
   foreach ( $missionarray as $mission ) {
     pdf_set_text_pos($pdf, 50, $missionheight);
     pdf_show($pdf, $mission['mission_name']);
@@ -304,7 +304,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
     pdf_show($pdf, $mission['text']);
     $missionheight -= 12;
   }
-  
+
   //Middle column
   //sort expertise
   $weapons = array();
@@ -322,7 +322,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
 		  $expertiseother[] = $exp;
 	  }
   }
-  
+
   // Weapons
   fontbold($font, $pdf);
   $weaponsheight = 772;
@@ -333,7 +333,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   if ($weapons) {
 	drawbox($pdf, $weapons, 220, $weaponsheight, 32, 4);
   }
-  
+
     // Expertise
   fontbold($font, $pdf);
   $expertiseheight = 639;
@@ -410,7 +410,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
     PDF_show_boxed($pdf, $disadvantage->getName(), 280, $disadvheight, 95, 12, 'L', '');
     $disadvheight -= 12;
   }
-  
+
   $psychoDisadvantages = $character->getPsychoDisadvantagesAll();
   $disadvheight -= 12;
   foreach ( $psychoDisadvantages as $disadvantage ) {
@@ -496,7 +496,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
     pdf_show($pdf, $skill['value']);
     $hasskillbonus = printbonus($pdf, $skill, $hasskillbonus, $bonusxpos, $bonus2xpos, $skillsheight);
     $skillsheight -= 12;
-    
+
     $skillexpertise = $characterController->getExpertiseOnSkill($character, $skill['id']);
     if ($skillexpertise) {
 		pdf_set_text_pos($pdf, $skillsxpos, $skillsheight);
@@ -504,7 +504,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
 		$skillsheight = drawbox($pdf, $skillexpertise, $expxpos, $skillsheight, 25);
 	}
   }
-  
+
   $skillsheight -= 12;
   $skillarray = $character->getExpertSkills();
   foreach ( $skillarray as $skill ) {
@@ -524,14 +524,14 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
 
   }
   $skillsheight -= 12;
-  
+
   if($hasskillbonus) {
 	fontbold($font, $pdf);
 	pdf_set_text_pos($pdf, $bonusxpos, 772);
 	pdf_show($pdf, "Bonus");
 	fontregular($font, $pdf);
   }
-  
+
   pdf_set_text_pos($pdf, 500, 810);
   pdf_show($pdf, "www.uscm.se");
 
