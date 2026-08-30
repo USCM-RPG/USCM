@@ -37,6 +37,10 @@ php -S localhost:8000
 
 See [schema](./database/schema/skynet.sql) file.
 
+## Sheet
+
+Download [TCPDF](https://github.com/tecnickcom/tcpdf) version [6.6.2](https://github.com/tecnickcom/TCPDF/releases/tag/6.6.2), extract and copy content into directory [./classes/tcpdf](./classes/tcpdf)
+
 ## Icons
 
 We use [Phosphor](https://phosphoricons.com/) open-source icons.
