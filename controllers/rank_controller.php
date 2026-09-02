@@ -1,5 +1,11 @@
 <?php
-Class RankController extends DbController {
+Class RankController {
+  private $db = NULL;
+
+  function __construct() {
+    $this->db = getDatabaseConnection();
+  }
+
   public function getRanks() {
     $ranks = array ();
     $sql = "SELECT id, rank_long, rank_short, rank_desc
