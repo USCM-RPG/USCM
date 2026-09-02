@@ -21,7 +21,6 @@ require_once ("classes/skill.php");
 require_once ("classes/specialty.php");
 require_once ("classes/trait.php");
 require_once ("classes/tags.php");
-require_once ("controllers/db_controller.php");
 require_once ("controllers/character_controller.php");
 require_once ("controllers/expertise_controller.php");
 require_once ("controllers/news_controller.php");
@@ -35,10 +34,6 @@ require_once ("controllers/tag_controller.php");
 
 $db_connection = NULL;
 // set_exception_handler(die("Caught exception, going to die"));
-function myconnect() {
-  return mysql_connect($GLOBALS['db_host'], $GLOBALS['db_user'], $GLOBALS['db_password']) or
-       die("Failed to connect to database");
-}
 
 /**
  * Returns a new or existing database connection
@@ -147,45 +142,19 @@ function login($level) {
 }
 
 /*
- * This function retuns all directory and file names from the given directory.
- * Works recrusive. Based on ltena at gmx dot net's function.
+ * Returns all file names under the given directory, recursively, stripped of the base dir.
  * Used for checking validity of includes from GET variables
  */
 function recursive_dirlist($base_dir) {
-  global $getDirList_alldirs, $getDirList_allfiles;
-
-  function getDirList($base, $base_dir) {
-    global $getDirList_alldirs, $getDirList_allfiles;
-    if (is_dir($base)) {
-      $dh = opendir($base);
-      while ( false !== ($dir = readdir($dh)) ) {
-        if (is_dir($base . "/" . $dir) && $dir !== '.' && $dir !== '..') {
-          $subs = $dir;
-          $subbase = $base . "/" . $dir;
-          $substrip = strip_basedir($subbase, $base_dir);
-          $getDirList_alldirs[] = $substrip;
-          getDirList($subbase, $base_dir);
-        } elseif (is_file($base . "/" . $dir) && $dir !== '.' && $dir !== '..') {
-          $subbase = $base . "/" . $dir;
-          $substrip = strip_basedir($subbase, $base_dir);
-          $getDirList_allfiles[] = $substrip;
-        }
-      }
-      closedir($dh);
+  $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($base_dir, FilesystemIterator::SKIP_DOTS));
+  $filelist = array();
+  foreach ( $files as $file ) {
+    if ($file->isFile()) {
+      $filelist[] = str_replace($base_dir, '', $file->getPathname());
     }
   }
-
-  function strip_basedir($dir, $basedir) {
-    $stripped_dir = str_replace($basedir, '', $dir);
-    return $stripped_dir;
-  }
-
-  getDirList($base_dir, $base_dir);
-  // $retval['dirs']=$getDirList_alldirs;
-  // $retval['files']=$getDirList_allfiles;
-  return $getDirList_allfiles;
+  return $filelist;
 }
-
 
 function attribute2visible($attributearray) {
   $attribarray = array ();
@@ -496,10 +465,6 @@ function attribute2visible($attributearray) {
   }
   return $attribarray;
 }
-
-
-
-
 
 function print_pdf_bonus($pdf, $bonusarray) {
   $totalBonus = "";
