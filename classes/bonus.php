@@ -10,186 +10,73 @@ class Bonus {
   }
 
   public function attributeBonus($modifiertype, $attribute) {
-    $bonus = Array ('always' => 0,'sometimes' => Array ()
-    );
-    $advsql = "SELECT $modifiertype, value_always_active
-      FROM uscm_advdisadv_bonus advdis
-      INNER JOIN uscm_advantages a ON a.advantage_name_id = advdis.advid
-      WHERE column_id = $attribute AND table_point_name = 'attribute_names' AND a.character_id = :cid
-         AND $modifiertype is not NULL";
-    // print_r($advsql);
-    $stmt = $this->db->prepare($advsql);
-    $stmt->bindValue(':cid', $this->characterId, PDO::PARAM_INT);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row ['value_always_active'] == 1) {
-        $bonus ['always'] = $bonus ['always'] + $row ["$modifiertype"];
-      } else {
-        $bonus ['sometimes'] [] = $row ["$modifiertype"];
-      }
-    }
-    $disadvsql = "SELECT $modifiertype, value_always_active
-      FROM uscm_advdisadv_bonus advdis
-      INNER JOIN uscm_disadvantages a ON a.disadvantage_name_id = advdis.disadvid
-      WHERE column_id = $attribute AND table_point_name = 'attribute_names' AND a.character_id = :cid
-         AND $modifiertype is not NULL";
-    // print_r($disadvsql);
-    $stmt = $this->db->prepare($disadvsql);
-    $stmt->bindValue(':cid', $this->characterId, PDO::PARAM_INT);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row ['value_always_active'] == 1) {
-        $bonus ['always'] = $bonus ['always'] + $row ["$modifiertype"];
-      } else {
-        $bonus ['sometimes'] [] = $row ["$modifiertype"];
-      }
-    }
-    $traitsql = "SELECT $modifiertype, value_always_active
-      FROM uscm_advdisadv_bonus advdis
-      INNER JOIN uscm_traits a ON a.trait_name_id = advdis.traitid
-      WHERE column_id = $attribute AND table_point_name = 'attribute_names' AND a.character_id = :cid
-         AND $modifiertype is not NULL";
-    // print_r($traitsql);
-    $stmt = $this->db->prepare($traitsql);
-    $stmt->bindValue(':cid', $this->characterId, PDO::PARAM_INT);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row ['value_always_active'] == 1) {
-        $bonus ['always'] = $bonus ['always'] + $row ["$modifiertype"];
-      } else {
-        $bonus ['sometimes'] [] = $row ["$modifiertype"];
-      }
-    }
-    return $bonus;
+    return $this->columnBonus('attribute_names', $modifiertype, $attribute);
   }
 
   function pointAndLimitBonus($bonustype) {
-    $bonus = Array ('always' => 0,'sometimes' => Array ()
-    );
-    $advsql = "SELECT modifier_basic_value, value_always_active
-            FROM uscm_advdisadv_bonus advdis
-            INNER JOIN uscm_advantages a ON a.advantage_name_id = advdis.advid
-            WHERE table_point_name = '$bonustype' AND a.character_id = :cid";
-    // print_r($advsql);
-    $stmt = $this->db->prepare($advsql);
-    $stmt->bindValue(':cid', $this->characterId, PDO::PARAM_INT);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row ['value_always_active'] == 1) {
-        $bonus ['always'] = $bonus ['always'] + $row ['modifier_basic_value'];
-      } else {
-        $bonus ['sometimes'] [] = $row ['modifier_basic_value'];
-      }
-    }
-    $disadvsql = "SELECT modifier_basic_value, value_always_active
-            FROM uscm_advdisadv_bonus advdis
-            INNER JOIN uscm_disadvantages a ON a.disadvantage_name_id = advdis.disadvid
-            WHERE table_point_name = '$bonustype' AND a.character_id = :cid";
-    // print_r($disadvsql);
-    $stmt = $this->db->prepare($disadvsql);
-    $stmt->bindValue(':cid', $this->characterId, PDO::PARAM_INT);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row ['value_always_active'] == 1) {
-        $bonus ['always'] = $bonus ['always'] + $row ['modifier_basic_value'];
-      } else {
-        $bonus ['sometimes'] [] = $row ['modifier_basic_value'];
-      }
-    }
-    $traitsql = "SELECT modifier_basic_value, value_always_active
-            FROM uscm_advdisadv_bonus advdis
-            INNER JOIN uscm_traits a ON a.trait_name_id = advdis.traitid
-            WHERE table_point_name = '$bonustype' AND a.character_id = :cid";
-    // print_r($traitsql);
-    $stmt = $this->db->prepare($traitsql);
-    $stmt->bindValue(':cid', $this->characterId, PDO::PARAM_INT);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row ['value_always_active'] == 1) {
-        $bonus ['always'] = $bonus ['always'] + $row ['modifier_basic_value'];
-      } else {
-        $bonus ['sometimes'] [] = $row ['modifier_basic_value'];
-      }
-    }
-    return $bonus;
+    return $this->columnBonus($bonustype, 'modifier_basic_value');
   }
 
   function carryCapacity() {
-    return $this->bonus('carrycapacity');
+    return $this->pointAndLimitBonus('carrycapacity');
   }
 
   function combatLoad() {
-    return $this->bonus('combatlod');
+    return $this->pointAndLimitBonus('combatlod');
   }
 
   function psychoPoints() {
-    return $this->bonus('psychopoints');
+    return $this->pointAndLimitBonus('psychopoints');
   }
   function psychoLimit() {
-    return $this->bonus('psycholimit');
+    return $this->pointAndLimitBonus('psycholimit');
   }
   function fearPoints() {
-    return $this->bonus('fearpoints');
+    return $this->pointAndLimitBonus('fearpoints');
   }
   function fearLimit() {
-    return $this->bonus('fearlimit');
+    return $this->pointAndLimitBonus('fearlimit');
   }
   function exhaustionPoints() {
-    return $this->bonus('exhaustionpoints');
+    return $this->pointAndLimitBonus('exhaustionpoints');
   }
   function exhaustionLimit() {
-    return $this->bonus('exhaustionlimit');
+    return $this->pointAndLimitBonus('exhaustionlimit');
   }
 
-  private function bonus($bonusType) {
+  /**
+   * Sums the advantage/disadvantage/trait modifiers for a table_point_name
+   * (optionally narrowed to one column_id), split into always-active vs.
+   * conditional ("sometimes") bonuses.
+   */
+  public function columnBonus($tablePointName, $modifierColumn, $columnId = null) {
     $bonus = Array ('always' => 0,'sometimes' => Array ()
     );
-    $advsql = "SELECT modifier_basic_value, value_always_active
-            FROM uscm_advdisadv_bonus advdis
-            INNER JOIN uscm_advantages a ON a.advantage_name_id = advdis.advid
-            WHERE table_point_name = :bonusType AND a.character_id = :cid";
-    // print_r($advsql);
-    $stmt = $this->db->prepare($advsql);
-    $stmt->bindValue(':cid', $this->characterId, PDO::PARAM_INT);
-    $stmt->bindValue(':bonusType', $this->characterId, PDO::PARAM_STR);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row ['value_always_active'] == 1) {
-        $bonus ['always'] = $bonus ['always'] + $row ['modifier_basic_value'];
-      } else {
-        $bonus ['sometimes'] [] = $row ['modifier_basic_value'];
+    $sources = Array (
+      Array ('uscm_advantages', 'advantage_name_id', 'advid'),
+      Array ('uscm_disadvantages', 'disadvantage_name_id', 'disadvid'),
+      Array ('uscm_traits', 'trait_name_id', 'traitid'),
+    );
+    $columnFilter = $columnId !== null ? "column_id = :columnid AND $modifierColumn IS NOT NULL AND " : "";
+    foreach ( $sources as $source ) {
+      list($table, $entityKey, $advdisKey) = $source;
+      $sql = "SELECT $modifierColumn, value_always_active
+              FROM uscm_advdisadv_bonus advdis
+              INNER JOIN $table a ON a.$entityKey = advdis.$advdisKey
+              WHERE {$columnFilter}table_point_name = :tablepointname AND a.character_id = :cid";
+      $stmt = $this->db->prepare($sql);
+      $stmt->bindValue(':cid', $this->characterId, PDO::PARAM_INT);
+      $stmt->bindValue(':tablepointname', $tablePointName, PDO::PARAM_STR);
+      if ($columnId !== null) {
+        $stmt->bindValue(':columnid', $columnId, PDO::PARAM_INT);
       }
-    }
-    $disadvsql = "SELECT modifier_basic_value, value_always_active
-            FROM uscm_advdisadv_bonus advdis
-            INNER JOIN uscm_disadvantages a ON a.disadvantage_name_id = advdis.disadvid
-            WHERE table_point_name = :bonusType AND a.character_id = :cid";
-    // print_r($disadvsql);
-    $stmt = $this->db->prepare($disadvsql);
-    $stmt->bindValue(':cid', $this->characterId, PDO::PARAM_INT);
-    $stmt->bindValue(':bonusType', $this->characterId, PDO::PARAM_STR);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row ['value_always_active'] == 1) {
-        $bonus ['always'] = $bonus ['always'] + $row ['modifier_basic_value'];
-      } else {
-        $bonus ['sometimes'] [] = $row ['modifier_basic_value'];
-      }
-    }
-    $traitsql = "SELECT modifier_basic_value, value_always_active
-            FROM uscm_advdisadv_bonus advdis
-            INNER JOIN uscm_traits a ON a.trait_name_id = advdis.traitid
-            WHERE table_point_name = :bonusType AND a.character_id = :cid";
-    // print_r($traitsql);
-    $stmt = $this->db->prepare($traitsql);
-    $stmt->bindValue(':cid', $this->characterId, PDO::PARAM_INT);
-    $stmt->bindValue(':bonusType', $this->characterId, PDO::PARAM_STR);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row ['value_always_active'] == 1) {
-        $bonus ['always'] = $bonus ['always'] + $row ['modifier_basic_value'];
-      } else {
-        $bonus ['sometimes'] [] = $row ['modifier_basic_value'];
+      $stmt->execute();
+      while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+        if ($row['value_always_active'] == 1) {
+          $bonus['always'] = $bonus['always'] + $row[$modifierColumn];
+        } else {
+          $bonus['sometimes'][] = $row[$modifierColumn];
+        }
       }
     }
     return $bonus;

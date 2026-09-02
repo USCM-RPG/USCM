@@ -425,24 +425,6 @@ class Character extends DbEntity {
   public function setPsychoDisadvantagesAll($psychodisadvantageProvider) {
     $this->psychodisadvantagesAll = new LazyLoader($psychodisadvantageProvider);
   }
-  
-  //TODO:remove
-  //function getDisadvantages($onlyvisible = false) {
-    //$disadvarray = array ();
-    //$sql = "SELECT dn.id, disadvantage_name, d.id as uid
-          //FROM uscm_disadvantage_names dn
-          //LEFT JOIN uscm_disadvantages d ON d.disadvantage_name_id=dn.id
-          //LEFT JOIN uscm_characters c ON c.id=d.character_id
-          //WHERE d.character_id=:cid ORDER BY disadvantage_name";
-    //$stmt = $this->db->prepare($sql);
-    //$stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
-    //$stmt->execute();
-    //while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      //$disadvarray[$row['id']]['disadvantage_name'] = $row['disadvantage_name'];
-      //$disadvarray[$row['id']]['uid'] = $row['uid'];
-    //}
-    //return $disadvarray;
-  //}
 
   public function getAwareness() {
     $sql = "SELECT (value * 2)  as value FROM uscm_attributes a
@@ -741,76 +723,15 @@ class Character extends DbEntity {
     );
     // Check certificate bonus
     foreach ( $certarray as $key => $value ) {
-      // print_r($key);
-      // print_r($certallarray[$key]);
-       //print_r($skillid);
       if ($certallarray[$key]['sid'] == $skillid) {
         $skillbonus['always'] = $skillbonus['always'] + 1;
       }
-      ;
     }
-    // if (certarray[
-    // print_r($skillbonus);
-     //print_r($certarray);
-     //print_r($certallarray);
-     //exit;
 
     // Check adv/disadv/trait bonus
-    // $sql = "SELECT skill_name_id, value, skill_name FROM {$_SESSION['table_prefix']}skills s
-    // LEFT JOIN {$_SESSION['table_prefix']}skill_names sn ON sn.id=s.skill_name_id
-    // LEFT JOIN {$_SESSION['table_prefix']}skill_groups sg ON sg.id=sn.skill_group_id
-    // WHERE character_id='{$cid}' AND skill_group_name='{$skilltype}'
-    // ORDER BY skill_name";
-    $advsql = "SELECT modifier_dice_value, modifier_basic_value, value_always_active
-               FROM uscm_advdisadv_bonus advdis
-               INNER JOIN uscm_skill_names sn ON sn.id = advdis.column_id AND table_point_name = 'skill_names'
-               INNER JOIN uscm_advantages a ON a.advantage_name_id = advdis.advid
-               WHERE column_id = :skillid AND a.character_id = :cid";
-    // print_r($advsql);
-    $stmt = $this->db->prepare($advsql);
-    $stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
-    $stmt->bindValue(':skillid', $skillid, PDO::PARAM_INT);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row['value_always_active'] == 1) {
-        $skillbonus['always'] = $skillbonus['always'] + $row['modifier_dice_value'];
-      } else {
-        $skillbonus['sometimes'][] = $row['modifier_dice_value'];
-      }
-    }
-    $disadvsql = "SELECT modifier_dice_value, modifier_basic_value, value_always_active
-                     FROM uscm_advdisadv_bonus advdis
-                     INNER JOIN uscm_skill_names sn ON sn.id = advdis.column_id AND table_point_name = 'skill_names'
-                     INNER JOIN uscm_disadvantages a ON a.disadvantage_name_id = advdis.disadvid
-                     WHERE column_id = :skillid AND a.character_id = :cid";
-    // print_r($disadvsql);
-    $stmt = $this->db->prepare($disadvsql);
-    $stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
-    $stmt->bindValue(':skillid', $skillid, PDO::PARAM_INT);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row['value_always_active'] == 1) {
-        $skillbonus['always'] = $skillbonus['always'] + $row['modifier_dice_value'];
-      } else {
-        $skillbonus['sometimes'][] = $row['modifier_dice_value'];
-      }
-    }
-    $traitsql = "SELECT modifier_dice_value, modifier_basic_value, value_always_active
-                     FROM uscm_advdisadv_bonus advdis
-                     INNER JOIN uscm_traits a ON a.trait_name_id = advdis.traitid
-                     WHERE column_id = :skillid AND table_point_name = 'skill_names' AND a.character_id = :cid";
-    // print_r($traitsql);
-    $stmt = $this->db->prepare($traitsql);
-    $stmt->bindValue(':cid', $this->id, PDO::PARAM_INT);
-    $stmt->bindValue(':skillid', $skillid, PDO::PARAM_INT);
-    $stmt->execute();
-    while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-      if ($row['value_always_active'] == 1) {
-        $skillbonus['always'] = $skillbonus['always'] + $row['modifier_dice_value'];
-      } else {
-        $skillbonus['sometimes'][] = $row['modifier_dice_value'];
-      }
-    }
+    $advDisadvTraitBonus = (new Bonus($this->id))->columnBonus('skill_names', 'modifier_dice_value', $skillid);
+    $skillbonus['always'] = $skillbonus['always'] + $advDisadvTraitBonus['always'];
+    $skillbonus['sometimes'] = array_merge($skillbonus['sometimes'], $advDisadvTraitBonus['sometimes']);
 
     return $skillbonus;
   }
