@@ -1,42 +1,5 @@
 <?php
 
-//TODO: remove
-function advantages($characterId, $onlyvisible = false) {
-  $db = getDatabaseConnection();
-  $advarray = array ();
-  $visible = $onlyvisible ? " AND an.visible = 1" : "";
-  $sql = "SELECT an.id, advantage_name
-          FROM uscm_advantage_names an
-          LEFT JOIN uscm_advantages a ON a.advantage_name_id=an.id
-          LEFT JOIN uscm_characters c ON c.id=a.character_id
-          WHERE a.character_id=:cid " . $visible . " ORDER BY advantage_name";
-  $stmt = $db->prepare($sql);
-  $stmt->bindValue(':cid', $characterId, PDO::PARAM_INT);
-  $stmt->execute();
-  while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-    $advarray [$row ['id']] ['advantage_name'] = $row ['advantage_name'];
-  }
-  return $advarray;
-}
-
-//TODO: remove
-function disadvantages($characterId, $onlyvisible = false) {
-  $db = getDatabaseConnection();
-  $disadvarray = array ();
-  $sql = "SELECT dn.id, disadvantage_name
-          FROM uscm_disadvantage_names dn
-          LEFT JOIN uscm_disadvantages d ON d.disadvantage_name_id=dn.id
-          LEFT JOIN uscm_characters c ON c.id=d.character_id
-          WHERE d.character_id=:cid ORDER BY disadvantage_name";
-  $stmt = $db->prepare($sql);
-  $stmt->bindValue(':cid', $characterId, PDO::PARAM_INT);
-  $stmt->execute();
-  while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-    $disadvarray [$row ['id']] ['disadvantage_name'] = $row ['disadvantage_name'];
-  }
-  return $disadvarray;
-}
-
 /**
  *
  * @param integer $characterId
@@ -44,63 +7,9 @@ function disadvantages($characterId, $onlyvisible = false) {
  * @return array
  */
 function certificates($characterId, $platoonId) {
-  $chosencertarray = getCertForCharacter($characterId);
-  $platooncertarray = getCertForPlatoon($platoonId);
-  $skillarray = getSkillsForCharacter($characterId);
-  $attribarray = getAttributesForCharacter($characterId);
-
-  $charskillattrib = array ();
-  foreach ( $skillarray as $id => $value ) {
-    $charskillattrib ['skill_names'] [$id] = $value;
-  }
-  foreach ( $attribarray as $id => $value ) {
-    $charskillattrib ['attribute_names'] [$id] = $value;
-  }
-  $cert = getCertificateRequirements();
-
-  // print_r($cert);
-  $certificatearray = array ();
-  foreach ( $cert as $id => $req ) {
-    $req_met = FALSE;
-    // echo "cert test ".$id." ";
-    // print_r($req);
-    if (in_array($id, $platooncertarray) || in_array($id, $chosencertarray)) {
-      $has_req = FALSE;
-      foreach ( $req as $reqid ) {
-        // echo $reqid['id'] . "<br>";
-        // print_r($charskillattrib[$reqid['table_name']]) . "<br>";
-        //
-        // echo "testing ".$charskillattrib[$reqid['table_name']][$reqid['id']]." against ".$reqid['value']." ";
-        // print "\n<br>";
-        if ($reqid ['value_greater'] == "1") {
-          if (!empty($charskillattrib[$reqid['table_name']]) && array_key_exists($reqid ['id'], $charskillattrib [$reqid ['table_name']]) &&
-               $charskillattrib [$reqid ['table_name']] [$reqid ['id']] >= $reqid ['value']) {
-            $has_req = TRUE;
-          } else {
-            $has_req = FALSE;
-            break;
-          }
-        } else {
-          if ($charskillattrib [$reqid ['table_name']] [$reqid ['id']] <= $reqid ['value']) {
-            $has_req = TRUE;
-          } else {
-            $has_req = FALSE;
-            break;
-          }
-        }
-      }
-      $req_met = $has_req;
-    }
-    if ($req_met) {
-      $certificatearray [$id] ['id'] = $id;
-      reset($req);
-      $name = current($req);
-      $certificatearray [$id] ['name'] = $name ['name'];
-    }
-  }
-  // print_r($certificatearray);
-  // exit;
-  return $certificatearray;
+  $character = new Character($characterId);
+  $character->setPlatoonId($platoonId);
+  return $character->getCertificates();
 }
 
 /**
@@ -127,18 +36,7 @@ function characterAttributes($characterId) {
 }
 
 function getAttributesForCharacter($characterId) {
-  $db = getDatabaseConnection();
-  $attribarray = array ();
-  $attribsql = "SELECT attribute_id as id,value
-          FROM uscm_attributes
-          WHERE character_id=:cid";
-  $stmt = $db->prepare($attribsql);
-  $stmt->bindValue(':cid', $characterId, PDO::PARAM_INT);
-  $stmt->execute();
-  while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-    $attribarray [$row ['id']] = $row ['value'];
-  }
-  return $attribarray;
+  return (new Character($characterId))->getAttributesForCharacter();
 }
 
 function getCertificateRequirements() {
@@ -171,20 +69,6 @@ function getCertificateRequirements() {
     $cert [$row ['certificate_id']] [$row ['req_item']] ['table_name'] = $row ['table_name'];
   }
   return $cert;
-}
-
-function getCertForCharacter($characterId) {
-  $db = getDatabaseConnection();
-  $chosencertarray = array ();
-  $chosencertsql = "SELECT certificate_name_id FROM uscm_certificates
-                    WHERE character_id=:cid";
-  $stmt = $db->prepare($chosencertsql);
-  $stmt->bindValue(':cid', $characterId, PDO::PARAM_INT);
-  $stmt->execute();
-  while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-    $chosencertarray [] = $row ['certificate_name_id'];
-  }
-  return $chosencertarray;
 }
 
 function getCommendationsForCharacter($characterId) {
@@ -244,33 +128,7 @@ function getNumberOfMissionsForCharacter($characterId) {
 }
 
 function getSkillsForCharacter($characterId) {
-  $db = getDatabaseConnection();
-  $skillarray = array ();
-  $skillsql = "SELECT skill_name_id as id,value
-          FROM uscm_skills
-          WHERE character_id=:cid";
-  $stmt = $db->prepare($skillsql);
-  $stmt->bindValue(':cid', $characterId, PDO::PARAM_INT);
-  $stmt->execute();
-  while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-    $skillarray [$row ['id']] = $row ['value'];
-  }
-  return $skillarray;
-}
-
-function getCertForPlatoon($platoonId) {
-  $db = getDatabaseConnection();
-  $platooncertarray = array ();
-  $platooncertsql = "SELECT certificate_id FROM uscm_platoon_certificates
-                    WHERE platoon_id=:platoonid";
-
-  $stmt = $db->prepare($platooncertsql);
-  $stmt->bindValue(':platoonid', $platoonId, PDO::PARAM_INT);
-  $stmt->execute();
-  while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-    $platooncertarray [] = $row ['certificate_id'];
-  }
-  return $platooncertarray;
+  return (new Character($characterId))->getSkillsForCharacter();
 }
 
 function listCharacters($charactersql, $sortType) {
@@ -359,20 +217,7 @@ function setMedalsAndGloryOnCharacter(&$characters, $key, $character) {
 }
 
 function traits($characterId) {
-  $db = getDatabaseConnection();
-  $traitarray = array ();
-  $sql = "SELECT tn.id, trait_name
-          FROM uscm_trait_names tn
-          LEFT JOIN uscm_traits t ON t.trait_name_id=tn.id
-          LEFT JOIN uscm_characters c ON c.id=t.character_id
-          WHERE t.character_id=:cid ORDER BY trait_name";
-  $stmt = $db->prepare($sql);
-  $stmt->bindValue(':cid', $characterId, PDO::PARAM_INT);
-  $stmt->execute();
-  while ( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-    $traitarray [$row ['id']] ['trait_name'] = $row ['trait_name'];
-  }
-  return $traitarray;
+  return (new Character($characterId))->getTraits();
 }
 
 function lastMissionForCharacter($characterId) {

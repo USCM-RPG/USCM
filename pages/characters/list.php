@@ -263,17 +263,15 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
       $trait = $key['trait_name'];
       $overlibtext = $overlibtext . htmlentities($trait,ENT_QUOTES) . "<br>";
     }
-    $advarray = advantages($npc['cid'], true);
-    $advarray ? $overlibtext = $overlibtext . "<br>": "";
-    foreach ( $advarray as $id => $key ) {
-      $adv = $key['advantage_name'];
-      $overlibtext = $overlibtext . htmlentities($adv,ENT_QUOTES) . "<br>";
+    $advarray = $characterController->getCharactersVisibleAdvantages($npc['cid']);
+    count($advarray) > 0 ? $overlibtext = $overlibtext . "<br>": "";
+    foreach ( $advarray as $advantage ) {
+      $overlibtext = $overlibtext . htmlentities($advantage->getName(),ENT_QUOTES) . "<br>";
     }
-    $disadvantages = disadvantages($npc['cid'], true);
-    $disadvantages ? $overlibtext = $overlibtext . "<br>": "";
-    foreach ( $disadvantages as $id => $key ) {
-      $dis = $key['disadvantage_name'];
-      $overlibtext = $overlibtext . htmlentities($dis,ENT_QUOTES) . "<br>";
+    $disadvantages = $characterController->getCharactersVisibleDisadvantages($npc['cid']);
+    count($disadvantages) > 0 ? $overlibtext = $overlibtext . "<br>": "";
+    foreach ( $disadvantages as $disadvantage ) {
+      $overlibtext = $overlibtext . htmlentities($disadvantage->getName(),ENT_QUOTES) . "<br>";
     }
   }
     ?><td><?php echo $npc['rank_short'];?></td>
