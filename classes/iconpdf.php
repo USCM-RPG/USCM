@@ -178,21 +178,6 @@ if ( !function_exists( "PDF_load_font" ) ) {
     function PDF_load_font($pdf, $name, $encoding, $options) {
         $fontMap = array(
             "Times-Roman"=>array("name"=>"times","style"=>""),
-            "Times-Bold"=>array("name"=>"timesb","style"=>"b"),
-            "Times-Italic"=>array("name"=>"timesi","style"=>"i"),
-            "Times-BoldItalic"=>array("name"=>"timesbi","style"=>"bi"),
-            "Helvetica"=>array("name"=>"helvetica","style"=>""),
-            "Helvetica-Bold"=>array("name"=>"helveticab","style"=>"b"),
-            "Helvetica-Oblique"=>array("name"=>"helveticai","style"=>"i"),
-            "Helvetica-BoldOblique"=>array("name"=>"helveticabi","style"=>"bi"),
-            "Courier"=>array("name"=>"courier","style"=>""),
-            "Courier-Bold"=>array("name"=>"courierb","style"=>"b"),
-            "Courier-Oblique"=>array("name"=>"courieri","style"=>"i"),
-            "Courier-BoldOblique"=>array("name"=>"courierbi","style"=>"bi"),
-            "Symbol"=>array("name"=>"symbol","style"=>""),
-            "ZapfDingbats"=>array("name"=>"zapfdingbats","style"=>"") );
-        $fontMap = array(
-            "Times-Roman"=>array("name"=>"times","style"=>""),
             "Times-Bold"=>array("name"=>"times","style"=>"b"),
             "Times-Italic"=>array("name"=>"times","style"=>"i"),
             "Times-BoldItalic"=>array("name"=>"times","style"=>"bi"),
