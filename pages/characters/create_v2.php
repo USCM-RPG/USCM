@@ -8,7 +8,14 @@ $userController = new UserController();
 $user = $userController->getCurrentUser();
 
 if ($user->isAdmin() || $user->isGm()) { ?>
-  <h1 class="heading heading-h1">Create character</h1>
+  <h1 class="heading heading-h1">
+    Create character
+    <?php if ($_SESSION['level']>=3) { ?>
+      <span class="span">
+        <a href="index.php?url=player/create.php">Create player</a>
+      </span>
+    <?php } ?>
+  </h1>
 
 <form class="form" method="post" action="actions/character.php?action=create_character">
   <div class="grid grid--1x2">
