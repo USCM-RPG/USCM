@@ -12,7 +12,6 @@ $characterController = new CharacterController();
 $playerController = new PlayerController();
 $character = $characterController->getCharacter($characterId);
 $user = new Player();
-$userid = $character->getPlayerId();
 
 if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->isGm()) {
   $platoon_id = $character->getPlatoonId();
@@ -107,7 +106,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   pdf_show($pdf, "Bonus");
 
   fontregular($font, $pdf);
-  $attributearray = characterattributes($characterId);
+  $attributearray = $characterController->characterattributes($characterId);
   $height = 520;
   foreach ( $attributearray as $attributeid => $attribute ) {
     pdf_set_text_pos($pdf, $aapcolumnone, $height);
