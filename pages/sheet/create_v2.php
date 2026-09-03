@@ -12,7 +12,6 @@ $characterController = new CharacterController();
 $playerController = new PlayerController();
 $character = $characterController->getCharacter($characterId);
 $user = new Player();
-
 $userid = $character->getPlayerId();
 
 if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->isGm()) {
@@ -43,7 +42,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   pdf_open_file($pdf, "");
   pdf_set_parameter($pdf, "warning", "true");
 
-  pdf_set_info($pdf, "Creator", "create_sheet.php");
+  pdf_set_info($pdf, "Creator", "www.uscm.se");
   pdf_set_info($pdf, "Author", "Skynet");
   pdf_set_info($pdf, "Title", "Character Sheet, USCM");
 
@@ -51,7 +50,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   $font = PDF_load_font($pdf, "Helvetica", "host", 0);
   pdf_setfont($pdf, $font, 10);
 
-  PDF_image($pdf, "../../assets/logo/uscm-blip-logo@512px.png", 50, 700, 280, 102);
+  PDF_image($pdf, "../../assets/logo/uscm-blip-logo@512px.png", 50, 710, 280, 102);
 
   fontbold($font, $pdf);
   pdf_set_text_pos($pdf, 50, 690);
@@ -547,7 +546,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   pdf_end_page($pdf);
   if($backside) {
     pdf_begin_page($pdf, 595, 842);
-    PDF_image($pdf, "../../assets/images/CharacterSheetBack.png", 0, 0, 595, 842);
+    PDF_image($pdf, "../../assets/images/sheet/CharacterSheetBack.png", 0, 0, 595, 842);
     pdf_end_page($pdf);
   }
   pdf_close($pdf);
