@@ -756,7 +756,7 @@ class Character extends DbEntity {
     foreach ( $attribarray as $id => $value ) {
       $charskillattrib['attribute_names'][$id] = $value;
     }
-    $cert = getCertificateRequirements();
+    $cert = (new CharacterController())->getCertificateRequirements();
 
 //     echo "Certificate requirements: \n";
 //     print_r($cert);

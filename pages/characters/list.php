@@ -109,14 +109,14 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
   </thead>
   <tbody>
 <?php
-  $characterarray = listCharacters($charactersql, "alive");
+  $characterarray = $characterController->listCharacters($charactersql, "alive");
   foreach ($characterarray as $character) { ?>
   <tr><?php $overlib = false;
   if ($_SESSION['level']>=1  ) {
     $overlib = true;
-    $attributearray = characterAttributes($character['cid']);
+    $attributearray = $characterController->characterAttributes($character['cid']);
     $attributearray = attribute2visible($attributearray);
-    $certificatearray = certificates($character['cid'],$_GET['platoon']);
+    $certificatearray = $characterController->certificates($character['cid'],$_GET['platoon']);
     $overlibtext = "";
     foreach ( $attributearray as $id => $key ) {
       $attrib = $key;
@@ -128,7 +128,7 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
       $cert2 = htmlentities($cert,ENT_QUOTES);
       $overlibtext = $overlibtext . $cert2 . "<br>";
     }
-    $traitarray = traits($character['cid']);
+    $traitarray = $characterController->traits($character['cid']);
     $traitarray ? $overlibtext = $overlibtext . "<br>": "";
     foreach ( $traitarray as $id => $key ) {
       $trait = $key['trait_name'];
@@ -145,7 +145,7 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
       $overlibtext = $overlibtext . htmlentities($disadvantage->getName(), ENT_QUOTES) . "<br>";
     }
   }
-  $lastMission = lastMissionForCharacter($character['cid']);
+  $lastMission = $characterController->lastMissionForCharacter($character['cid']);
     ?><td><?php echo $character['rank_short'];?></td>
     <td <?php if ($overlib) {?>class="popover"<?php } ?>><?php
     $link = false;
@@ -172,7 +172,7 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
 <?php
       $medals = "";
       $glory = 0;
-      $commendationsArray = getCommendationsForCharacter($character['cid']);
+      $commendationsArray = $characterController->getCommendationsForCharacter($character['cid']);
       foreach ($commendationsArray as $key => $value) {
         if ($commendationsArray[$key]['medal_short'] != "") $medals = $medals . " " . $commendationsArray[$key]['medal_short'];
         $glory = $glory + $commendationsArray[$key]['medal_glory'];
@@ -236,16 +236,16 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
   </thead>
   <tbody>
 <?php
-  $npcarray = listCharacters($npcsql,"alive");
+  $npcarray = $characterController->listCharacters($npcsql,"alive");
   $medals = "";
   $glory = 0;
   foreach ($npcarray as $npc) { ?>
   <tr><?php $overlib = false;
   if ( $_SESSION['level']>=1  ) {
     $overlib = true;
-      $attributearray = characterAttributes($character['cid']);
+      $attributearray = $characterController->characterAttributes($character['cid']);
       $attributearray = attribute2visible($attributearray);
-      $certificatearray = certificates($npc['cid'],$_GET['platoon']);
+      $certificatearray = $characterController->certificates($npc['cid'],$_GET['platoon']);
     $overlibtext = "";
     foreach ( $attributearray as $id => $key ) {
       $attrib = $key;
@@ -257,7 +257,7 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
       $cert2 = htmlentities($cert,ENT_QUOTES);
       $overlibtext = $overlibtext . $cert2 . "<br>";
     }
-    $traitarray = traits($npc['cid']);
+    $traitarray = $characterController->traits($npc['cid']);
     $traitarray ? $overlibtext = $overlibtext . "<br>": "";
     foreach ( $traitarray as $id => $key ) {
       $trait = $key['trait_name'];
@@ -291,12 +291,12 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
     </td>
     <td><?php echo $npc['specialty_name'];?></td>
 <?php
-  $missionCount = getNumberOfMissionsForCharacter($npc['cid'])?>
+  $missionCount = $characterController->getNumberOfMissionsForCharacter($npc['cid'])?>
     <td><?php echo $missionCount;?></td>
 <?php
   $medals = "";
   $glory = 0;
-  $commendationsArray = getCommendationsForCharacter($npc['cid']);
+  $commendationsArray = $characterController->getCommendationsForCharacter($npc['cid']);
   foreach ($commendationsArray as $key => $value) {
     if ($commendationsArray[$key]['medal_short'] != "") $medals = $medals . " " . $commendationsArray[$key]['medal_short'];
     $glory = $glory + $commendationsArray[$key]['medal_glory'];

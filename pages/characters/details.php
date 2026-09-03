@@ -20,7 +20,7 @@ $user = $userController->getCurrentUser();
 <?php
 if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->isGm()) {
   $player = $character->getPlayer();
-  $missionCount = getNumberOfMissionsForCharacter($characterId);
+  $missionCount = $characterController->getNumberOfMissionsForCharacter($characterId);
   $xpval = $character->getXPvalue();
   $startxp = $character->getXPstartvalue();
   $totglory = $character->getGlory();
@@ -142,7 +142,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 		<?php
 	}
 	
-    $missiontags = getMissionTagsForCharacter($characterId);
+    $missiontags = $characterController->getMissionTagsForCharacter($characterId);
     if ($missiontags) {
     ?>
     <h3 class="heading heading-h3">
@@ -171,7 +171,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
 	<?php
 	}
 	
-   $missionterrain = getMissionTerrainForCharacter($characterId);
+   $missionterrain = $characterController->getMissionTerrainForCharacter($characterId);
     if ($missionterrain) {
     ?>
     <h3 class="heading heading-h3">
@@ -225,7 +225,7 @@ if ($character->getVersion() < 3) {
     <ul class="list">
 	<?php
 	$availableCerts = $character->getCertsBuyableWithoutReqCheck();
-	$cert = getCertificateRequirements();
+	$cert = $characterController->getCertificateRequirements();
 
 	foreach ( $cert as $id => $req ) {
       $req_met = FALSE;
@@ -279,7 +279,7 @@ if ($character->getVersion() < 3) {
     </thead>
 		<tbody>
 		<?php
-		$ocarray = servedWith($characterId);
+		$ocarray = $characterController->servedWith($characterId);
 		foreach ($ocarray as $comrade) { ?>
 		<tr>
 			<td><?php echo $comrade['name'];?></td>
