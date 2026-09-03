@@ -1,10 +1,10 @@
 <?php
 $characterId = $_GET['character_id'];
-$userController = new UserController();
+$playerController = new PlayerController();
 $characterController = new CharacterController();
 $character = new Character($characterId);
 $character = $characterController->getCharacter($characterId);
-$user = $userController->getCurrentUser();
+$user = $playerController->getCurrentUser();
 ?>
 
 <h1 class="heading heading-h1">

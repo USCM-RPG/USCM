@@ -1,8 +1,8 @@
 <?php
 require_once("session.php");
 $newsController = new NewsController();
-$userController = new UserController();
-$user = $userController->getCurrentUser();
+$playerController = new PlayerController();
+$user = $playerController->getCurrentUser();
 ?>
   <h1 class="heading heading-h1">News</h1>
   <?php

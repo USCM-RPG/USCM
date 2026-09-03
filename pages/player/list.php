@@ -8,9 +8,8 @@
 </h1>
 
 <?php
-$userController = new UserController();
 $playerController = new PlayerController();
-$user = $userController->getCurrentUser();
+$user = $playerController->getCurrentUser();
 $platoonController = new PlatoonController();
 $playerId = 0;
 if (array_key_exists('player', $_GET)) {

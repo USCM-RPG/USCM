@@ -10,8 +10,8 @@ include("../functions.php");
 $missionController = new MissionController();
 $characterController = new CharacterController();
 $rankController = new RankController();
-$userController = new UserController();
-$user = $userController->getCurrentUser();
+$playerController = new PlayerController();
+$user = $playerController->getCurrentUser();
 
 if ($user->isAdmin() || $user->isGm()) {
   $missionId = $_GET['mission'];

@@ -1,14 +1,14 @@
 <?php
 
 $characterId = $_GET['character_id'];
-$userController = new UserController();
+$playerController = new PlayerController();
 $platoonController = new PlatoonController();
 $rankController = new RankController();
 $characterController = new CharacterController();
 $expertiseController = new ExpertiseController();
 $character = new Character($characterId);
 $character = $characterController->getCharacter($characterId);
-$user = $userController->getCurrentUser();
+$user = $playerController->getCurrentUser();
 $canmodify = FALSE;
 
 if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->isGm()) {

@@ -5,9 +5,8 @@
  */
 require_once("../session.php");
 include("../functions.php");
-$userController = new UserController();
 $playerController = new PlayerController();
-$user = $userController->getCurrentUser();
+$user = $playerController->getCurrentUser();
 
 $forname=$_POST['forname'];
 $lastname=$_POST['lastname'];

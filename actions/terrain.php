@@ -5,8 +5,8 @@ require_once "../functions.php";
 
 $missionController = new MissionController();
 $db = getDatabaseConnection();
-$userController = new UserController();
-$user = $userController->getCurrentUser();
+$playerController = new PlayerController();
+$user = $playerController->getCurrentUser();
 
 if ($user->isAdmin() || $user->isGm()) {
   /*
