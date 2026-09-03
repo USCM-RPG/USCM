@@ -1,6 +1,6 @@
 <?php
-$userController = new UserController();
-$user = $userController->getCurrentUser();
+$playerController = new PlayerController();
+$user = $playerController->getCurrentUser();
 $platoonController = new PlatoonController();
 if ($user->isAdmin()) {
 ?>

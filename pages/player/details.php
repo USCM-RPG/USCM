@@ -1,7 +1,6 @@
 <?php
-$userController = new UserController();
 $playerController = new PlayerController();
-$user = $userController->getCurrentUser();
+$user = $playerController->getCurrentUser();
 $playerId = 0;
 if (array_key_exists('player', $_GET)) {
   $playerId = $_GET['player'];

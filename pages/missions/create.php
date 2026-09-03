@@ -1,6 +1,6 @@
 <?php
-$userController = new UserController();
-$user = $userController->getCurrentUser();
+$playerController = new PlayerController();
+$user = $playerController->getCurrentUser();
 if ($user->isAdmin() || $user->isGm()) {
 ?>
   <h1 class="heading heading-h1">Create mission</h1>

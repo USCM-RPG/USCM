@@ -28,7 +28,6 @@ require_once ("controllers/mission.php");
 require_once ("controllers/platoon.php");
 require_once ("controllers/player.php");
 require_once ("controllers/rank.php");
-require_once ("controllers/user.php");
 require_once ("controllers/tag.php");
 
 $db_connection = NULL;

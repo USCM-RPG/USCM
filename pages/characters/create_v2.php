@@ -4,8 +4,7 @@ $characterController = new CharacterController();
 $platoonController = new PlatoonController();
 $playerController = new PlayerController();
 $rankController = new RankController();
-$userController = new UserController();
-$user = $userController->getCurrentUser();
+$user = $playerController->getCurrentUser();
 
 if ($user->isAdmin() || $user->isGm()) { ?>
   <h1 class="heading heading-h1">

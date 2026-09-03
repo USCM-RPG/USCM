@@ -6,6 +6,24 @@ Class PlayerController {
     $this->db = getDatabaseConnection();
   }
 
+  public function getCurrentUser() {
+    if (array_key_exists('user_id', $_SESSION)) {
+      return $this->getPlayer($_SESSION['user_id']);
+    } else {
+      return new Player();
+    }
+  }
+
+  private function runInTransaction($stmt) {
+    try {
+      $this->db->beginTransaction();
+      $stmt->execute();
+      $this->db->commit();
+    } catch (PDOException $e) {
+      $this->db->rollBack();
+    }
+  }
+
   /**
    *
    * @param Player $player
@@ -22,13 +40,7 @@ Class PlayerController {
     $stmt->bindValue(':password',  $player->getPassword(), PDO::PARAM_STR);
     $stmt->bindValue(':useNickname',  $player->getUseNickname(), PDO::PARAM_INT);
     $stmt->bindValue(':platoonId',  $player->getPlatoonId(), PDO::PARAM_INT);
-    try {
-      $this->db->beginTransaction();
-      $stmt->execute();
-      $this->db->commit();
-    } catch (PDOException $e) {
-      $this->db->rollBack();
-    }
+    $this->runInTransaction($stmt);
   }
 
   /**
@@ -49,13 +61,7 @@ Class PlayerController {
     $stmt->bindValue(':platoonId',  $player->getPlatoonId(), PDO::PARAM_INT);
 	$stmt->bindValue(':playeractive',  $player->getPlayerActive(), PDO::PARAM_INT);
 	$stmt->bindValue(':discordId',  $player->getDiscordId(), PDO::PARAM_STR);
-    try {
-      $this->db->beginTransaction();
-      $stmt->execute();
-      $this->db->commit();
-    } catch (PDOException $e) {
-      $this->db->rollBack();
-    }
+    $this->runInTransaction($stmt);
   }
 
   public function updatePassword($player) {
@@ -63,13 +69,7 @@ Class PlayerController {
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':playerId', $player->getId(), PDO::PARAM_INT);
     $stmt->bindValue(':password',  $player->getPassword(), PDO::PARAM_STR);
-    try {
-      $this->db->beginTransaction();
-      $stmt->execute();
-      $this->db->commit();
-    } catch (PDOException $e) {
-      $this->db->rollBack();
-    }
+    $this->runInTransaction($stmt);
   }
 
   public function getPlayer($playerId) {
