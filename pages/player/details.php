@@ -48,8 +48,8 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
       <tbody>
     <?php
     foreach ($characters as $character) {
-      $lastMission = lastMissionForCharacter($character->getId());
-      $missionCount = getNumberOfMissionsForCharacter($character->getId());
+      $lastMission = $characterController->lastMissionForCharacter($character->getId());
+      $missionCount = $characterController->getNumberOfMissionsForCharacter($character->getId());
       ?>
       <tr>
         <td>
@@ -81,7 +81,7 @@ if ($user->isAdmin() || $user->getId() == $playerId) {
           $glory = $character->getGlory();
           if ($glory != "0") {
             $medals = "";
-            $commendationsArray = getCommendationsForCharacter($character->getId());
+            $commendationsArray = $characterController->getCommendationsForCharacter($character->getId());
             foreach ($commendationsArray as $key => $value) {
               if ($commendationsArray[$key]['medal_short'] != "") $medals = $medals . " " . $commendationsArray[$key]['medal_short'];
             }

@@ -1,5 +1,6 @@
 <?php
 $platoonController = new PlatoonController();
+$characterController = new CharacterController();
 $admin=($_SESSION['level']>=3)?(TRUE):(FALSE);
 $gm=($_SESSION['level']==2)?(TRUE):(FALSE);
 //echo $_SESSION['level'];
@@ -102,7 +103,7 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
   <tbody>
 <?php
 // 	$characterres=mysql_query($glorytopsql);
-    $characterarray = listCharacters($glorytopsql, "glory");
+    $characterarray = $characterController->listCharacters($glorytopsql, "glory");
     $i = 0;
     foreach ($characterarray as $character) {
     $i++;
@@ -110,7 +111,7 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
 
 	$medals = "";
 	$glory = 0;
-	$commendationsArray = getCommendationsForCharacter($character['cid']);
+	$commendationsArray = $characterController->getCommendationsForCharacter($character['cid']);
 	foreach ($commendationsArray as $key => $value) {
 		if ($commendationsArray[$key]['medal_short'] != "") $medals = $medals . " " . $commendationsArray[$key]['medal_short'];
 		$glory = $glory + $commendationsArray[$key]['medal_glory'];
@@ -159,7 +160,7 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
   <tbody>
 <?php
 // 	$characterres=mysql_query($deadcharactersql);
-    $characterarray = listCharacters($deadcharactersql, "dead");
+    $characterarray = $characterController->listCharacters($deadcharactersql, "dead");
     foreach ($characterarray as $character) { ?>
   <tr>
     <td><?php echo $character['missions'];?></td>
@@ -179,7 +180,7 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
 <?php
 // $lastmissionsql="SELECT DATE_FORMAT(date,'%Y-%m-%d') as date,mission_name_short FROM uscm_mission_names LEFT JOIN uscm_missions as m on m.mission_id = uscm_mission_names.id WHERE character_id = '{$character['cid']}' ORDER BY date DESC LIMIT 1";
 //     $lastmission=mysql_fetch_array(mysql_query($lastmissionsql));
-    $lastMission = lastMissionForCharacter($character['cid'])?>
+    $lastMission = $characterController->lastMissionForCharacter($character['cid'])?>
     <td>
       <span class="no-wrap">
         * <?php echo $character['enlisted'];?>
@@ -228,7 +229,7 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
   <tbody>
 <?php
 //$characterres=mysql_query($retiredcharactersql);
-    $characterarray = listCharacters($retiredcharactersql,"retired");
+    $characterarray = $characterController->listCharacters($retiredcharactersql,"retired");
     foreach ($characterarray as $character) { ?>
   <tr>
     <td><?php echo $character['missions'];?></td>
@@ -248,7 +249,7 @@ $glorytopsql="SELECT c.id as cid,c.forname as cfor,c.lastname as clast,DATE_FORM
 <?php
 // $lastmissionsql="SELECT DATE_FORMAT(date,'%Y-%m-%d') as date,mission_name_short FROM uscm_mission_names LEFT JOIN uscm_missions as m on m.mission_id = uscm_mission_names.id WHERE character_id = '{$character['cid']}' ORDER BY date DESC LIMIT 1";
 // 		$lastMission=mysql_fetch_array(mysql_query($lastmissionsql));
-    $lastMission = lastMissionForCharacter($character['cid']) ?>
+    $lastMission = $characterController->lastMissionForCharacter($character['cid']) ?>
     <td>
       <span class="no-wrap">
         * <?php echo $character['enlisted'];?>
