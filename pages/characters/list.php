@@ -58,7 +58,7 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
   Characters
   <?php if ($_SESSION['level']>=2) { ?>
     <span class="span">
-      <a href="index.php?url=characters/create3.php">Create character v3</a> <span class="tag tag-bf5">current version</span> <a href="index.php?url=characters/create2.php">Create character v2</a> <span class="tag">old version</span>
+      <a href="index.php?url=characters/create_v3.php">Create character v3</a> <span class="tag tag-bf5">current version</span> <a href="index.php?url=characters/create_v2.php">Create character v2</a> <span class="tag">old version</span>
     </span>
   <?php } ?>
 </h1>

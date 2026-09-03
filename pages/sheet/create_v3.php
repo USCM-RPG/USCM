@@ -185,7 +185,7 @@ if ($user->getId() == $character->getPlayerId() || $user->isAdmin() || $user->is
   $health = $character->getHealthPoints();
   $xpos = $aapcolumntwo;
   drawwhiteboxes($pdf, $xpos, 388, $health, 12,12);
-  PDF_image($pdf, "../../assets/images/healtheffects.png", 142+$health*8, 400, 100, 50);
+  PDF_image($pdf, "../../assets/images/sheet/healtheffects.png", 142+$health*8, 400, 100, 50);
 
 
 pdf_set_text_pos($pdf, $aapcolumnone, 374);
@@ -538,7 +538,7 @@ pdf_set_text_pos($pdf, $aapcolumnone, 374);
   pdf_end_page($pdf);
   if($backside) {
     pdf_begin_page($pdf, 595, 842);
-    PDF_image($pdf, "../../assets/images/CharacterSheetBack.png", 0, 0, 595, 842);
+    PDF_image($pdf, "../../assets/images/sheet/CharacterSheetBack.png", 0, 0, 595, 842);
     pdf_end_page($pdf);
   }
 
