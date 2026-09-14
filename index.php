@@ -2,15 +2,30 @@
   include("session.php");
   include("functions.php");
   include("components/security-headers.php");
+
+  /*
+   * Returns all file names under the given directory, recursively, stripped of the base dir.
+   * Used for checking validity of includes from GET variables
+   */
+  function recursive_dirlist($base_dir) {
+    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($base_dir, FilesystemIterator::SKIP_DOTS));
+    $filelist = array();
+    foreach ( $files as $file ) {
+      if ($file->isFile()) {
+        $filelist[] = str_replace($base_dir, '', $file->getPathname());
+      }
+    }
+    return $filelist;
+  }
 ?>
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <?php
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <?php
       include("components/meta.php");
-      ?>
-    </head>
-    <body>
+    ?>
+  </head>
+  <body>
     <div class="galaxy <?php echo !($_GET["url"] ?? "") ? "animate" : "" ?>"></div>
 
     <div class="wrapper">
@@ -26,8 +41,7 @@
           if(in_array('/'.$_GET['url'], $pages)) {
             include('pages/'.$_GET['url']);
           }
-        }
-        else {
+        } else {
           include('pages/news/news.php');
         }
         ?>
@@ -37,5 +51,5 @@
         include("components/footer.php");
       ?>
     </div>
-    </body>
-  </html>
+  </body>
+</html>

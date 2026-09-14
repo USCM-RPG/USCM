@@ -50,8 +50,6 @@ $npcsql="SELECT c.id as cid,c.forname,c.lastname,DATE_FORMAT(c.enlisted,'%Y-%m-%
               WHERE c.status != 'Dead' AND c.status != 'Retired' AND (p.id = '0' OR p.id = '59') {$where}
               ORDER BY rank_id DESC";
 
-//echo $charactersql . "<br><br><br><br><br><br>";
-
 ?>
 
 <h1 class="heading heading-h1">

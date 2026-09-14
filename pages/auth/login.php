@@ -23,16 +23,13 @@ if(isset($_GET['redirect'])){
   <label for="rpg">
     Game
     <select id="rpg" name="rpg">
-        <?php
+      <?php
         $db = getDatabaseConnection();
         $rpgsql="select rpg_name_short,table_prefix from RPG order by rpg_name";
-
         $stmt = $db->query($rpgsql);
-
-         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-           echo "<option value='{$row['table_prefix']}'>{$row['rpg_name_short']}</option>";
-             }
-
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+          echo "<option value='{$row['table_prefix']}'>{$row['rpg_name_short']}</option>";
+        }
       ?>
     </select>
   </label>
