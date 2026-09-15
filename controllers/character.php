@@ -679,7 +679,7 @@ WHERE p.character_id=:cid";
 
   private function hasCharacterMetRequirement($requirement, $characterSkillsAndAttributes) {
     $hasRequirement = FALSE;
-    if ($this->shouldHaveValueGreaterThanRequirement($requirement)) {
+    if ($requirement['value_greater'] == "1") {
       if (array_key_exists($requirement['id'], $characterSkillsAndAttributes[$requirement['table_name']]) &&
            $characterSkillsAndAttributes[$requirement['table_name']][$requirement['id']] >= $requirement['value']) {
         $hasRequirement = TRUE;
@@ -691,13 +691,6 @@ WHERE p.character_id=:cid";
     }
 
     return $hasRequirement;
-  }
-
-  private function shouldHaveValueGreaterThanRequirement() {
-    if ($requirement['value_greater'] == "1") {
-      return TRUE;
-    }
-    return FALSE;
   }
 
   function getAquiredCertificatesForCharacter($character) {

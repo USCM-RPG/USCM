@@ -1,7 +1,6 @@
 <?php
 
-class Platoon {
-  private $id = NULL;
+class Platoon extends DbEntity {
   private $longName = "";
   private $shortName = "";
   private $certificates = NULL;
@@ -20,13 +19,6 @@ class Platoon {
 
   public function setShortName($name) {
     $this->shortName = $name;
-  }
-
-  public function getId() {
-    return $this->id;
-  }
-  public function setId($id) {
-    $this->id = $id;
   }
 
   /**
