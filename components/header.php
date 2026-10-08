@@ -81,14 +81,18 @@
         $redirect = $urlParam ? "&redirect={$urlParam}" : "";
         ?>
         <li>
-          <a href="index.php?url=auth/login.php&alt=login<?php echo $redirect; ?>">
+          <button class="popover-trigger" popovertarget="login">
             Log In
-            <svg aria-hidden="true">
-              <use href="assets/icons/sign-in.svg#sign-in"></use>
-            </svg>
-          </a>
+              <svg aria-hidden="true">
+                <use href="assets/icons/sign-in.svg#sign-in"></use>
+              </svg>
+          </button>
         </li>
       <?php endif ?>
     </ul>
   </nav>
 </header>
+
+<div class="popover-target" popover id="login">
+  <?php include("login.php"); ?>
+</div>

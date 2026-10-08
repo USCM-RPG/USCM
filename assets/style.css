@@ -111,12 +111,14 @@ a:hover {
   gap: 10px;
   justify-content: center;
 }
-.nav a {
+.nav a,
+.nav button {
   display: inline-block;
   position: relative;
   text-decoration: none;
 }
-.nav a::after {
+.nav a::after,
+.nav button::after {
   background-color: var(--uscm-color-green-hover);
   content: "";
   position: absolute;
@@ -128,7 +130,8 @@ a:hover {
   transform-origin: bottom right;
   transition: transform .25s ease-out;
 }
-.nav a:hover::after {
+.nav a:hover::after,
+.nav button:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
@@ -452,4 +455,17 @@ legend {
   overflow: visible;
   clip: auto;
   white-space: normal;
+}
+
+.popover-trigger {
+  background: unset;
+  border: unset;
+  color: var(--uscm-color-green);
+  padding: unset;
+}
+.popover-target {
+  background-color: var(--uscm-color-background);
+  border: 2px solid var(--uscm-color-green);
+  color: var(--uscm-color-text);
+  padding: 0 20px 20px;
 }
